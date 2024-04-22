@@ -15,7 +15,7 @@
     <div class="wrapper">
         <form action="validar_log.php" method="post">
             <h1>INICIAR SESIÓN</h1>
-            
+
             <div class="input-box">
                 <input type="email" id="correo" name="correo" placeholder="Correo electronico" required>
                 <i class='bx bxs-user'></i>
@@ -26,11 +26,11 @@
                 <i class='bx bxs-lock-alt'></i>
             </div>
            
+            <button type="submit" class="btn" >Entrar</button>
+            
             <div class="olvide-c">
                 <a href="#">Registrarse</a>
             </div>
-
-            <button type="submit" class="btn" >Entrar</button>
         </form>
     </div>
 </body>
