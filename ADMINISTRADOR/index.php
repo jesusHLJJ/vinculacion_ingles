@@ -8,9 +8,19 @@
 </head>
 
 <body>
+    <div class="contenedor" id="contenedor">
+        <ul class="lista">
+            <li class="menu"><a href="">HOME</a></li>
+            <li class="menu"><a href="">NIVELES</a></li>
+            <li class="menu"><a href="">PROFESORES</a></li>
+            <li class="menu"><a href="">AVANCE PROGRAMATICO</a></li>
+            <li class="menu"><a href="">ALUMNOS</a></li>
+            <li class="menu"><a href="">ACTAS DE CALIFICACION</a></li>
+        </ul>
+    </div>
 
-
-    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <div class="cerrar_sesion">
+    </div>
 </body>
 
 </html>
