@@ -13,7 +13,7 @@
     </header>
 
     <div class="wrapper">
-        <form action="validar_log.php" method="post">
+        <form action="CONTROLADORES\validar_log.php" method="post">
             <h1>INICIAR SESIÓN</h1>
 
             <div class="input-box">
@@ -29,9 +29,12 @@
             <button type="submit" class="btn">Entrar</button>
             
             <div class="olvide-c">
-                <a href="#">Registrarse</a>
+                <a href="registros.php">Registrarse</a>
             </div>
         </form>
     </div>
+    <?php
+    include "BD.php";
+    ?>
 </body>
 </html>
