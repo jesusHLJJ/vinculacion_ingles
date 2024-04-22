@@ -1,0 +1,20 @@
+.boton-redondo {
+    background-color: #4CAF50; /* Color de fondo */
+    border: none; /* Sin borde */
+    color: white; /* Color de texto */
+    padding: 15px 32px; /* Espacio alrededor del texto */
+    text-align: center; /* Centrar texto */
+    text-decoration: none; /* Sin subrayado */
+    display: inline-block;
+    font-size: 16px; /* Tamaño del texto */
+    border-radius: 50%; /* Forma redonda */
+    cursor: pointer; /* Cambiar el cursor al pasar sobre el botón */
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2); /* Sombra */
+    border: none; /* Quitar borde */
+    outline: none; /* Quitar el contorno */
+  }
+  
+  .boton-redondo:hover {
+    background-color: #45a049; /* Cambiar color al pasar el mouse */
+  }
+  
