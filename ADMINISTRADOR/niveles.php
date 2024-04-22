@@ -4,51 +4,49 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="https://cdn.datatables.net/2.0.5/css/dataTables.dataTables.css" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/5.3.0/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://cdn.datatables.net/2.0.5/css/dataTables.bootstrap5.css">
     <title>NIVELES</title>
 </head>
 
 <body>
-    <div class="container">
-        <div class="row">
-            <div class="col-lg-12">
-                <div class="table-responsive">
-                    <table class="table table-bordered" id="myTable">
-                        <thead>
-                            <tr>
-                                <th>NIVEL</th>
-                                <th>GRUPO</th>
-                                <th>PROFESOR</th>
-                                <th>CUPO MAXIMO</th>
-                                <th>MODALIDAD</th>
-                                <th>HORARIO</th>
-                            </tr>
-                        </thead>
+    <header>
+        <nav class="contenedor" id="contenedor">
+            <ul class="lista">
+                <li class="menu"><a href="index.php">HOME</a></li>
+                <li class="menu"><a href="niveles.php">NIVELES</a></li>
+                <li class="menu"><a href="">PROFESORES</a></li>
+                <li class="menu"><a href="">AVANCE PROGRAMATICO</a></li>
+                <li class="menu"><a href="">ALUMNOS</a></li>
+                <li class="menu"><a href="">ACTAS DE CALIFICACION</a></li>
+            </ul>
+        </nav>
+    </header>
 
-                        <tbody>
-                            <tr>
-                                <td>1</td>
-                                <td>2</td>
-                                <td>3</td>
-                                <td>4</td>
-                                <td>5</td>
-                                <td>6</td>
-                            </tr>
-                        </tbody>
-                    </table>
-                </div>
-            </div>
-        </div>
-    </div>
+    <table id="example" class="display" style="width:100%">
+        <thead>
+            <tr>
+                <th>NIVEL</th>
+                <th>GRUPO</th>
+                <th>PROFESOR</th>
+                <th>CUPO MAXIMO</th>
+                <th>MODALIDAD</th>
+                <th>HORARIO</th>
+                <th></th>
+            </tr>
+        </thead>
 
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js" integrity="sha512-qFOQ9YFAeGj1gDOuUD61g3D+tLDv3u1ECYWqT82WQoaWrOhAY+5mRMTTVsQdWutbA5FORCnkEPEgU0OF8IzGvA==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+        <tbody>
+        </tbody>
+
+        <tfoot>
+            <button class="btn btn-agregar">Nuevo Registro</button>
+        </tfoot>
+    </table>
+
+    <script src="https://code.jquery.com/jquery-3.7.1.js"></script>
     <script src="https://cdn.datatables.net/2.0.5/js/dataTables.js"></script>
-
-    <script>
-        $(document).ready(function() {
-            $('#myTable').DataTable();
-        });
-    </script>
+    <script src="../JS/DataTable.js"></script>
 </body>
 
 </html>
