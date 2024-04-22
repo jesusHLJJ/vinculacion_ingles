@@ -26,7 +26,7 @@
                 <i class='bx bxs-lock-alt'></i>
             </div>
            
-            <button type="submit" class="btn" >Entrar</button>
+            <button type="submit" class="btn">Entrar</button>
             
             <div class="olvide-c">
                 <a href="#">Registrarse</a>
