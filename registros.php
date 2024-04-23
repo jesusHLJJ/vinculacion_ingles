@@ -25,7 +25,7 @@
 </html>
 
 <?php
-include "BD.php";
+include "conn_bd.php";
 
 if(isset($_POST['enviar'])){
     $correo = $_POST['email']; 
@@ -36,9 +36,16 @@ if(isset($_POST['enviar'])){
     $sql = "INSERT INTO login_usuarios (correo, contrasena, id_tipo) VALUES ('$correo','$HASH',2)";
     $result = $conexion->query($sql);
     if ($result === TRUE) {
-        header('Location: index.php');
+      $sql = "INSERT INTO profesores (correo) VALUES ('$correo')";
+      $result = $conexion->query($sql);
+      if ($result === TRUE) {
+          header('Location: index.php');
+      } else {
+          echo "Error al insertar el registro: ";
+      }
     } else {
         echo "Error al insertar el registro: ";
     }
+
 }
 ?>

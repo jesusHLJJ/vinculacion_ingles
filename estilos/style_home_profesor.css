@@ -1,13 +1,60 @@
+.titulo-bienvenida {
+    color: #000000; /* Color del texto */
+    font-family: Arial, sans-serif; /* Tipo de fuente */
+    text-align: center; /* Alineación del texto */
+    margin-top: 20px; /* Espacio superior */
+}
+.button-description1 {
+    color: #000000; /* Color del texto */
+    font-family: Arial, sans-serif; /* Tipo de fuente */
+    text-align:left; /* Alineación del texto */
+    margin-top: 5px; /* Espacio superior */
+    position: fixed;
+    top: 150px; /* Ajusta la distancia desde la parte superior */
+    left: 40px; /* Ajusta la distancia desde la parte izquierda */
+    font-size: 20px;
+}
+
+.button-description2 {
+    color: #000000; /* Color del texto */
+    font-family: Arial, sans-serif; /* Tipo de fuente */
+    text-align:right; /* Alineación del texto */
+    margin-top: 5px; /* Espacio superior */
+    position: fixed;
+    top: 425px; /* Ajusta la distancia desde la parte superior */
+    left: 90px; /* Ajusta la distancia desde la parte izquierda */
+    font-size: 20px;
+}
+.button-description3 {
+    color: #000000; /* Color del texto */
+    font-family: Arial, sans-serif; /* Tipo de fuente */
+    text-align: right; /* Alineación del texto */
+    position: fixed;
+    bottom: 5px; /* Distancia desde la parte inferior */
+    right: 16px; /* Distancia desde la parte derecha */
+    margin: 0;
+    top: 655px;
+    font-size: 17px;
+}
+
+.boton-redondo,
+.boton-redondo2,
+.boton-redondo3 {
+    position: fixed;
+    z-index: 1;
+}
+
 .boton-redondo {
-    display: inline-block;
+    top: 80px;
+    left: 20px;
     width: 70px; /* Ajusta el tamaño del botón según tus necesidades */
     height: 70px; /* Ajusta el tamaño del botón según tus necesidades */
+    left: 105px;
     border-radius: 50%;
     overflow: hidden;
     box-shadow: 0 0 0 3px #ccc; /* Grosor y color del borde */
     transition: box-shadow 0.3s ease; /* Transición suave */
     cursor: pointer;
-    position: relative;
 }
 
 .boton-redondo:hover {
@@ -22,15 +69,16 @@
 }
 
 .boton-redondo2 {
-    display: inline-block;
+    top: calc(50% - 35px);
+    left: 20px;
     width: 70px; /* Ajusta el tamaño del botón según tus necesidades */
     height: 70px; /* Ajusta el tamaño del botón según tus necesidades */
+    left: 108px;
     border-radius: 50%;
     overflow: hidden;
     box-shadow: 0 0 0 3px #ccc; /* Grosor y color del borde */
     transition: box-shadow 0.3s ease; /* Transición suave */
     cursor: pointer;
-    position: relative;
 }
 
 .boton-redondo2:hover {
@@ -45,7 +93,8 @@
 }
 
 .boton-redondo3 {
-    display: inline-block;
+    bottom: 20px;
+    right: 30px;
     width: 70px; /* Ajusta el tamaño del botón según tus necesidades */
     height: 70px; /* Ajusta el tamaño del botón según tus necesidades */
     border-radius: 50%;
@@ -53,7 +102,7 @@
     box-shadow: 0 0 0 3px #ccc; /* Grosor y color del borde */
     transition: box-shadow 0.3s ease; /* Transición suave */
     cursor: pointer;
-    position: relative;
+    
 }
 
 .boton-redondo3:hover {
@@ -113,4 +162,49 @@
     cursor: pointer;
     border-radius: 5px;
     margin-top: 20px;
+}
+
+.button-description {
+    text-align: center;
+    margin-top: 5px;
+    font-size: 12px;
+}
+
+/* Estilos responsivos */
+@media screen and (max-width: 600px) {
+    .boton-redondo,
+    .boton-redondo2,
+    .boton-redondo3 {
+        width: 50px; /* Ajusta el tamaño del botón según tus necesidades */
+        height: 50px; /* Ajusta el tamaño del botón según tus necesidades */
+    }
+
+    .button-description {
+        font-size: 10px;
+    }
+}
+
+.boton-regresar {
+    position: fixed;
+    top: 20px;
+    left: 20px;
+    width: 100px; /* Ajusta el tamaño del botón según tus necesidades */
+    height: 40px; /* Ajusta el tamaño del botón según tus necesidades */
+    border-radius: 20px; /* Ajusta el radio para obtener una forma redonda */
+    overflow: hidden;
+    box-shadow: 0 0 0 3px #000000; /* Grosor y color del borde */
+    transition: box-shadow 0.3s ease; /* Transición suave */
+    cursor: pointer;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: #ffffff; /* Color de fondo del botón */
+    color: #f60101; /* Color del texto */
+    font-size: 16px; /* Tamaño de fuente */
+    font-weight: bold; /* Grosor de la fuente */
+    text-decoration: none; /* Sin subrayado para el texto del botón */
+}
+
+.boton-regresar:hover {
+    box-shadow: 0 0 0 5px #000000; /* Cambiar el color del borde al pasar el ratón */
 }
