@@ -29,3 +29,25 @@ $(document).ready(function() {
         ]
     });
 });
+
+$(alumnos).ready(function() {
+    $('#alumnos').DataTable({
+        "columns": [
+            {"data": "MATRICULA"},
+            {"data": "NOMBRES"},
+            {"data": "AP. PATERNO"},
+            {"data": "AP. MATERNO"},
+            {"data": "EDAD"},
+            {"data": "NIVEL"},
+            {"data": "SEXO"},
+            {"data": "CORREO"},
+            {"data": "TEL.MOVIL"},
+            {"data": "CARRERA"},
+            {"data": "GRUPO"},
+            {"data": "TURNO"},
+            {"data": "LINEA CAP."},
+            {"data": "DOCUMENTOS"},
+            {"defaultContent": "<button class='btn btn-modificar'>Modificar</button>"}
+        ]
+    });
+});

@@ -17,7 +17,7 @@
                 <li class="menu">PROFESORES</li>
                 <li class="menu"><a href="niveles.php">NIVELES</a></li>
                 <li class="menu"><a href="">AVANCE PROGRAMATICO</a></li>
-                <li class="menu"><a href="">ALUMNOS</a></li>
+                <li class="menu"><a href="../ADMINISTRADOR/Tabla_alumnos/tabla_alumnos.php">ALUMNOS</a></li>
                 <li class="menu"><a href="">ACTAS DE CALIFICACION</a></li>
             </ul>
         </nav>
@@ -56,4 +56,60 @@
     <script src="../JS/DataTable.js"></script>
 </body>
 
+<style>
+    .lista {
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+    background-color: #333; 
+    overflow: hidden; 
+    font-size: 18px; 
+}
+
+.menu {
+    float: left; 
+    width: 16.6%; 
+}
+
+.menu a {
+    display: block;
+    color: white; 
+    text-align: center;
+    padding: 20px 0; 
+    text-decoration: none;
+}
+
+.menu a:hover {
+    background-color: #555; 
+}
+
+
+.menu a:hover {
+    color: #555; 
+}
+
+.lista {
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+    background-color: #2cdd00; 
+    overflow: hidden; 
+}
+
+.menu {
+    float: left; 
+}
+
+.menu a {
+    display: block;
+    color: white; 
+    text-align: center;
+    padding: 14px 16px;
+    text-decoration: none;
+}
+
+.menu a:hover {
+    background-color: #ffffff; 
+}
+</style>
 </html>
