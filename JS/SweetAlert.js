@@ -44,7 +44,7 @@ $('#add').click(function(){
     }) ()
 });
 
-$('#registro').click(function(){
+$('#agregar').click(function(){
     (async() => {
         const{value:formValues} = await Swal.fire({
             title: 'Nuevo Registro',
@@ -71,7 +71,41 @@ $('#registro').click(function(){
                     Swal.fire({
                         icon: 'success',
                         title: 'Datos registrados exitosamente'
-                    })
+                    }).then(() => {
+                        location.reload();
+                    });
+                }
+            })
+        }
+    }) ()
+});
+
+$('[id^=editar]').click(function(){
+    (async() => {
+        const{value:formValues} = await Swal.fire({
+            title: 'Nuevo Registro',
+            html:
+            '<input class="swal2-input" id="estatus" placeholder="estatus">',
+            showCancelButton: true
+        })
+
+        if (formValues) {
+            var data=
+            {
+                estatus: $('#estatus').val()
+            };
+
+            $.ajax({
+                url: '../ADMINISTRADOR/CONTROLADORES/profesores_logica.php',
+                type: 'post',
+                data: data,
+                success: function(){
+                    Swal.fire({
+                        icon: 'success',
+                        title: 'Estatus actualizado exitosamente'
+                    }).then(() => {
+                        location.reload();
+                    });
                 }
             })
         }
