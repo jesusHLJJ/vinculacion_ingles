@@ -25,7 +25,7 @@
 </html>
 
 <?php
-include "BD.php";
+include "conn_bd.php";
 
 if(isset($_POST['enviar'])){
     $correo = $_POST['email']; 
