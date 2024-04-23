@@ -7,7 +7,6 @@
   <link rel="stylesheet" href="../estilos/style_home_profesor.css">
 </head>
 <body>
-
 <div class="boton-redondo" onclick="alert('Haz hecho clic en el botón')">
   <a href="pagina_imagen1.html">
     <img class="imagen" src="https://www.eraeidon.com/eidon/wp-content/uploads/2016/12/usuario-masculino-foto-de-perfil_318-37825.jpg" alt="Botón Redondo">
