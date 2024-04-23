@@ -29,9 +29,12 @@
             <button type="submit" class="btn">Entrar</button>
             
             <div class="olvide-c">
-                <a href="#">Registrarse</a>
+                <a href="registros.php">Registrarse</a>
             </div>
         </form>
     </div>
+    <?php
+    include "BD.php";
+    ?>
 </body>
 </html>

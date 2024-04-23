@@ -41,5 +41,4 @@ if(isset($_POST['enviar'])){
         echo "Error al insertar el registro: ";
     }
 }
-
 ?>

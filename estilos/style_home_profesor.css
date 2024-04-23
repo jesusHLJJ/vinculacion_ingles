@@ -1,20 +1,116 @@
 .boton-redondo {
-    background-color: #4CAF50; /* Color de fondo */
-    border: none; /* Sin borde */
-    color: white; /* Color de texto */
-    padding: 15px 32px; /* Espacio alrededor del texto */
-    text-align: center; /* Centrar texto */
-    text-decoration: none; /* Sin subrayado */
     display: inline-block;
-    font-size: 16px; /* Tamaño del texto */
-    border-radius: 50%; /* Forma redonda */
-    cursor: pointer; /* Cambiar el cursor al pasar sobre el botón */
-    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2); /* Sombra */
-    border: none; /* Quitar borde */
-    outline: none; /* Quitar el contorno */
-  }
-  
-  .boton-redondo:hover {
-    background-color: #45a049; /* Cambiar color al pasar el mouse */
-  }
-  
+    width: 70px; /* Ajusta el tamaño del botón según tus necesidades */
+    height: 70px; /* Ajusta el tamaño del botón según tus necesidades */
+    border-radius: 50%;
+    overflow: hidden;
+    box-shadow: 0 0 0 3px #ccc; /* Grosor y color del borde */
+    transition: box-shadow 0.3s ease; /* Transición suave */
+    cursor: pointer;
+    position: relative;
+}
+
+.boton-redondo:hover {
+    box-shadow: 0 0 0 5px #4CAF50; /* Cambiar el color del borde al pasar el ratón */
+}
+
+.boton-redondo .imagen {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.boton-redondo2 {
+    display: inline-block;
+    width: 70px; /* Ajusta el tamaño del botón según tus necesidades */
+    height: 70px; /* Ajusta el tamaño del botón según tus necesidades */
+    border-radius: 50%;
+    overflow: hidden;
+    box-shadow: 0 0 0 3px #ccc; /* Grosor y color del borde */
+    transition: box-shadow 0.3s ease; /* Transición suave */
+    cursor: pointer;
+    position: relative;
+}
+
+.boton-redondo2:hover {
+    box-shadow: 0 0 0 5px #4CAF50; /* Cambiar el color del borde al pasar el ratón */
+}
+
+.boton-redondo2 .imagen {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.boton-redondo3 {
+    display: inline-block;
+    width: 70px; /* Ajusta el tamaño del botón según tus necesidades */
+    height: 70px; /* Ajusta el tamaño del botón según tus necesidades */
+    border-radius: 50%;
+    overflow: hidden;
+    box-shadow: 0 0 0 3px #ccc; /* Grosor y color del borde */
+    transition: box-shadow 0.3s ease; /* Transición suave */
+    cursor: pointer;
+    position: relative;
+}
+
+.boton-redondo3:hover {
+    box-shadow: 0 0 0 5px #4CAF50; /* Cambiar el color del borde al pasar el ratón */
+}
+
+.boton-redondo3 .imagen {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+#image-gallery {
+    text-align: center;
+}
+
+#current-image-container {
+    position: relative;
+    display: inline-block;
+}
+
+#current-image {
+    max-width: 40%;
+    height: auto;
+    position: relative;
+    z-index: 2;
+    transition: opacity 0.5s ease-in-out;
+}
+
+.image-overlay {
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    width: 15%;
+    background-color: rgba(255, 255, 255, 0.5);
+    transition: opacity 0.5s ease-in-out;
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+}
+
+#previous-image-overlay {
+    left: 17%; /* Ajusta este valor para controlar la separación */
+}
+
+#next-image-overlay {
+    right: 18%; /* Ajusta este valor para controlar la separación */
+}
+
+.button {
+    display: inline-block;
+    padding: 10px 20px;
+    background-color: #007bff;
+    color: #fff;
+    border: none;
+    cursor: pointer;
+    border-radius: 5px;
+    margin-top: 20px;
+}
