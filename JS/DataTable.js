@@ -15,7 +15,7 @@ $(document).ready(function() {
 $(document).ready(function() {
     $('#profesores').DataTable({
         "columns": [
-            {"data": "NOMBRE"},
+            {"data": "NOMBRE COMPLETO"},
             {"data": "EDAD"},
             {"data": "ESTADO CIVIL"},
             {"data": "SEXO"},

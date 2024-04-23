@@ -33,7 +33,41 @@ $('#add').click(function(){
                 url: '../ADMINISTRADOR/CONTROLADORES/niveles_logica.php',
                 type: 'post',
                 data: data,
-                success:function(){
+                success: function(){
+                    Swal.fire({
+                        icon: 'success',
+                        title: 'Datos registrados exitosamente'
+                    })
+                }
+            })
+        }
+    }) ()
+});
+
+$('#registro').click(function(){
+    (async() => {
+        const{value:formValues} = await Swal.fire({
+            title: 'Nuevo Registro',
+            html:
+            '<input class="swal2-input" id="nombre" placeholder="Nombre">' +
+            '<input class="swal2-input" id="correo" placeholder="Correo">' +
+            '<input class="swal2-input" id="password" placeholder="Contraseña">',
+            showCancelButton: true
+        })
+
+        if (formValues) {
+            var data=
+            {
+                nombre: $('#nombre').val(),
+                correo: $('#correo').val(),
+                password: $('#password').val()
+            };
+
+            $.ajax({
+                url: '../ADMINISTRADOR/CONTROLADORES/profesores_logica.php',
+                type: 'post',
+                data: data,
+                success: function(){
                     Swal.fire({
                         icon: 'success',
                         title: 'Datos registrados exitosamente'

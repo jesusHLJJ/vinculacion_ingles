@@ -26,13 +26,13 @@
     <table id="profesores" class="display" style="width:100%">
         <thead>
             <tr>
-                <th>NOMBRE</th>
+                <th>NOMBRE COMPLETO</th>
+                <th>ESTATUS</th>
                 <th>EDAD</th>
                 <th>ESTADO CIVIL</th>
                 <th>SEXO</th>
                 <th>DOMICILIO</th>
                 <th>RFC</th>
-                <th>PERIODO</th>
                 <th>MODALIDAD</th>
                 <th>NIVEL</th>
                 <th>TURNO</th>
@@ -42,18 +42,20 @@
         
         <tbody>
             <?php
-            
+                
             ?>
         </tbody>
 
         <tfoot>
-            <button class="btn btn-agregar">Nuevo Registro</button>
+            <button class="btn btn-agregar" id="registro">Nuevo Registro</button>
         </tfoot>
     </table>
 
     <script src="https://code.jquery.com/jquery-3.7.1.js"></script>
     <script src="https://cdn.datatables.net/2.0.5/js/dataTables.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <script src="../JS/DataTable.js"></script>
+    <script src="../JS/SweetAlert.js"></script>
 </body>
 
 </html>
