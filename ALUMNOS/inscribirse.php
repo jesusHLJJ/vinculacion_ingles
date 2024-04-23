@@ -16,6 +16,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>INSCRIBIRSE</title>
     <link rel="stylesheet" href="estilos/inscribirse.css">
+
 </head>
 
 <body>
@@ -91,32 +92,32 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
 
         <div class="form_documentos">
-            <label class="file-label" for="soli_aspirante">
+            <label class="file-label" for="soli_aspirante" id="file-label">
                 <span class="file-label-text">SOLICITUD DE ASPIRANTE</span></label>
             <input class="file-input" type="file" id="soli_aspirante" name="soli_aspirante" required>
             <br>
 
-            <label class="file-label" for="lin_captura">
+            <label class="file-label" for="lin_captura_d" id="file-label1">
                 <span class="file-label-text">LINEA DE CAPTURA</span></label>
-            <input class="file-input" type="file" id="lin_captura" name="lin_captura" required>
+            <input class="file-input" type="file" id="lin_captura_d" name="lin_captura_d" required>
             <br>
 
-            <label class="file-label" for="comp_pago">
+            <label class="file-label" for="comp_pago" id="file-label2">
                 <span class="file-label-text">COMPROBANTE DE PAGO</span></label>
             <input class="file-input" type="file" id="comp_pago" name="comp_pago" required>
             <br>
 
-            <label class="file-label" for="ine">
+            <label class="file-label" for="ine" id="file-label3">
                 <span class="file-label-text">INE</span></label>
             <input class="file-input" type="file" id="ine" name="ine" required>
             <br>
 
-            <label class="file-label" for="act_nacimiento">
+            <label class="file-label" for="act_nacimiento" id="file-label4">
                 <span class="file-label-text">ACTA DE NACIMIENTO</span></label>
             <input class="file-input" type="file" id="act_nacimiento" name="act_nacimiento" required>
             <br>
 
-            <label class="file-label" for="comp_estudios">
+            <label class="file-label" for="comp_estudios" id="file-label5">
                 <span class="file-label-text">COMRPOBANTE DE ESTUDIOS</span></label>
             <input class="file-input" type="file" id="comp_estudios" name="comp_estudios" required>
             <br><br><br>
@@ -129,7 +130,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     <form action="" method="post">
         <input type="submit" id="volver" name="volver" value=VOLVER>
     </form>
-
+    <script src="java/inscribirse.js"></script>
 </body>
 
 </html>

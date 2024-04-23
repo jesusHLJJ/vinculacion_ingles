@@ -90,19 +90,19 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
 
         <div class="form_documentos">
-            <label class="file-label" for="const_anterior">
+            <label class="file-label" for="const_anterior" id="file-label">
                 <span class="file-label-text">CONSTANCIA NIVEL ANTERIOR</span></label>
             <input class="file-input" type="file" id="const_anterior" name="const_anterior" required>
             <br>
 
-            <label class="file-label" for="comp_pago">
+            <label class="file-label" for="comp_pago" id="file-label1">
                 <span class="file-label-text">COMPROBANTE DE PAGO</span> </label>
             <input class="file-input" type="file" id="comp_pago" name="comp_pago" required>
             <br>
 
-            <label class="file-label" for="lin_captura">
+            <label class="file-label" for="lin_captura_d" id="file-label2">
                 <span class="file-label-text">LINEA DE CAPTURA</span></label>
-            <input class="file-input" type="file" id="lin_captura" name="lin_captura" required>
+            <input class="file-input" type="file" id="lin_captura_d" name="lin_captura_d" required>
             <br><br><br>
         </div>
 
@@ -112,6 +112,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     <form action="" method="post">
         <input type="submit" id="volver" name="volver" value=VOLVER>
     </form>
+    <script src="java/reinscribirse.js"></script>
 </body>
 
 </html>
