@@ -1,6 +1,6 @@
 <?php
-    $con = mysqli_connect('localhost', 'root', '', 'vinculacion_ingles');
-        if (!$con){
+    $conexion = mysqli_connect('localhost', 'root', '', 'vinculacion_ingles');
+        if (!$conexion){
             echo('Conexion fallida');
         }else{
             
