@@ -9,6 +9,15 @@ const dataTableOptions = {
             text: '<i class="fa-solid fa-file-csv"></i>',
             titleAttr: "Exportar a Excel",
             className: "btn btn-success",
+        },
+        {
+            extends: "",
+            text: '<i class="fa-solid fa-user-plus"></i>',
+            titleAttr: "Agregar un nuevo Usuario",
+            className: "btn btn-info",
+            action: function () {
+                agregarNuevoUsuario(); // Llama a la función para agregar un nuevo usuario
+            }
         }
     ],
     lengthMenu: [10, 50, 100],
@@ -111,19 +120,25 @@ $('#add').click(function(){
 function agregarNuevoUsuario() {
     (async () => {
         const { value: formValues } = await Swal.fire({
-            title: 'Nuevo Registro',
+            title: 'Nuevo Grupo',
             html:
-            '<input class="swal2-input" id="nombre" placeholder="Nombre">' +
-            '<input class="swal2-input" id="correo" placeholder="Correo">' +
-            '<input class="swal2-input" id="password" placeholder="Contraseña">',
+            '<input class="swal2-input" id="nivel" placeholder="Nivel">' +
+            '<input class="swal2-input" id="grupo" placeholder="Grupo">' +
+            '<input class="swal2-input" id="profesor" placeholder="Profesor">' +
+            '<input class="swal2-input" id="cupo_max" placeholder="Cupo Maximo">' +
+            '<input class="swal2-input" id="modalidad" placeholder="Modalidad">' +
+            '<input class="swal2-input" id="horario" placeholder="Horario">',
             showCancelButton: true
         })
 
         if (formValues) {
             var data = {
-                nombre: $('#nombre').val(),
-                correo: $('#correo').val(),
-                password: $('#password').val()
+                nombre: $('#nivel').val(),
+                correo: $('#grupo').val(),
+                password: $('#profesor').val(),
+                password: $('#cupo_max').val(),
+                password: $('#modalidad').val(),
+                password: $('#horario').val()
             };
 
             $.ajax({

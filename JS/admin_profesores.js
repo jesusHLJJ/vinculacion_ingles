@@ -124,34 +124,67 @@ $('#add').click(function(){
 function agregarNuevoUsuario() {
     (async () => {
         const { value: formValues } = await Swal.fire({
-            title: 'Nuevo Registro',
+            title: 'Nuevo Profesor',
             html:
-            '<input class="swal2-input" id="nombre" placeholder="Nombre">' +
-            '<input class="swal2-input" id="correo" placeholder="Correo">' +
-            '<input class="swal2-input" id="password" placeholder="Contraseña">',
-            showCancelButton: true
+                '<input type="text" class="swal2-input" id="nombre" placeholder="Nombre">' +
+                '<input type="email" class="swal2-input" id="correo" placeholder="Correo">' +
+                '<input type="password" class="swal2-input" id="password" placeholder="Contraseña">',
+            showCancelButton: true,
+            preConfirm: () => {
+                const nombre = document.getElementById('nombre').value;
+                const correo = document.getElementById('correo').value;
+                const password = document.getElementById('password').value;
+    
+                // Validación del correo electrónico
+                if (!isValidEmail(correo)) {
+                    Swal.showValidationMessage('Por favor ingresa un correo electrónico válido');
+                    return false;
+                }
+    
+                return { nombre: nombre, correo: correo, password: password };
+            }
         })
-
+    
         if (formValues) {
             var data = {
-                nombre: $('#nombre').val(),
-                correo: $('#correo').val(),
-                password: $('#password').val()
+                nombre: formValues.nombre,
+                correo: formValues.correo,
+                password: formValues.password
             };
-
+    
             $.ajax({
                 url: '../ADMINISTRADOR/CONTROLADORES/profesores_logica.php',
                 type: 'post',
                 data: data,
-                success: function () {
+                success: function (response) {
+                    var responseData = JSON.parse(response);
+                    if (responseData.success) {
+                        Swal.fire({
+                            icon: 'success',
+                            title: 'Datos registrados exitosamente'
+                        }).then(() => {
+                            location.reload();
+                        });
+                    } else {
+                        Swal.fire({
+                            icon: 'error',
+                            title: 'Error al procesar los datos'
+                        });
+                    }
+                },
+                error: function () {
                     Swal.fire({
-                        icon: 'success',
-                        title: 'Datos registrados exitosamente'
-                    }).then(() => {
-                        location.reload();
+                        icon: 'error',
+                        title: 'Error al procesar la solicitud'
                     });
                 }
             })
         }
-    })()
+    })();
+    
+    function isValidEmail(email) {
+        // Utilizando una expresión regular para validar el formato del correo electrónico
+        const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+        return emailRegex.test(email);
+    }
 };
