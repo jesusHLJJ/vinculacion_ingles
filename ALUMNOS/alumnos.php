@@ -32,6 +32,7 @@ $aula = 'K9';
             <input type='submit' name="actas" value="VER ACTAS/CALIFICACIONES">
             <input type='submit' name="inscribirse" value="INSCRIBIRSE">
             <input type='submit' name="reinscribirse" value="REINSCRIBIRSE">
+            <input type='submit' name="datos_alumno" value="VER MIS DATOS">
             <input type='submit' id="cerrar" name="cerrar" value="CERRAR SESION">
         </form>
     </div>
@@ -78,4 +79,11 @@ if (isset($_POST['cerrar'])) {
     header("Location: ../index.php");
     session_destroy();
 }
+
+if (isset($_POST['datos_alumno'])) {
+    header("Location: ../ALUMNOS/datos_alumno.php");
+    session_destroy();
+}
+
+
 ?>
