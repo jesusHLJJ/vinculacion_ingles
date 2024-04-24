@@ -105,8 +105,7 @@ $horario = $t_horario;
 $periodo = $t_periodo;
 $aula = $nombre_aula;
 
-
-if($alumno=='   '){                          //IF PARA LA PRIMERA VEZ QUE ENTRE EL ALUMNO
+if($alumno=="  "){                          //IF PARA LA PRIMERA VEZ QUE ENTRE EL ALUMNO
     $alumno="ACTUALIZA TUS DATOS";
     $grupo="AD";
     $nivel="AD";

@@ -3,7 +3,7 @@ session_start();
 include '../conn_bd.php';
 
 $ingreso = $_SESSION['correo'];
-$t_carrera = '';
+$t_carrera = '99';
 //CONSULTAS SQL PARA OBTENER LOS DATOS DEL ALUMNO//
 
 //DATOS DEL ALUMNO
@@ -26,6 +26,10 @@ if ($result->num_rows > 0) {
     $telefono = $fila['telefono'];
 
     $id_carrera = $fila['id_carrera'];
+}
+
+if ($nombres == '') {
+    $id_carrera = '99';
 }
 
 
