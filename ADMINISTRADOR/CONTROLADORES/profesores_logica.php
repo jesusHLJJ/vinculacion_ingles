@@ -8,10 +8,11 @@ if (isset($_POST['nombre'])) {
 
     $hash = password_hash($pass, PASSWORD_DEFAULT);
     $tipo_usuario = 2;
+    $id_estatus = 1;
 
-    $insert_profesor = 'INSERT INTO profesores(nombres,correo) VALUES(?, ?)';
+    $insert_profesor = 'INSERT INTO profesores(id_estatus, nombres,correo) VALUES(?, ?, ?)';
     $stmt_insert_profesor = $conexion->prepare($insert_profesor);
-    $stmt_insert_profesor->bind_param("ss", $nombre, $correo);
+    $stmt_insert_profesor->bind_param("iss", $id_estatus, $nombre, $correo);
 
     if ($stmt_insert_profesor->execute()) {
         $stmt_insert_profesor->close();

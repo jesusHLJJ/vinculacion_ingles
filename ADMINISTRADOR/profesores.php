@@ -33,6 +33,7 @@
             <table id="profesores" class="table table-striped" style="width:100%">
                 <thead>
                     <tr>
+                        <th>ID</th>
                         <th>NOMBRE</th>
                         <th>ESTATUS</th>
                         <th>EDAD</th>
@@ -52,11 +53,11 @@
                 </tbody>
 
                 <tfoot>
-                    <button class="btn btn-info" id="agregar">Nuevo Usuario</button>
                 </tfoot>
             </table>
         </div>
     </div>
+
     <!--JQuery-->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js" integrity="sha512-v2CJ7UaYy4JwqLDIrZUI/4hqeoQieOmAZNXBeQyjo21dadnwR+8ZaIJVT8EE2iyI61OV8e6M8PP2/4hpQINQ/g==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
     <!--DataTables-->
@@ -74,8 +75,7 @@
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
     <!--SweetAlert2-->
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-    <script src="../JS/DataTable.js"></script>
-    <script src="../JS/SweetAlert.js"></script>
+    <script src="../JS/admin_profesores.js"></script>
 </body>
 
 </html>
