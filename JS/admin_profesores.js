@@ -56,7 +56,7 @@ const listprofesor = async() => {
                 <td class="text-center">${profesor.modalidad}</td>
                 <td class="text-center">${profesor.nivel}</td>
                 <td class="text-center">${profesor.turno}</td>
-                <td>
+                <td class="text-center">
                     <button class="modificar btn btn-sm btn-primary">
                         <i class="fa-solid fa-pen-to-square"></i>
                     </button>

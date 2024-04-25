@@ -44,7 +44,7 @@
                         <th>MODALIDAD</th>
                         <th>NIVEL</th>
                         <th>TURNO</th>
-                        <th>OPCIONES</th>
+                        <th></th>
                     </tr>
                 </thead>
 
