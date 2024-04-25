@@ -37,7 +37,7 @@ const initDataTable = async() => {
 
 const listprofesor = async() => {
     try {
-        const response = await fetch('../ADMINISTRADOR/CONTROLADORES/datos_profesor.php');
+        const response = await fetch('../ADMINISTRADOR/PROFESOR/datos_profesor.php');
         const profesor = await response.json();
 
         let content = ``;
@@ -107,7 +107,7 @@ function agregarNuevoUsuario() {
             };
     
             $.ajax({
-                url: '../ADMINISTRADOR/CONTROLADORES/profesores_logica.php',
+                url: '../ADMINISTRADOR/PROFESOR/profesores_logica.php',
                 type: 'post',
                 data: data,
                 success: function (response) {

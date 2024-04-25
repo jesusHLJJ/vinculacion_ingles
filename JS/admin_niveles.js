@@ -37,7 +37,7 @@ const initDataTable = async() => {
 
 const listprofesor = async() => {
     try {
-        const response = await fetch('../ADMINISTRADOR/CONTROLADORES/datos_niveles.php');
+        const response = await fetch('../ADMINISTRADOR/NIVELES/datos_niveles.php');
         const profesor = await response.json();
 
         let content = ``;
@@ -126,7 +126,7 @@ function agregarNuevoUsuario() {
 
         if (formValues) {
             $.ajax({
-                url: '../ADMINISTRADOR/CONTROLADORES/niveles_logica.php',
+                url: '../ADMINISTRADOR/NIVELES/niveles_logica.php',
                 type: 'post',
                 data: formValues,
                 success: function (response) {
@@ -162,7 +162,7 @@ function agregarNuevoUsuario() {
 function obtenerProfesores() {
     return new Promise((resolve, reject) => {
         $.ajax({
-            url: '../ADMINISTRADOR/CONTROLADORES/datos_select.php', // Ruta a tu archivo PHP que obtiene la lista de profesores
+            url: '../ADMINISTRADOR/NIVELES/datos_select.php', // Ruta a tu archivo PHP que obtiene la lista de profesores
             type: 'GET',
             success: function (response) {
                 resolve(JSON.parse(response));
@@ -177,7 +177,7 @@ function obtenerProfesores() {
 function obtenerPeriodo() {
     return new Promise((resolve, reject) => {
         $.ajax({
-            url: '../ADMINISTRADOR/CONTROLADORES/datos_periodos.php', // Ruta a tu archivo PHP que obtiene la lista de profesores
+            url: '../ADMINISTRADOR/NIVELES/datos_periodos.php', // Ruta a tu archivo PHP que obtiene la lista de profesores
             type: 'GET',
             success: function (response) {
                 resolve(JSON.parse(response));
