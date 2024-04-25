@@ -1,0 +1,80 @@
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    background-color: #f5f5f5;
+}
+.container {
+    text-align: center;
+    width: 50%;
+    top: auto;
+    margin: 50px auto;
+    padding: 20px;
+    background-color: #fff;
+    border-radius: 5px;
+    background-color: rgba(154, 112, 112, 0.4); 
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  }
+
+h1 {
+    text-align: center;
+    margin-top: 20px;
+    color: #007bff;
+}
+
+.grupos {
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 20px;
+}
+
+.groups {
+    margin-bottom: 20px;
+    background-color: #fff;
+    border-radius: 5px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.groups summary {
+    padding: 10px;
+    cursor: pointer;
+    outline: none;
+}
+
+.groups p {
+    padding: 10px;
+    margin: 0;
+}
+
+.groups a {
+    display: block;
+    padding: 10px;
+    text-decoration: none;
+    background-color: #4CAF50;
+    color: #fff;
+    border-radius: 0 0 5px 5px;
+    text-align: center;
+}
+
+.groups a:hover {
+    background-color: #45a049;
+}
+form {
+    text-align: center;
+    margin-top: -25px; /* Modificado para reducir el espacio superior */
+}
+
+input[type="submit"] {
+    width: 40%;
+    padding: 10px 20px;
+    background-color: #ff0000;
+    color: #fff;
+    border: none;
+    border-radius: 100px;
+    cursor: pointer;
+    margin-top: 5px; /* Ajustado para reducir la separación del botón con otros elementos */
+}
+
+input[type="submit"]:hover {
+    background-color: #8d1e1e;
+}
