@@ -24,7 +24,7 @@ if (password_verify($pass, $hash)) {
             header('location: ../PROFESORES/');
             break;
         case 3:
-            header('location: ../ALUMNOS/');
+            header('location:../ALUMNOS/alumnos.php');
             break;
         default:
             header('location: ../');

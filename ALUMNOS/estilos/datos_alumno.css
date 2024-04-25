@@ -30,8 +30,7 @@ span{
 
 .botones{
     margin-top: 40px;
-    margin-left: 240px;
-    
+    display: block; 
 }
 
 .botones input:hover{
@@ -46,6 +45,7 @@ span{
     border: none; /* Quita el borde */
     border-radius: 10px; /* Borde redondeado */
     font-size: 30px; /* Tamaño del texto */
+    width: 250px;
 }
 
 .botones #volver{
@@ -59,9 +59,27 @@ span{
     border-radius: 5px;
     font-size: 16px;
     z-index: 999; /* Asegura que el botón esté por encima de otros elementos */
-    width: 150px;
+ 
 }
 
 .botones #volver:hover{
     background-color: rgb(255, 5, 5);
+}
+
+.botones #modificar{
+    position: fixed;
+    bottom: 100px;
+    right: 20px;
+    padding: 10px 20px;
+    background-color: orange;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    font-size: 16px;
+    z-index: 999; /* Asegura que el botón esté por encima de otros elementos */
+  
+}
+
+.botones #modificar:hover{
+    background-color: rgb(0, 0, 0);
 }
