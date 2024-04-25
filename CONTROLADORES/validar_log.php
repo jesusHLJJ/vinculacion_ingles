@@ -26,8 +26,7 @@ if (password_verify($pass, $hash)) {
             $pagina = "../PROFESORES/";
             break;
         case 3:
-            $mensaje = "Inicio de sesión exitoso como alumno";
-            $pagina = "../ALUMNOS/";
+            header('location:../ALUMNOS/alumnos.php');
             break;
         default:
             $mensaje = "Inicio de sesión exitoso";

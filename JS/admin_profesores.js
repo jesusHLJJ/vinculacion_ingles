@@ -37,7 +37,7 @@ const initDataTable = async() => {
 
 const listprofesor = async() => {
     try {
-        const response = await fetch('../ADMINISTRADOR/CONTROLADORES/datos_profesor.php');
+        const response = await fetch('../ADMINISTRADOR/PROFESOR/datos_profesor.php');
         const profesor = await response.json();
 
         let content = ``;
@@ -75,83 +75,70 @@ window.addEventListener("load", async() => {
 });
 
 //SweetAlert2
-$('#add').click(function(){
-    (async() => {
-        const{value:formValues} = await Swal.fire({
-            title: 'Nuevos Grupos',
-            html:
-            '<input class="swal2-input" id="nivel" placeholder="Nivel">' +
-            '<input class="swal2-input" id="grupo" placeholder="Grupo">' +
-            '<input class="swal2-input" id="profesor" placeholder="Profesor">' +
-            '<input class="swal2-input" id="cupo_min" placeholder="Cupo Minimo">' +
-            '<input class="swal2-input" id="cupo_max" placeholder="Cupo Maximo">' +
-            '<input class="swal2-input" id="modalidad" placeholder="Modalidad">' +
-            '<input class="swal2-input" id="horario" placeholder="Horario">' +
-            '<input class="swal2-input" id="aula" placeholder="Aula">' + 
-            '<input class="swal2-input" id="ciclo" placeholder="Ciclo Escolar">',
-            showCancelButton: true
-        })
-
-        if (formValues) {
-            var data =
-            {
-                nivel: $('#nivel').val(),
-                grupo: $('#grupo').val(),
-                profesor: $('#profesor').val(),
-                cupo_min: $('#cupo_min').val(),
-                cupo_max: $('#cupo_max').val(),
-                modalidad: $('#modalidad').val(),
-                horario: $('#horario').val(),
-                aula: $('#aula').val(),
-                ciclo: $('#ciclo').val()
-            };
-
-            $.ajax({
-                url: '../ADMINISTRADOR/CONTROLADORES/niveles_logica.php',
-                type: 'post',
-                data: data,
-                success: function(){
-                    Swal.fire({
-                        icon: 'success',
-                        title: 'Datos registrados exitosamente'
-                    })
-                }
-            })
-        }
-    }) ()
-});
-
 function agregarNuevoUsuario() {
     (async () => {
         const { value: formValues } = await Swal.fire({
-            title: 'Nuevo Registro',
+            title: 'Nuevo Profesor',
             html:
-            '<input class="swal2-input" id="nombre" placeholder="Nombre">' +
-            '<input class="swal2-input" id="correo" placeholder="Correo">' +
-            '<input class="swal2-input" id="password" placeholder="Contraseña">',
-            showCancelButton: true
+                '<input type="text" class="swal2-input" id="nombre" placeholder="Nombre">' +
+                '<input type="email" class="swal2-input" id="correo" placeholder="Correo">' +
+                '<input type="password" class="swal2-input" id="password" placeholder="Contraseña">',
+            showCancelButton: true,
+            preConfirm: () => {
+                const nombre = document.getElementById('nombre').value;
+                const correo = document.getElementById('correo').value;
+                const password = document.getElementById('password').value;
+    
+                // Validación del correo electrónico
+                if (!isValidEmail(correo)) {
+                    Swal.showValidationMessage('Por favor ingresa un correo electrónico válido');
+                    return false;
+                }
+    
+                return { nombre: nombre, correo: correo, password: password };
+            }
         })
-
+    
         if (formValues) {
             var data = {
-                nombre: $('#nombre').val(),
-                correo: $('#correo').val(),
-                password: $('#password').val()
+                nombre: formValues.nombre,
+                correo: formValues.correo,
+                password: formValues.password
             };
-
+    
             $.ajax({
-                url: '../ADMINISTRADOR/CONTROLADORES/profesores_logica.php',
+                url: '../ADMINISTRADOR/PROFESOR/profesores_logica.php',
                 type: 'post',
                 data: data,
-                success: function () {
+                success: function (response) {
+                    var responseData = JSON.parse(response);
+                    if (responseData.success) {
+                        Swal.fire({
+                            icon: 'success',
+                            title: 'Datos registrados exitosamente'
+                        }).then(() => {
+                            location.reload();
+                        });
+                    } else {
+                        Swal.fire({
+                            icon: 'error',
+                            title: 'Error al procesar los datos'
+                        });
+                    }
+                },
+                error: function () {
                     Swal.fire({
-                        icon: 'success',
-                        title: 'Datos registrados exitosamente'
-                    }).then(() => {
-                        location.reload();
+                        icon: 'error',
+                        title: 'Error al procesar la solicitud'
                     });
                 }
             })
         }
-    })()
+    })();
+    
+    function isValidEmail(email) {
+        // Utilizando una expresión regular para validar el formato del correo electrónico
+        const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+        return emailRegex.test(email);
+    }
 };

@@ -39,12 +39,13 @@
                         <th>PROFESOR</th>
                         <th>CUPO MAXIMO</th>
                         <th>MODALIDAD</th>
+                        <th>TURNO</th>
                         <th>HORARIO</th>
                         <th></th>
                     </tr>
                 </thead>
         
-                <tbody class="table_alumno">
+                <tbody id="table_niveles">
         
                 </tbody>
         
