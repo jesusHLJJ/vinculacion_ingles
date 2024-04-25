@@ -41,8 +41,6 @@
                         <th>SEXO</th>
                         <th>DOMICILIO</th>
                         <th>RFC</th>
-                        <th>MODALIDAD</th>
-                        <th>NIVEL</th>
                         <th>TURNO</th>
                         <th></th>
                     </tr>

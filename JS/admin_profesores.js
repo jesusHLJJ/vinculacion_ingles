@@ -5,12 +5,6 @@ const dataTableOptions = {
     dom: "Bfrtilp",
     buttons: [
         {
-            extend: "excelHtml5",
-            text: '<i class="fa-solid fa-file-csv"></i>',
-            titleAttr: "Exportar a Excel",
-            className: "btn btn-success",
-        },
-        {
             extends: "",
             text: '<i class="fa-solid fa-user-plus"></i>',
             titleAttr: "Agregar un nuevo Usuario",
@@ -53,8 +47,6 @@ const listprofesor = async() => {
                 <td class="text-center">${profesor.sexo}</td>
                 <td class="text-center">${profesor.calle}</td>
                 <td class="text-center">${profesor.rfc}</td>
-                <td class="text-center">${profesor.modalidad}</td>
-                <td class="text-center">${profesor.nivel}</td>
                 <td class="text-center">${profesor.turno}</td>
                 <td class="text-center">
                     <button class="modificar btn btn-sm btn-primary">

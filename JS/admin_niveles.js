@@ -5,10 +5,13 @@ const dataTableOptions = {
     dom: "Bfrtilp",
     buttons: [
         {
-            extend: "excelHtml5",
+            extend: "",
             text: '<i class="fa-solid fa-file-csv"></i>',
             titleAttr: "Exportar a Excel",
             className: "btn btn-success",
+            action: function () {
+                exportExcel();
+            }
         },
         {
             extends: "",
@@ -72,6 +75,35 @@ window.addEventListener("load", async() => {
 });
 
 //SweetAlert2
+function exportExcel() {
+    Swal.fire({
+        title: "Exportar a Excel",
+        showCancelButton: true
+    }).then((result) => {
+        if (result.isConfirmed) {
+            $.ajax({
+                url: 'exportar_excel.php', // Ruta a tu archivo PHP con la lógica para exportar a Excel
+                type: 'GET',
+                success: function(response) {
+                    // Manejar la respuesta si es necesario
+                    Swal.fire({
+                        icon: 'success',
+                        title: 'Exportación exitosa',
+                        text: 'Los datos se han exportado correctamente a Excel'
+                    });
+                },
+                error: function() {
+                    Swal.fire({
+                        icon: 'error',
+                        title: 'Error',
+                        text: 'Ha ocurrido un error al exportar los datos a Excel'
+                    });
+                }
+            });
+        }
+    });
+}
+
 function agregarNuevoUsuario() {
     (async () => {
         // Obtener la lista de profesores de la base de datos
@@ -108,19 +140,24 @@ function agregarNuevoUsuario() {
                 '<input class="swal2-input" id="turno" placeholder="Turno">',
             showCancelButton: true,
             preConfirm: () => {
-                return {
-                    grupo: $('#grupo').val(),
-                    profesor: $('#profesor').val(),
-                    nivel: $('#nivel').val(),
-                    periodo: $('#periodo').val(),
-                    modalidad: $('#modalidad').val(),
-                    horario: $('#horario').val(),
-                    cupo_min: $('#cupo_min').val(),
-                    cupo_max: $('#cupo_max').val(),
-                    aula: $('#aula').val(),
-                    ciclo: $('#ciclo').val(),
-                    turno: $('#turno').val()
-                };
+                const grupo = $('#grupo').val();
+                const profesor = $('#profesor').val();
+                const nivel = $('#nivel').val();
+                const periodo = $('#periodo').val();
+                const modalidad = $('#modalidad').val();
+                const horario = $('#horario').val();
+                const cupo_min = $('#cupo_min').val();
+                const cupo_max = $('#cupo_max').val();
+                const aula = $('#aula').val();
+                const ciclo = $('#ciclo').val();
+                const turno = $('#turno').val();
+
+                // Validar que ningún campo esté vacío
+                if (!grupo || !profesor || !nivel || !periodo || !modalidad || !horario || !cupo_min || !cupo_max || !aula || !ciclo || !turno) {
+                    Swal.showValidationMessage('Todos los campos son obligatorios');
+                }
+
+                return { grupo, profesor, nivel, periodo, modalidad, horario, cupo_min, cupo_max, aula, ciclo, turno };
             }
         });
 
