@@ -5,7 +5,7 @@ include "../BD.php";
 $correo = $_POST['correo'];
 $pass = $_POST['pass'];
 
-$sql = "SELECT Contrasena, id_tipo FROM login_usuarios WHERE Correo = ?";
+$sql = "SELECT contrasena, id_tipo FROM usuarios WHERE correo = ?";
 $stmt = $conexion->prepare($sql);
 $stmt->bind_param("s", $correo);
 $stmt->execute();

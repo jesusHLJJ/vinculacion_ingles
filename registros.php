@@ -36,11 +36,11 @@ if(isset($_POST['enviar'])){
     $matricula =$_POST['matricula'];
 
     $HASH = password_hash($contrasena, PASSWORD_DEFAULT);
-
-    $sql = "INSERT INTO login_usuarios (correo, contrasena, id_tipo) VALUES ('$correo','$HASH',3)";
+    $sql="INSERT INTO `usuarios` (`correo`, `contrasena`, `id_tipo`) VALUES ('$correo', '$HASH', 3)";
+    echo $sql;
     $result = $con->query($sql);
     if ($result === TRUE) {
-      $sql = "INSERT INTO `alumno` (`matricula`, `nombres`, `apellido_paterno`, `apellido_materno`, `edad`, `sexo`, `correo`, `telefono`, `id_carrera`, `id_grupo`, `turno`, `linea_captura`) VALUES ('$matricula', NULL, NULL, NULL, NULL, NULL,'$correo', NULL, NULL, NULL, NULL, NULL)";
+      $sql="INSERT INTO `alumnos` (`matricula`, `nombre`, `ap_paterno`, `ap_materno`, `id_carrera`, `telefono`, `sexo`, `id_nivel`, `id_estatus`, `id_usuarios`) VALUES ($matricula, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL)";
       echo $sql;
       $result = $con->query($sql);
       if ($result === TRUE) {
@@ -49,7 +49,7 @@ if(isset($_POST['enviar'])){
           echo "Error al insertar el registro: ";
       }
     } else {
-        echo "Error al insertar el registro: ";
+        echo "No se inserto nada: ";
     }
 
 }
