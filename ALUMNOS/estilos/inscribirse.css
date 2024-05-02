@@ -28,7 +28,7 @@ input,select{
     color: rgb(0, 0, 0);
 }
 
-#reinscribirse, #volver{
+#inscribirse, #volver{
     width: 100%;
 }
 
@@ -38,7 +38,7 @@ input,select{
     color:white;
 }
 
-#reinscribirse:hover{
+#inscribirse:hover{
     border:5px solid orange;
     background-color: orange;
     color:white;

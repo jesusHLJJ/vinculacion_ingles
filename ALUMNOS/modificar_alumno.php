@@ -6,8 +6,19 @@ $ingreso = $_SESSION['correo'];
 
 //CONSULTAS SQL PARA OBTENER LOS DATOS DEL ALUMNO//
 
+
+$t_nombres = '';
+$t_ap_pa = '';
+$t_ap_ma = '';
+
+$t_edad = '';
+$t_sexo = '';
+$t_telefono = '';
+
+$t_id_carrera = '';
+
 //DATOS DEL ALUMNO
-$sql = "select * from alumno where correo='$ingreso'";
+$sql = "select alumnos.matricula,alumnos.nombre,alumnos.ap_paterno,alumnos.ap_materno,alumnos.edad,alumnos.sexo,alumnos.telefono,alumnos.id_carrera from alumnos join usuarios on alumnos.id_usuarios=usuarios.id_usuario where usuarios.correo='$ingreso'";
 $stmt = $con->prepare($sql);
 $stmt->execute();
 $result = $stmt->get_result();
@@ -15,9 +26,10 @@ $result = $stmt->get_result();
 if ($result->num_rows > 0) {
     // Obtener el nombre de la fila
     $fila = $result->fetch_assoc();
-    $t_nombres = $fila['nombres'];
-    $t_ap_pa = $fila['apellido_paterno'];
-    $t_ap_ma = $fila['apellido_materno'];
+    $t_matricula = $fila['matricula'];
+    $t_nombres = $fila['nombre'];
+    $t_ap_pa = $fila['ap_paterno'];
+    $t_ap_ma = $fila['ap_materno'];
 
     $t_edad = $fila['edad'];
     $t_sexo = $fila['sexo'];
@@ -68,8 +80,25 @@ $id_carrera = $t_id_carrera;
 
             <label for="sexo">SEXO</label>
             <select name="sexo" id="sexo">
-                <option value='M' selected>MASCULINO</option>
-                <option value='F'>FEMENINO</option>
+                <?php
+                $sql="select alumnos.sexo from alumnos join usuarios on alumnos.id_usuarios=usuarios.id_usuario where usuarios.correo='$ingreso'";
+                $stmt = $con->prepare($sql);
+                $stmt->execute();
+                $result = $stmt->get_result();
+                //Verificar si se encontraron resultados
+                if ($result->num_rows > 0) {
+                    // Obtener el nombre de la fila
+                    $fila = $result->fetch_assoc();
+                    $d_sexo = $fila['sexo'];
+                    if($sexo=='F'){
+                        echo "<option value='M'>MASCULINO</option>";
+                        echo "<option value='F' selected>FEMENINO</option>"; 
+                    }else{
+                        echo "<option value='M' selected>MASCULINO</option>";
+                        echo "<option value='F'>FEMENINO</option>"; 
+                    }
+                }
+                ?>
             </select><br>
 
             <label for="numero">NÚMERO TELEFÓNICO</label>
@@ -86,7 +115,7 @@ $id_carrera = $t_id_carrera;
                 if ($result->num_rows > 0) {
                     while ($row = $result->fetch_assoc()) {
                         $id_carr = $row['id_carrera'];
-                        $nom_carr = $row["carrera"];
+                        $nom_carr = $row["nombre_carrera"];
                         if ($id_carrera == $id_carr) {
                             echo '<option value="' . $id_carr . '"selected>' . $nom_carr . '</option>';
                         } else {
@@ -121,18 +150,17 @@ if (isset($_POST['modificar'])) {
     $f_sexo = $_POST['sexo'];
     $f_numero = $_POST['numero'];
     $f_carrera = $_POST['carrera'];
-    $sql = "update alumno set nombres='$f_nombre',apellido_paterno='$f_ap_pa',apellido_materno='$f_ap_ma',edad=$f_edad,sexo='$f_sexo',telefono='$f_numero',id_carrera=$f_carrera where correo='$ingreso'";
+    $sql = "update alumnos set nombre='$f_nombre',ap_paterno='$f_ap_pa',ap_materno='$f_ap_ma',edad=$f_edad,sexo='$f_sexo',telefono='$f_numero',id_carrera=$f_carrera where matricula='$t_matricula'";
     echo $sql;
 
     $sql_query = mysqli_query($con, $sql);
-    if($sql_query){
+    if ($sql_query) {
         echo "operacion realizada con exito";
         header("Location: ../ALUMNOS/datos_alumno.php");
-    }else{
+    } else {
         echo "ocurrio un error a la hora de hacer la modificacion";
     }
     mysqli_close($con);
-   
 }
 
 if (isset($_POST['volver'])) {

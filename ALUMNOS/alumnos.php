@@ -1,6 +1,6 @@
 <?php include '../conn_bd.php';
 session_start();
-
+/*
 $id_profesor='';
 $id_periodo='';
 $nombre_grupo='';
@@ -11,14 +11,27 @@ $ap_ma_pro='';
 $t_horario='';
 $t_periodo='';
 $nombre_aula='';
+*/
 
+
+$nombre_alumno = '';
+$ap_alumno = '';
+$am_alumno = '';
+$nombre_grupo = '';
+$numero_nivel = '';
+$nombres_profesor = '';
+$ap_profesor = '';
+$am_profesor = '';
+$t_horario = '';
+$t_periodo = '';
+$nombre_aula = '';
 
 $ingreso = $_SESSION['correo']; //correo electrónico que ingresa a la parte ALUMNO
 
 //REALIZAR CONSULTAS SQL PARA RECOLECTAR DATOS //
 
-//DATOS DEL ALUMNO
-$sql = "select * from alumno where correo='$ingreso'";
+//DATOS GENERALES
+$sql = "select alumnos.matricula, alumnos.nombre,alumnos.ap_paterno,alumnos.ap_materno,usuarios.correo from alumnos join usuarios on alumnos.id_usuarios=usuarios.id_usuario where usuarios.correo='$ingreso'";
 $stmt = $con->prepare($sql);
 $stmt->execute();
 $result = $stmt->get_result();
@@ -26,69 +39,28 @@ $result = $stmt->get_result();
 if ($result->num_rows > 0) {
     // Obtener el nombre de la fila
     $fila = $result->fetch_assoc();
-    $matricula= $fila['matricula'];
+    $_SESSION['matricula'] = $fila['matricula'];
+    $nombre_alumno = $fila['nombre'];
+    $ap_alumno = $fila['ap_paterno'];
+    $am_alumno = $fila['ap_materno'];
+}
 
-    $nombres= $fila['nombres'];
-    $ap_pa =$fila['apellido_paterno'];
-    $ap_ma =$fila['apellido_materno'];
-
-    $edad=$fila['edad'];
-    $sexo=$fila['sexo'];
-    $telefono=$fila['telefono'];
-
-    $id_carrera=$fila['id_carrera'];
-    $id_grupo=$fila['id_grupo'];
-
-    $turno=$fila['turno'];
-
-    $linea_daptura=$fila['linea_captura'];
-} 
-
-//DATOS DEL GRUPO
-$sql = "select * from grupos where id_grupo='$id_grupo'";
+$sql = "select niveles.grupo, niveles.nivel,profesores.nombre,profesores.ap_paterno,niveles.horario,periodos.periodo,niveles.aula from alumnos join  niveles on alumnos.id_nivel=niveles.id_nivel join periodos on niveles.id_periodo=periodos.id_periodo join profesores on niveles.id_profesor=profesores.id_profesor join usuarios on alumnos.id_usuarios=usuarios.id_usuario where usuarios.correo='$ingreso'";
 $stmt = $con->prepare($sql);
 $stmt->execute();
 $result = $stmt->get_result();
+//Verificar si se encontraron resultados
 if ($result->num_rows > 0) {
+    // Obtener el nombre de la fila
     $fila = $result->fetch_assoc();
-    $nombre_grupo= $fila['nombre_grupo'];
-    $id_profesor =$fila['id_profesor'];
-    $numero_nivel =$fila['nivel'];
-    $t_horario=$fila['horario'];
-    $id_periodo=$fila['id_periodo'];
-    $nombre_aula=$fila['aula'];
-} 
-
-//DATOS DEL PROFESOR
-$sql = "select * from profesores where id_profesor='$id_profesor'";
-$stmt = $con->prepare($sql);
-$stmt->execute();
-$result = $stmt->get_result();
-if ($result->num_rows > 0) {
-    $fila = $result->fetch_assoc();
-    $nombres_pro= $fila['nombres'];
-    $ap_pa_pro =$fila['apellido_paterno'];
-    $ap_ma_pro =$fila['apellido_materno'];
-} 
-
-//DATOS DEL PERIODO
-$sql = "select * from periodos where id_periodo='$id_periodo'";
-$stmt = $con->prepare($sql);
-$stmt->execute();
-$result = $stmt->get_result();
-if ($result->num_rows > 0) {
-    $fila = $result->fetch_assoc();
-    $t_periodo= $fila['periodo'];
-} 
-
-
-
-
-
-
-
-
-
+    $nombre_grupo = $fila['grupo'];
+    $numero_nivel = $fila['nivel'];
+    $nombres_profesor = $fila['nombre'];
+    $ap_profesor = $fila['ap_paterno'];
+    $t_horario = $fila['horario'];
+    $t_periodo = $fila['periodo'];
+    $nombre_aula = $fila['aula'];
+}
 
 mysqli_close($con); //CERRAMOS LA CONEXION SQL PARA QUE NO OCUPE ESPACIO EN LA MEMORIA
 
@@ -97,22 +69,23 @@ mysqli_close($con); //CERRAMOS LA CONEXION SQL PARA QUE NO OCUPE ESPACIO EN LA M
 
 
 //Se van a obtener los datos de las sesiones y de la base de datos
-$alumno = $nombres . ' ' . $ap_pa . ' ' . $ap_ma; 
+$alumno = $nombre_alumno . ' ' . $ap_alumno . ' ' . $am_alumno;
 $grupo = $nombre_grupo;
 $nivel = $numero_nivel;
-$docente = $nombres_pro . ' ' . $ap_pa_pro . ' ' . $ap_ma_pro; ;
+$docente = $nombres_profesor . ' ' . $ap_profesor;
 $horario = $t_horario;
 $periodo = $t_periodo;
 $aula = $nombre_aula;
 
-if($alumno=="  "){                          //IF PARA LA PRIMERA VEZ QUE ENTRE EL ALUMNO
-    $alumno="ACTUALIZA TUS DATOS";
-    $grupo="AD";
-    $nivel="AD";
-    $docente="AD";
-    $horario="AD";
-    $periodo="AD";
-    $aula="AD";
+
+if ($alumno == "  ") {                          //IF PARA LA PRIMERA VEZ QUE ENTRE EL ALUMNO
+    $alumno = "ACTUALIZA TUS DATOS";
+    $grupo = "AD";
+    $nivel = "AD";
+    $docente = "AD";
+    $horario = "AD";
+    $periodo = "AD";
+    $aula = "AD";
 }
 //_________________________________________________________________
 
