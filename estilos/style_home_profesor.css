@@ -4,6 +4,53 @@
     text-align: center; /* Alineación del texto */
     margin-top: 20px; /* Espacio superior */
 }
+.container {
+    text-align: center;
+    width: 50%;
+    top: auto;
+    margin: 10px auto;
+    padding: 20px;
+    background-color: #fff;
+    border-radius: 5px;
+    background-color: rgba(255, 255, 255, 0.4); 
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    position: relative; /* Añadido */
+    overflow: hidden; /* Añadido */
+}
+
+.icono-izquierdo {
+    position: absolute;
+    top: 10px; /* Ajusta la posición vertical según sea necesario */
+    left: 10px; /* Ajusta la posición horizontal según sea necesario */
+    z-index: 1; /* Añadido */
+}
+
+.icono-izquierdo img {
+    width: 40px; /* Ajusta el tamaño del icono según sea necesario */
+    height: auto;
+    border-radius: 50%;
+    overflow: hidden;
+    box-shadow: 0 0 0 3px #ccc; /* Grosor y color del borde */
+    transition: box-shadow 0.3s ease; /* Transición suave */
+}
+
+
+.icono-derecho {
+    position: absolute;
+    top: 10px; /* Ajusta la posición vertical según sea necesario */
+    right: 10px; /* Ajusta la posición horizontal según sea necesario */
+    z-index: 1; /* Añadido */
+}
+
+.icono-derecho img {
+    width: 40px; /* Ajusta el tamaño del icono según sea necesario */
+    height: auto;
+    border-radius: 50%;
+    overflow: hidden;
+    box-shadow: 0 0 0 3px #ccc; /* Grosor y color del borde */
+    transition: box-shadow 0.3s ease; /* Transición suave */
+}
+
 .button-description1 {
     color: #000000; /* Color del texto */
     font-family: Arial, sans-serif; /* Tipo de fuente */

@@ -11,11 +11,14 @@
 
 <form action="" method="POST">
   
-  <label for="email">Correo Electrónico:</label><br>
-  <input type="email" id="email" name="email" required><br>
+  <label for="correo">CORREO ELECTRÓNICO:</label><br>
+  <input type="email" id="correo" name="correo" required><br>
   
-  <label for="contra">Contraseña::</label><br>
-  <input type="password" id="contra" name="contra" required><br>
+  <label for="contra">CONTRASEÑA:</label><br>
+  <input type="password" id="contrasena" name="contrasena" required><br>
+
+  <label for="contra">MATRICULA:</label><br>
+  <input type="text" id="matricula" name="matricula" required><br>
   
 
   <input type="submit" name="enviar" value="Enviar">
@@ -28,24 +31,28 @@
 include "conn_bd.php";
 
 if(isset($_POST['enviar'])){
-    $correo = $_POST['email']; 
-    $contra = $_POST['contra']; 
+    $correo = $_POST['correo']; 
+    $contrasena = $_POST['contrasena'];
+    $matricula =$_POST['matricula'];
 
-    $HASH = password_hash($contra, PASSWORD_DEFAULT);
-
-    $sql = "INSERT INTO login_usuarios (correo, contrasena, id_tipo) VALUES ('$correo','$HASH',2)";
-    $result = $conexion->query($sql);
+    $HASH = password_hash($contrasena, PASSWORD_DEFAULT);
+    $sql="INSERT INTO `usuarios` (`correo`, `contrasena`, `id_tipo`) VALUES ('$correo', '$HASH', 3)";
+    echo $sql;
+    $result = $con->query($sql);
     if ($result === TRUE) {
-      $sql = "INSERT INTO profesores (correo) VALUES ('$correo')";
-      $result = $conexion->query($sql);
+      $sql="INSERT INTO `alumnos` (`matricula`, `nombre`, `ap_paterno`, `ap_materno`, `id_carrera`, `telefono`, `sexo`, `id_nivel`, `id_estatus`, `id_usuarios`) VALUES ($matricula, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL)";
+      echo $sql;
+      $result = $con->query($sql);
       if ($result === TRUE) {
           header('Location: index.php');
       } else {
           echo "Error al insertar el registro: ";
       }
     } else {
-        echo "Error al insertar el registro: ";
+        echo "No se inserto nada: ";
     }
 
 }
 ?>
+
+

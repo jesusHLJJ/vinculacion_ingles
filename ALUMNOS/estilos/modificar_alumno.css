@@ -1,0 +1,46 @@
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    background-color: #f5f5f5;
+    font-size: 20px;
+    font-weight: bold;
+}
+
+.contenedor_botones {
+    display: flex;
+    justify-content: center; /* Centra horizontalmente los elementos dentro del contenedor */
+    align-items: center; /* Centra verticalmente los elementos dentro del contenedor (opcional) */
+}
+
+input, select{
+    font-size: 25px;
+    margin-top: 10px;
+    margin-bottom: 10px;
+}
+
+
+input, select{
+    border: 3px solid rgb(128, 128, 128); /* Estilo del borde (ancho, tipo y color) */
+    border-radius: 7px;
+    display: inline-block; /* Para que el ancho del borde se ajuste al contenido */
+    margin-top: 10px;
+    width: 100%;
+}
+
+span{
+    color:red;
+    align-items: center;
+}
+
+#volver:hover{
+    background-color:red;
+    border: 3px solid rgb(250, 48, 48);
+    color: white;
+}
+
+#modificar:hover{
+    background-color:orange;
+    border: 3px solid orange;
+    color: white;
+}

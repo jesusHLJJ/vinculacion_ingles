@@ -12,6 +12,13 @@ h1{
     background-color: rgb(81, 81, 81);
 }
 
+h3{
+    text-align: center;
+    background-color: red;
+    color:white;
+
+}
+
 input,select{
     background-color: rgba(2, 2, 2, 0.173);
     border: 5px solid #ccc;

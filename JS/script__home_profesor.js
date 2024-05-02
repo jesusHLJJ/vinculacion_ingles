@@ -1,13 +1,11 @@
 // Array de URLs de las imágenes
-
-//aca es donde vamos a referencias las paginas para cargar los grupos, sisi usted si le sabe
 var images = [
-    {src: "../imagenes/recurso_profesor_1.jpg", href: "pagina_imagen1.html"},
-    {src: "../imagenes/recurso_profesor_2.jpg", href: "pagina_imagen2.html"},
-    {src: "../imagenes/recurso_profesor_3.jpg", href: "pagina_imagen3.html"},
-    {src: "../imagenes/recurso_profesor_4.jpg", href: "pagina_imagen4.html"},
-    {src: "../imagenes/recurso_profesor_5.jpg", href: "pagina_imagen5.html"},
-    {src: "../imagenes/recurso_profesor_6.jpg", href: "pagina_imagen6.html"}
+    {src: "../imagenes/recurso_profesor_1.jpg", href: "../PROFESORES/show_g1.php"},
+    {src: "../imagenes/recurso_profesor_2.jpg", href: "../PROFESORES/show_g2.php"},
+    {src: "../imagenes/recurso_profesor_3.jpg", href: "../PROFESORES/show_g3.php"},
+    {src: "../imagenes/recurso_profesor_4.jpg", href: "../PROFESORES/show_g4.php"},
+    {src: "../imagenes/recurso_profesor_5.jpg", href: "../PROFESORES/show_g5.php"},
+    {src: "../imagenes/recurso_profesor_6.jpg", href: "../PROFESORES/show_g6.php"}
 ];
 
 // Variable para almacenar la posición de la imagen actual
@@ -17,6 +15,7 @@ var currentIndex = 0;
 function cambiarImagen(n) {
     currentIndex = (currentIndex + n + images.length) % images.length;
     var image = document.getElementById("current-image");
+    var currentImageLink = document.getElementById("current-image-link");
     var previousImageOverlay = document.getElementById("previous-image-overlay");
     var nextImageOverlay = document.getElementById("next-image-overlay");
 
@@ -26,16 +25,18 @@ function cambiarImagen(n) {
 
     setTimeout(function() {
         image.src = images[currentIndex].src;
-        image.parentElement.href = images[currentIndex].href;
+        currentImageLink.href = images[currentIndex].href;
         image.style.opacity = 1;
 
         var previousIndex = (currentIndex - 1 + images.length) % images.length;
         var nextIndex = (currentIndex + 1) % images.length;
 
         previousImageOverlay.style.backgroundImage = "url('" + images[previousIndex].src + "')";
-        previousImageOverlay.parentElement.href = images[previousIndex].href;
+        previousImageOverlay.style.cursor = "pointer";
+        previousImageOverlay.onclick = function() { window.location.href = images[previousIndex].href; };
         nextImageOverlay.style.backgroundImage = "url('" + images[nextIndex].src + "')";
-        nextImageOverlay.parentElement.href = images[nextIndex].href;
+        nextImageOverlay.style.cursor = "pointer";
+        nextImageOverlay.onclick = function() { window.location.href = images[nextIndex].href; };
 
         previousImageOverlay.style.opacity = 0.5;
         nextImageOverlay.style.opacity = 0.5;

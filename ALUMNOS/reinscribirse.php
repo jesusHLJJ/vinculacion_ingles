@@ -22,45 +22,12 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     <h1>REINSCRIBIRSE</h1>
     <form action="subir.php" method="POST" enctype="multipart/form-data">
         <div class="form_datos">
-            <label for="nombre">NOMBRES(S)</label>
-            <input type="text" name="nombre" id="nombre" required><br>
-
-
-            <label for="nombre">APELLIDO PATERNO</label>
-            <input type="text" name="ap_pa" id="nombre" required><br>
-
-            <label for="nombre">APELLIDO MATERNO</label>
-            <input type="text" name="ap_ma" id="nombre" required><br>
-
-            <label for="nombre">MATRICULA</label>
-            <input type="text" name="matricula" id="nombre" required><br>
-
-            <label for="carrera">CARRERA</label>
-            <select name="carrera" id="carrera" required>
-                <option value=''>Selecciona una opción...</option>
-                <option value='1'>Ingenieria en sistemas computacionales</option>
-                <option value='2'>Administracion</option>
-                <option value='3'>Informatica</option>
-            </select><br>
-
-            <label for="correo">CORREO ELECTRÓNICO</label>
-            <input type="email" name="correo" id="correo" placeholder="ejemplo@gmail.com" required><br>
-
-            <label for="telefono">NÚMERO DE TELEFONO</label>
-            <input type="text" name="telefono" id="telefono" required><br>
 
             <label for="lin_captura">LINEA DE CAPTURA</label>
             <input type="text" name="lin_captura" id="lin_captura" placeholder="XXXXXX(6) XXXXXX XXXXXX XXXXXX XXX" required><br>
 
             <label for="fe_pago">FECHA DEPAGO</label>
             <input type="date" name="fe_pago" id="fe_pago" required><br>
-
-            <label for="sexo">SEXO</label>
-            <select name="sexo" id="sexo" required>
-                <option value=''>Selecciona una opción...</option>
-                <option value='1'>MASCULINO</option>
-                <option value='2'>FEMENINO</option>
-            </select><br>
 
             <label for="nivel">NIVEL A CURSAR</label>
             <select name="nivel" id="nivel" required>
@@ -87,7 +54,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                 <option value='2'>13:00 a 16:00 hrs</option>
             </select><br><br><br>
         </div>
-
+        <h3>DOCUMENTOS EN FORMATO PDF NO MAYOR A 2MB</h3>
 
         <div class="form_documentos">
             <label class="file-label" for="const_anterior" id="file-label">
