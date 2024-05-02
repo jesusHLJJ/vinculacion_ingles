@@ -4,19 +4,22 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/5.3.0/css/bootstrap.min.css">
-    <link rel="stylesheet" href="https://cdn.datatables.net/2.0.5/css/dataTables.bootstrap5.css">
-    <link rel="stylesheet" href="stylos.css">
     <title>ALUMNOS</title>
+    <!--DataTables-->
+    <link href="https://cdn.datatables.net/2.0.5/css/dataTables.bootstrap5.min.css" rel="stylesheet">
+    <link href="https://cdn.datatables.net/buttons/3.0.2/css/buttons.bootstrap5.min.css" rel="stylesheet">
+    <!--Bootstrap-->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css">
+    <!--Font-Awesome-->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" integrity="sha512-SnH5WK+bZxgPHs44uWIX+LLJAJ9/2PkPKZ5QiAj6Ta86w+fsb2TkcmfRyVX3pBnMFcV7oQPJkl9QevSCWr3W6A==" crossorigin="anonymous" referrerpolicy="no-referrer" />
 </head>
-
 <body>
     <header>
         <nav class="contenedor" id="contenedor">
             <ul class="lista">
                 <li class="menu"><a href="../index.php">HOME</a></li>
-                <li class="menu"><a href="../profesores.php">PROFESORES</li>
-                <li class="menu"><a href="../niveles.php">NIVELES</a></li>
+                <li class="menu"><a href="../profesores.php">PROFESORES</a></li>
+                <li class="menu"><a href="../niveles.php">NIVEL</li>
                 <li class="menu"><a href="">AVANCE PROGRAMATICO</a></li>
                 <li class="menu">ALUMNOS</a></li>
                 <li class="menu"><a href="">ACTAS DE CALIFICACION</a></li>
@@ -24,44 +27,50 @@
         </nav>
     </header>
 
-    <table id="alumnos" class="display" style="width:100%">
-        <thead>
-            <tr>
-                <th>MATRICULA</th>
-                <th>NOMBRES</th>
-                <th>AP. PATERNO</th>
-                <th>AP. MATERNO</th>
-                <th>EDAD</th>
-                <th>NIVEL</th>
-                <th>SEXO</th>
-                <th>CORREO</th>
-                <th>TEL. MOVIL</th>
-                <th>CARRERA</th>
-                <th>GRUPO.</th>
-                <th>TURNO</th>
-                <th>LINEA CAP.</th>
-                <th>DOCUMENTOS</th>
-                <th>MODIFICAR</th>
-            </tr>
-        </thead>
-        
-        <tbody>
-            <?php
-            
-            ?>
-        </tbody>
+    <center><h1>ALUMNOS</h1></center>
+    <div class="container my-5">
+        <div class="row">
+                <table id="alumnos" class="table table-striped" style="width: 100%">
+                    <thead>
+                        <tr>
+                        <th>MATRICULA</th>
+                        <th>NOMBRES</th>
+                        <th>AP. PATERNO</th>
+                        <th>AP. MATERNO</th>
+                        <th>CARRERA</th>
+                        <th>TELEFONO</th>
+                        <th>SEXO</th>
+                        <th>NIVEL</th>
+                        <th>ESTATUS</th>
+                        <th>USUARIOS</th>
+                        </tr>
+                    </thead>
 
-        <tfoot>
-            <button class="btn btn-agregar">Descargar Listas</button>
-        </tfoot>
-    </table>
+                <tbody id="table_alumnos">
 
-    <script src="https://code.jquery.com/jquery-3.7.1.js"></script>
-    <script src="https://cdn.datatables.net/2.0.5/js/dataTables.js"></script>
+                </tbody>
+
+                </table>
+        </div>
+    </div>
+    <!--JQuery-->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js" integrity="sha512-v2CJ7UaYy4JwqLDIrZUI/4hqeoQieOmAZNXBeQyjo21dadnwR+8ZaIJVT8EE2iyI61OV8e6M8PP2/4hpQINQ/g==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    <!--DataTables-->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.10.1/jszip.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.2.7/pdfmake.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.2.7/vfs_fonts.js"></script>
+    <script src="https://cdn.datatables.net/2.0.5/js/dataTables.min.js"></script>
+    <script src="https://cdn.datatables.net/2.0.5/js/dataTables.bootstrap5.min.js"></script>
+    <script src="https://cdn.datatables.net/buttons/3.0.2/js/dataTables.buttons.min.js"></script>
+    <script src="https://cdn.datatables.net/buttons/3.0.2/js/buttons.bootstrap5.min.js"></script>
+    <script src="https://cdn.datatables.net/buttons/3.0.2/js/buttons.colVis.min.js"></script>
+    <script src="https://cdn.datatables.net/buttons/3.0.2/js/buttons.html5.min.js"></script>
+    <script src="https://cdn.datatables.net/buttons/3.0.2/js/buttons.print.min.js"></script>
+    <!--Bootstrap-->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+    <!--SweetAlert2-->
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-    <script src="../../JS/DataTable.js"></script>
-    <script src="../../JS/SweetAlert.js"></script>
+    <script src="../JS/Java.JS"></script>
+    <script src="../JS/SweetAlert.js"></script>
 </body>
-
-</html>	
-
+</html>
