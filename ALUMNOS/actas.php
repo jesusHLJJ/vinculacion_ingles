@@ -1,7 +1,8 @@
 <?php include '../conn_bd.php';
 session_start();
 
-$ruta_archivo = 'C:\Users\da7ca\Desktop\actas_grupo_1A.pdf';
+//$ruta_archivo = 'C:\Users\da7ca\Desktop\actas_grupo_1A.pdf';
+$ruta_archivo ='C:\Users\da7ca\Documents\Universidad\Servicio social\Documentos de prueba\Documentos de alumno\actas_grupo_1A.pdf';
 
 
 ?>

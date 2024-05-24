@@ -1,14 +1,14 @@
 <?php
 session_start();
+include "../conn_bd.php";
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
-    // Inicias la sesión PHP
     if (isset($_POST['volver'])) {
         header("Location:alumnos.php");
     }
 }
 
 $ingreso = $_SESSION['correo'];
-
+$expediente = $_SESSION['id_expediente'];
 ?>
 
 <!DOCTYPE html>
@@ -24,7 +24,7 @@ $ingreso = $_SESSION['correo'];
 
 <body>
     <h1>INSCRIBIRSE</h1>
-    <form action="subir.php" method="POST" enctype="multipart/form-data">
+    <form action="" method="POST" enctype="multipart/form-data">
         <div class="form_datos">
 
             <label for="lin_captura">LINEA DE CAPTURA</label>
@@ -47,15 +47,17 @@ $ingreso = $_SESSION['correo'];
             <label for="modalidad">MODALIDAD</label>
             <select name="modalidad" id="modalidad" required>
                 <option value=''>Selecciona una opción...</option>
-                <option value='1'>PRESENCIAL</option>
-                <option value='2'>LINEA</option>
+                <option value='presencial'>PRESENCIAL</option>
+                <option value='linea'>LINEA</option>
             </select><br>
 
             <label for="horario">HORARIO</label>
             <select name="horario" id="horario" required>
                 <option value=''>Selecciona una opción...</option>
-                <option value='1'>8:00 a 12:00 hrs</option>
-                <option value='2'>13:00 a 16:00 hrs</option>
+                <option value='1'>8:00 a 12:00</option>
+                <option value='2'>12:00 a 16:00</option>
+                <option value='3'></option>
+
             </select><br><br><br>
         </div>
         <h3>DOCUMENTOS EN FORMATO PDF NO MAYOR A 2MB</h3>
@@ -115,25 +117,87 @@ if (isset($_POST['inscribirse'])) {
     $nivel_cursar = $_POST['nivel'];
     $modalidad = $_POST['modalidad'];
     $horario = $_POST['horario'];
-    //DOCUMENTOS
-    $soli_aspirante = $_POST['soli_aspirante'];
-    $lin_captura_d = $_POST['lin_captura_d'];
-    $comp_pago = $_POST['comp_pago'];
-    $ine = $_POST['ine'];
-    $act_nacimiento = $_POST['act_nacimiento'];
-    $comp_estudios = $_POST['comp_estudios'];
 
-    $sql = "select alumnos.id_expediente from alumnos join usuarios on alumnos.id_usuarios=usuarios.id_usuario where usuarios.correo='$ingreso'";
-    $stmt = $con->prepare($sql);
-    $stmt->execute();
-    $result = $stmt->get_result();
-    if ($result->num_rows > 0) {
-        $fila = $result->fetch_assoc();
-        $id_expediente = $fila['id_expediente'];
+    //DOCUMENTOS
+
+    $soli_aspirante = '';
+    $act_nacimiento =  '';
+    $comp_estudios =  '';
+    $ine =  '';
+    $comp_pago =  '';
+    $lin_captura_d =  '';
+
+
+
+
+
+
+    //COPIAR DOCUMENTOS A LA CARPETA DE USUARIO CORRESPONDIENTE
+
+    $soli_aspirante = $_FILES['soli_aspirante']['name'];
+    if ($soli_aspirante != '') {
+        $soli_aspirante_extension = pathinfo($soli_aspirante, PATHINFO_EXTENSION);
+        $soli_aspirante_tmp = $_FILES['soli_aspirante']['tmp_name'];
+        $soli_aspirante_route = "archivos/usuario_expediente_" . $expediente . "/soli_aspirante." . $soli_aspirante_extension;
+        move_uploaded_file($soli_aspirante_tmp, $soli_aspirante_route);
     }
 
-    
+    $act_nacimiento = $_FILES['act_nacimiento']['name'];
+    if ($act_nacimiento != '') {
+        $act_nacimiento_extension = pathinfo($act_nacimiento, PATHINFO_EXTENSION);
+        $act_nacimiento_tmp = $_FILES['act_nacimiento']['tmp_name'];
+        $act_nacimiento_route = "archivos/usuario_expediente_" . $expediente . "/act_nacimiento." . $act_nacimiento_extension;
+        move_uploaded_file($act_nacimiento_tmp, $act_nacimiento_route);
+    }
 
+    $comp_estudios = $_FILES['comp_estudios']['name'];
+    if ($comp_estudios != '') {
+        $comp_estudios_extension = pathinfo($comp_estudios, PATHINFO_EXTENSION);
+        $comp_estudios_tmp = $_FILES['comp_estudios']['tmp_name'];
+        $comp_estudios_route = "archivos/usuario_expediente_" . $expediente . "/comp_estudios." . $comp_estudios_extension;
+        move_uploaded_file($comp_estudios_tmp,  $comp_estudios_route);
+    }
+
+    $ine = $_FILES['ine']['name'];
+    if ($ine != '') {
+        $ine_extension = pathinfo($ine, PATHINFO_EXTENSION);
+        $ine_tmp = $_FILES['ine']['tmp_name'];
+        $ine_route = "archivos/usuario_expediente_" . $expediente . "/ine." . $ine_extension;
+        move_uploaded_file($ine_tmp,  $ine_route);
+    }
+
+    $comp_pago = $_FILES['comp_pago']['name'];
+    if ($comp_pago != '') {
+        $comp_pago_extension = pathinfo($comp_pago, PATHINFO_EXTENSION);
+        $comp_pago_tmp = $_FILES['comp_pago']['tmp_name'];
+        $comp_pago_route = "archivos/usuario_expediente_" . $expediente . "/comp_pago." . $comp_pago_extension;
+        move_uploaded_file($comp_pago_tmp,  $comp_pago_route);
+    }
+
+    $lin_captura_d = $_FILES['lin_captura_d']['name'];
+    if ($lin_captura_d != '') {
+        $lin_captura_d_extension = pathinfo($lin_captura_d, PATHINFO_EXTENSION);
+        $lin_captura_d_tmp = $_FILES['lin_captura_d']['tmp_name'];
+        $lin_captura_d_route = "archivos/usuario_expediente_" . $expediente . "/lin_captura_d." . $lin_captura_d_extension;
+        move_uploaded_file($lin_captura_d_tmp,  $lin_captura_d_route);
+    }
+
+
+
+
+
+
+
+
+
+    //CONSULTA PARA ALMACENAR LAS RUTAS
+    $sql = "update expediente set nivel=$nivel_cursar, lin_captura='$lin_captura_d_route',soli_aspirante='$soli_aspirante_route',act_nac='$act_nacimiento_route',comp_estu='$comp_estudios_route',ine='$ine_route',comp_pago='$comp_pago_route',lin_captura_t='$linea_captura',fecha_pago='$fecha_pago',modalidad='$modalidad',horario='$horario' where id_expediente=$expediente";
+    $result = $con->query($sql);
+    if ($result) {
+        echo "Se cargaron los archivos correctamente";
+    } else {
+        echo "NO se cargaron los archivos correctamente";
+    }
 }
 
 

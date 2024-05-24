@@ -1,58 +1,109 @@
 <!DOCTYPE html>
 <html lang="es">
+
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Formulario</title>
 </head>
+
 <body>
 
-<h2>Formulario</h2>
+  <h2>Formulario</h2>
 
-<form action="" method="POST">
-  
-  <label for="correo">CORREO ELECTRÓNICO:</label><br>
-  <input type="email" id="correo" name="correo" required><br>
-  
-  <label for="contra">CONTRASEÑA:</label><br>
-  <input type="password" id="contrasena" name="contrasena" required><br>
+  <form action="" method="POST">
 
-  <label for="contra">MATRICULA:</label><br>
-  <input type="text" id="matricula" name="matricula" required><br>
-  
+    <label for="correo">CORREO ELECTRÓNICO:</label><br>
+    <input type="email" id="correo" name="correo" required><br>
 
-  <input type="submit" name="enviar" value="Enviar">
-</form>
+    <label for="contra">CONTRASEÑA:</label><br>
+    <input type="password" id="contrasena" name="contrasena" required><br>
+
+    <label for="contra">MATRICULA:</label><br>
+    <input type="text" id="matricula" name="matricula" required><br>
+
+
+    <input type="submit" name="enviar" value="Enviar">
+  </form>
 
 </body>
+
 </html>
 
 <?php
 include "conn_bd.php";
 
-if(isset($_POST['enviar'])){
-    $correo = $_POST['correo']; 
-    $contrasena = $_POST['contrasena'];
-    $matricula =$_POST['matricula'];
+if (isset($_POST['enviar'])) {
+  $correo = $_POST['correo'];
+  $contrasena = $_POST['contrasena'];
+  $matricula = $_POST['matricula'];
 
-    $HASH = password_hash($contrasena, PASSWORD_DEFAULT);
-    $sql="INSERT INTO `usuarios` (`correo`, `contrasena`, `id_tipo`) VALUES ('$correo', '$HASH', 3)";
-    echo $sql;
-    $result = $con->query($sql);
-    if ($result === TRUE) {
-      $sql="INSERT INTO `alumnos` (`matricula`, `nombre`, `ap_paterno`, `ap_materno`, `id_carrera`, `telefono`, `sexo`, `id_nivel`, `id_estatus`, `id_usuarios`) VALUES ($matricula, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL)";
-      echo $sql;
-      $result = $con->query($sql);
-      if ($result === TRUE) {
-          header('Location: index.php');
-      } else {
-          echo "Error al insertar el registro: ";
-      }
-    } else {
-        echo "No se inserto nada: ";
+  $HASH = password_hash($contrasena, PASSWORD_DEFAULT);
+  $sql = "INSERT INTO `usuarios` (`correo`, `contrasena`, `id_tipo`) VALUES ('$correo', '$HASH', 3)";
+  $result = $con->query($sql);
+
+
+
+  if ($result === TRUE) {
+
+    //ULTIMO ID DE LA TABLA USUARIOS
+    $sql = "select MAX(id_usuario) as 'ultimo_id' from usuarios";
+    $stmt = $con->prepare($sql);
+    $stmt->execute();
+    $result = $stmt->get_result();
+    //Verificar si se encontraron resultados
+    if ($result->num_rows > 0) {
+      // Obtener el nombre de la fila
+      $fila = $result->fetch_assoc();
+      $ultimo_id_usuario = $fila['ultimo_id'];
     }
+  
+    $sql = "SELECT MAX(id_expediente) as 'ultimo_id' FROM expediente";
+    $stmt = $con->prepare($sql);
+    $stmt->execute();
+    $result = $stmt->get_result();
+    if ($result->num_rows > 0) {
+      $fila = $result->fetch_assoc();
+      $ultimo_id = $fila['ultimo_id'];
+    }
+    $ultimo_id=$ultimo_id+1;
 
+    $sql = "SELECT MAX(id_nota) as 'ultimo_id' FROM notas";
+    $stmt = $con->prepare($sql);
+    $stmt->execute();
+    $result = $stmt->get_result();
+    if ($result->num_rows > 0) {
+      $fila = $result->fetch_assoc();
+      $ultimo_id_notas = $fila['ultimo_id'];
+    }
+    $ultimo_id_notas=$ultimo_id_notas+1;
+
+    $sql="INSERT INTO `expediente` (`id_expediente`, `nivel`, `lin_captura`, `soli_aspirante`, `act_nac`, `comp_estu`, `ine`, `comp_pago`, `lin_captura_t`, `fecha_pago`, `modalidad`, `horario`) VALUES ($ultimo_id, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL)";
+    $result = $con->query($sql);
+    $sql = "INSERT INTO `alumnos` (`matricula`, `nombre`, `ap_paterno`, `ap_materno`, `edad`, `id_carrera`, `telefono`, `sexo`, `id_nivel`, `id_estatus`, `id_usuarios`, `id_expediente`, `id_nota`) VALUES ($matricula, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, $ultimo_id_usuario, $ultimo_id, $ultimo_id_notas)";
+    $result = $con->query($sql);
+
+
+
+
+    if ($result === TRUE) {
+      //CREACION DE LAS CARPETAS DE USUARIO 
+      $nombre_carpeta = "usuario_expediente_" . $ultimo_id;
+      $directorio = "ALUMNOS/archivos/";
+      $ruta_carpeta = $directorio . $nombre_carpeta;
+      mkdir($ruta_carpeta, 0755);
+
+      $nombre_carpeta = "usuario_expediente_" . $ultimo_id . "_reinscripcion";
+      $directorio = "ALUMNOS/archivos/";
+      $ruta_carpeta = $directorio . $nombre_carpeta;
+      mkdir($ruta_carpeta, 0755);
+
+      header('Location: index.php');
+    } else {
+      echo "Error al insertar el registro: ";
+    }
+  } else {
+    echo "No se inserto nada: ";
+  }
 }
 ?>
-
-

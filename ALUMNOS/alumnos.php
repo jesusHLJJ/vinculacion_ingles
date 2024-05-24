@@ -13,7 +13,6 @@ $t_periodo='';
 $nombre_aula='';
 */
 
-
 $nombre_alumno = '';
 $ap_alumno = '';
 $am_alumno = '';
@@ -39,11 +38,24 @@ $result = $stmt->get_result();
 if ($result->num_rows > 0) {
     // Obtener el nombre de la fila
     $fila = $result->fetch_assoc();
-    $_SESSION['matricula'] = $fila['matricula'];
+    $matricula = $fila['matricula'];
     $nombre_alumno = $fila['nombre'];
     $ap_alumno = $fila['ap_paterno'];
     $am_alumno = $fila['ap_materno'];
 }
+
+$_SESSION['matricula']=$matricula;
+
+$sql = "select alumnos.id_expediente from alumnos where alumnos.matricula=$matricula";
+$stmt = $con->prepare($sql);
+//$stmt->bind_param("s", $correo);
+$stmt->execute();
+$result = $stmt->get_result();
+if ($result->num_rows > 0) {
+    $fila = $result->fetch_assoc();
+    $id_expediente = $fila['id_expediente'];
+}
+$_SESSION['id_expediente'] = $id_expediente;
 
 $sql = "select niveles.grupo, niveles.nivel,profesores.nombre,profesores.ap_paterno,niveles.horario,periodos.periodo,niveles.aula from alumnos join  niveles on alumnos.id_nivel=niveles.id_nivel join periodos on niveles.id_periodo=periodos.id_periodo join profesores on niveles.id_profesor=profesores.id_profesor join usuarios on alumnos.id_usuarios=usuarios.id_usuario where usuarios.correo='$ingreso'";
 $stmt = $con->prepare($sql);
@@ -109,6 +121,7 @@ if ($alumno == "  ") {                          //IF PARA LA PRIMERA VEZ QUE ENT
             <input type='submit' name="inscribirse" value="INSCRIBIRSE">
             <input type='submit' name="reinscribirse" value="REINSCRIBIRSE">
             <input type='submit' name="datos_alumno" value="VER MIS DATOS">
+            <input type='submit' name="calif_alumno" value="VER MIS CALIFICACIONES">
             <input type='submit' id="cerrar" name="cerrar" value="CERRAR SESION">
         </form>
     </div>
@@ -158,6 +171,10 @@ if (isset($_POST['cerrar'])) {
 
 if (isset($_POST['datos_alumno'])) {
     header("Location: ../ALUMNOS/datos_alumno.php");
+}
+
+if (isset($_POST['calif_alumno'])) {
+    header("Location: ../ALUMNOS/calif_alumno.php");
 }
 
 
