@@ -1,0 +1,439 @@
+
+*{
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    list-style: none;
+    text-decoration: none;
+    font-family: Arial, Helvetica, sans-serif;
+}
+body{
+    
+    font-family: sans-serif;
+}
+
+
+/* Estilos para el contenedor */
+.info-container {
+    position: absolute;
+    left: 150px; /* Colocar el contenedor a 150px del borde izquierdo */
+    top: 142px; /* Colocar el contenedor a 150px del borde superior */
+    background-color: black; /* Color de fondo negro */
+    padding: 10px; /* Espacio interior */
+    border-radius: 5px; /* Bordes redondeados */
+    color: white; /* Color del texto */
+    max-width: 400px; /* Ancho máximo del contenedor */
+}
+
+/* Estilos para los elementos h2 dentro del contenedor */
+.info-container h2 {
+    font-size: 1.1em; /* Tamaño de fuente más pequeño */
+    font-weight: bold;
+    margin-bottom: 5px; /* Margen inferior más pequeño */
+}
+
+.container{
+    position: absolute;
+    left: 48%;
+    top: 25%;
+    transform: translate(-50%, -50%);
+    padding: 10px;
+}
+
+.si{
+    outline: none;
+    box-sizing: border-box;
+    height: 60px;
+    width: 0;
+    padding: 0 20px;
+    color: #000000;
+    border-radius: 50px;
+    font-size: 20px;
+    border: 1px solid #FF1046;
+    transition: all .7s ease;
+}
+
+::placeholder{
+    color: gray;
+}
+.btn1{
+    position: absolute;
+    right: 0;
+    top: 0;
+    width: 80px;
+    height: 80px;
+    background: #D50000;
+    line-height: 80px;
+    border-radius: 50%;
+    text-align: center;
+    cursor: pointer;
+    transition: .5s;
+}
+
+.btn1 i{
+    font-size: 25px;
+    color: white;
+    line-height: 80px;
+    transition: all .7s ease;
+}
+
+.btn2{
+    position: absolute;
+    right: 20px;
+    top: 150px;
+    width: 80px;
+    height: 80px;
+    background: #D50000;
+    line-height: 80px;
+    border-radius: 50%;
+    text-align: center;
+    font-family: Arial, Helvetica, sans-serif;
+    font-size: 18px;
+    cursor: pointer;
+    color: #FFFFFF;
+    transition: .5s;
+}
+.btn3{
+    position: absolute;
+    right: 104px;
+    top: 150px;
+    width: 80px;
+    height: 80px;
+    background: #3f5042;
+    line-height: 80px;
+    border-radius: 50%;
+    text-align: center;
+    font-family: Arial, Helvetica, sans-serif;
+    font-size: 18px;
+    cursor: pointer;
+    color: #FFFFFF;
+    transition: .5s;
+}
+
+.container:hover input {
+    width: 350px;
+}
+.container:hover i {
+    transform: rotate(-360deg);
+}
+.btn1:hover  {
+    background:#cc0000;
+}
+header{
+
+    width: 100%;
+    height: 140px;
+    background-color: #000000;
+    display: flex;
+    align-items: center;
+    justify-content:space-between;
+    padding: 0 100px;
+}
+
+.logo{
+    font-size: 35px;
+    font-weight: bold;
+    color: #FFFFFF;
+}
+
+.bars{
+    display: none;
+}
+.nav-bar ul {
+    display: flex;
+}
+
+.nav-bar ul li a {
+    display: block;
+    color: #FFFFFF;
+    font-size: 18px;
+    padding: 10px 10px;
+    border-radius: 15px;
+    transition: 0.2s;
+    margin: 0 5px;
+}
+
+.nav-bar ul li a:hover{
+    color:#000000;
+    background-color:yellow;
+
+}
+.nav-bar ul li a.active {
+    color: #000000;
+    background-color: rgb(255, 0, 0);
+}
+.nav-bar ul li a.active2 {
+    color: #000000;
+    background-color:greenyellow;
+}
+
+.table-container {
+    max-height: 520px; /* Altura máxima que deseas para la tabla */
+    overflow-y: auto; /* Hace que el contenedor sea desplazable si hay demasiados elementos */
+    margin-top: 100px;
+}
+
+
+.table{
+    width: 100%;
+    border-collapse: collapse;
+}
+.table thead{
+    background-color:green;
+    
+}
+.table thead tr th{
+    font-size: 14px;
+    font-weight: 600;
+    letter-spacing: 0.35px;
+    color: #FFFFFF;
+    opacity: 1;
+    padding: 12px;
+    vertical-align: top;
+    border: 1px solid #dee2e685;
+
+}
+.table tbody tr td{
+    font-size: 14px;
+    letter-spacing: 0.35px;
+    font-weight: normal;
+    color: #f1f1f1;
+    background-color: #3c3f44;
+    padding: 8px;
+    text-align: center;
+    border: 1px solid #dee2e685;
+}
+.table tbody tr td .btn{
+    width: 130px;
+    text-decoration: none;
+    line-height: 35px;
+    display: block;
+    background-color: #FF1046;
+    font-weight: medium;
+    color: #FFFFFF;
+    text-align: center;
+    vertical-align: middle;
+    user-select: none;
+    border: 1px solid transparent;
+    font-size: 14px;
+    opacity: 1;
+}
+
+.table input[type="text"] {
+background-color: transparent; /* Establecer el fondo transparente */
+border: none; /* Eliminar el borde */
+color: #f1f1f1; /* Establecer el color del texto */
+width: calc(100% - 16px); /* Ancho del input */
+padding: 8px; /* Añadir un poco de espacio alrededor del texto */
+font-size: 14px; /* Tamaño de fuente */
+}
+
+.table-scroll {
+    overflow-y: auto; /* Asegura que solo la tabla sea desplazable, no toda la página */
+}
+
+@media (max-width: 900px) {
+    .table thead {
+        display: none;
+    }
+    .table{
+        margin-top: 150px;
+    }
+    .table,
+    .table tbody,
+    .table tr,
+    .table td {
+        display: block;
+        width: 100%;
+    }
+    .table tr {
+        margin-bottom: 15px;
+    }
+    .table tbody tr td {
+        text-align: right;
+        padding-left: 50%;
+        position: relative;
+    }
+    .table input[type="text"] {
+        width: 100%;
+        padding-left: 0;
+    }
+
+    header {
+        padding: 0px 30px;
+    }
+    .bars {
+        display: block;
+        cursor: pointer;
+    }
+    .bars .line {
+        width: 30px;
+        height: 3px;
+        background-color: #FFFFFF;
+        margin: 6px 0px;
+    }
+    .nav-bar {
+        height: 0px;
+        position: absolute;
+        top: 80px;
+        left: 0;
+        right: 0;
+        width: 100vw;
+        background-color: #000000;
+        transition: 0.5s;
+        overflow: hidden;
+    }
+
+    .nav-bar.active {
+        height: calc(100vh - 520px); /* Ajusta la altura de la barra de navegación activa */
+        overflow-y: auto; /* Agrega desplazamiento si la barra de navegación es más larga que la pantalla */
+    }
+
+    .nav-bar.active ul {
+        opacity: 1;
+        margin-top: 20px; /* Añade un margen superior para separar la barra de navegación de la tabla */
+    }
+    .nav-bar ul {
+        display: block;
+        width: fit-content;
+        margin: 80px auto 0 auto;
+        text-align: center;
+        transition: 0.5s;
+        opacity: 0;
+    }
+    .nav-bar.active ul {
+        opacity: 1;
+    }
+    .nav-bar ul li a {
+        margin-bottom: 20px;
+    }
+}
+
+
+input[type="file"]{
+    display: none;
+}
+
+label{
+    display: inline-block;
+    text-transform: uppercase;
+    color: #FFFFFF;
+    background: #cc5800;
+    text-align: center;
+    padding: 15px 40px;
+    font-size: 18px;
+    letter-spacing: 1.5px;
+    user-select: none;
+    cursor: pointer;
+    box-shadow: 5px 15px 25px rgb(0, 0, 0.35);
+    border-radius: 3px;
+
+}
+
+.custom-button {
+    display:list-item;
+    text-transform: uppercase;
+    color: #FFFFFF;
+    background:green; 
+    text-align: center;
+    padding: 15px 40px;
+    font-size: 18px;
+    letter-spacing: 1.5px;
+    user-select: none;
+    cursor: pointer;
+    box-shadow: 5px 15px 25px rgb(0, 0, 0.35);
+    border-radius: 3px;
+    align-items: center; 
+    margin: 0 auto;
+    margin-top: 20px;
+}
+
+/* Estilos para el icono dentro del botón */
+.custom-button i {
+    margin-right: 5px; /* Espacio entre el icono y el texto */
+}
+
+.label {
+    margin-bottom: 10px; /* Espacio entre el label y el botón */
+}
+label:active{
+    transform: scale(0.9);
+}
+
+/* Estilos CSS para el modal */
+.modal {
+    display: none; /* Por defecto, el modal está oculto */
+    position: fixed; /* Se posiciona de forma fija en la ventana del navegador */
+    z-index: 999; /* Z-index alto para que esté por encima de otros elementos */
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    overflow: auto; /* Agregar scroll si el contenido es demasiado grande */
+    background-color: rgba(0, 0, 0, 0.5); /* Fondo oscuro semi-transparente */
+    text-align: center;
+  }
+
+  .modal2 {
+    display: none; /* Por defecto, el modal está oculto */
+    position: fixed; /* Se posiciona de forma fija en la ventana del navegador */
+    z-index: 999; /* Z-index alto para que esté por encima de otros elementos */
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    overflow: auto; /* Agregar scroll si el contenido es demasiado grande */
+    background-color: rgba(0, 0, 0, 0.5); /* Fondo oscuro semi-transparente */
+    text-align: center;
+  }
+  
+  /* Estilos para el contenido del modal */
+  .modal-content {
+    background-color: #fff; /* Fondo blanco */
+    margin: 15% auto; /* Centrar verticalmente */
+    padding: 20px;
+    border: 1px solid #888;
+    width: 80%;
+    max-width: 600px; /* Ancho máximo */
+    border-radius: 5px;
+    position: relative;
+  }
+  
+  /* Estilos para la cabecera del modal */
+  .modal-header {
+    background-color: #007bff; /* Fondo azul */
+    color: #fff; /* Texto blanco */
+    padding: 10px;
+    border-top-left-radius: 5px;
+    border-top-right-radius: 5px;
+  }
+  
+  /* Estilos para el cuerpo del modal */
+  .modal-body {
+    padding: 20px;
+  }
+  
+  /* Estilos para el botón de cerrar */
+  .close {
+    position: absolute;
+    top: 1px;
+    right: 1px;
+    font-size: 24px;
+    cursor: pointer;
+    color: #fff;
+    background-color: #d20b0b;
+    border: none;
+    border-radius: 50%;
+    width: 36px;
+    height: 36px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    transition: background-color 0.3s ease;
+    
+  }
+  
+  .close:hover {
+    background-color: #c50707;
+  }
+  

@@ -28,7 +28,14 @@
 </html>
 
 <?php
-include "conn_bd.php";
+
+
+    $conexion = mysqli_connect('localhost', 'root', '', 'vinculacion_ingles');
+        if (!$conexion){
+            echo('Conexion fallida');
+        }else{
+            
+        }
 
 if(isset($_POST['enviar'])){
     $correo = $_POST['correo']; 
@@ -36,13 +43,13 @@ if(isset($_POST['enviar'])){
     $matricula =$_POST['matricula'];
 
     $HASH = password_hash($contrasena, PASSWORD_DEFAULT);
-    $sql="INSERT INTO `usuarios` (`correo`, `contrasena`, `id_tipo`) VALUES ('$correo', '$HASH', 3)";
+    $sql="INSERT INTO `usuarios` (`correo`, `contrasena`, `id_tipo`) VALUES ('$correo', '$HASH', 2)";
     echo $sql;
-    $result = $con->query($sql);
+    $result = $conexion->query($sql);
     if ($result === TRUE) {
-      $sql="INSERT INTO `alumnos` (`matricula`, `nombre`, `ap_paterno`, `ap_materno`, `id_carrera`, `telefono`, `sexo`, `id_nivel`, `id_estatus`, `id_usuarios`) VALUES ($matricula, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL)";
+      $sql="INSERT INTO `profesores` ('nombre', `id_usuarios`) VALUES ($matricula, 0)";
       echo $sql;
-      $result = $con->query($sql);
+      $result = $conexion->query($sql);
       if ($result === TRUE) {
           header('Location: index.php');
       } else {
