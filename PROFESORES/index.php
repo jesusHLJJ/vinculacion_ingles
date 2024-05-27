@@ -1,9 +1,6 @@
 <?php
 include "../BD.php";
 // Realizar la consulta para obtener el nombre
-<<<<<<< HEAD
-
-=======
 $sql = "select profesores.id_profesor, profesores.nombre, profesores.ap_paterno, profesores.ap_materno, usuarios.correo from profesores JOIN usuarios on usuarios.id_usuario = profesores.id_usuario where usuarios.correo = ?";
 $stmt = $conexion->prepare($sql);
 $stmt->bind_param("s", $correo);
@@ -24,7 +21,6 @@ if ($result->num_rows > 0) {
 } else {
     $nombre = "Nombre no encontrado";
 }
->>>>>>> 88b1ac5c3bbc849871edb8bcee5a69274fd981a7
 ?>
 
 <!DOCTYPE html>
@@ -39,8 +35,6 @@ if ($result->num_rows > 0) {
   <script src="../JS/script__home_profesor.js"></script>
   
 </head>
-<<<<<<< HEAD
-=======
 <body>
   
 <nav class="navbar">
@@ -70,7 +64,6 @@ if ($result->num_rows > 0) {
 
 
 <div class="container">
->>>>>>> 88b1ac5c3bbc849871edb8bcee5a69274fd981a7
 
 <body>
 
