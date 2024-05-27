@@ -25,6 +25,7 @@ $t_horario = '';
 $t_periodo = '';
 $nombre_aula = '';
 
+
 $ingreso = $_SESSION['correo']; //correo electrónico que ingresa a la parte ALUMNO
 
 //REALIZAR CONSULTAS SQL PARA RECOLECTAR DATOS //

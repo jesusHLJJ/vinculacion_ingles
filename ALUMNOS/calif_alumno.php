@@ -5,6 +5,8 @@ $primer_parcial = '';
 $segundo_parcial = '';
 $tercer_parcial = '';
 
+
+
 $matricula = $_SESSION['matricula'];
 
 if (isset($_POST['volver'])) {
@@ -12,7 +14,7 @@ if (isset($_POST['volver'])) {
 }
 
 // OBTENEMOS LAS CALIFICACIONES DEL ALUMNO
-$sql = "select notas.nota_parcial1,notas.nota_parcial2,notas.nota_parcial3,niveles.nivel,profesores.nombre,profesores.ap_paterno,profesores.ap_materno from notas join alumnos on notas.matricula=alumnos.matricula join niveles on alumnos.id_nivel=niveles.id_nivel join profesores on niveles.id_profesor=profesores.id_profesor where notas.matricula=$matricula";
+$sql = "select notas.nota_parcial1,notas.nota_parcial2,notas.nota_parcial3,niveles.nivel,profesores.nombre,profesores.ap_paterno,profesores.ap_materno from notas join alumnos on notas.id_nota=alumnos.id_nota join niveles on alumnos.id_nivel=niveles.id_nivel join profesores on niveles.id_profesor=profesores.id_profesor where alumnos.matricula=$matricula";
 $stmt = $con->prepare($sql);
 $stmt->execute();
 $result = $stmt->get_result();
@@ -25,6 +27,9 @@ if ($result->num_rows > 0) {
     $nombre = $fila['nombre'];
     $ap_paterno = $fila['ap_paterno'];
     $ap_materno = $fila['ap_materno'];
+}else{
+    echo "No perteneces a algun grupo";
+    die();
 }
 //NOMBRE COMPLETO DEL PROFE
 $nombre_profesor = $nombre . " " . $ap_paterno . " " . $ap_materno;

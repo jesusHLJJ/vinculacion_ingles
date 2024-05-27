@@ -40,7 +40,8 @@
     //nuevo
     if ($stmt_actualizar->execute()) {
       // Verificar si ya existen notas para el alumno
-      $sql_verificar_notas = "SELECT * FROM notas WHERE matricula = ?";
+      //$sql_verificar_notas = "SELECT * FROM notas WHERE matricula = ?";
+      $sql_verificar_notas = "SELECT * FROM notas join alumnos on notas.id_nota=notas.id_nota WHERE alumnos.matricula =?";
       $stmt_verificar_notas = $conexion->prepare($sql_verificar_notas);
       $stmt_verificar_notas->bind_param("s", $matricula);
       $stmt_verificar_notas->execute();
@@ -48,14 +49,14 @@
 
       if ($result_verificar_notas->num_rows > 0) {
         // Actualizar las notas existentes
-        $sql_actualizar_notas = "UPDATE notas SET nota_parcial1=?, nota_parcial2=?, nota_parcial3=? WHERE matricula=?";
+        $sql_actualizar_notas = "update notas join alumnos on notas.id_nota=alumnos.id_nota set notas.nota_parcial1=?,notas.nota_parcial2=?,notas.nota_parcial3=? where alumnos.matricula=?";
         $stmt_actualizar_notas = $conexion->prepare($sql_actualizar_notas);
-        $stmt_actualizar_notas->bind_param("ssss", $nota_parcial1, $nota_parcial2, $nota_parcial3, $matricula);
+        $stmt_actualizar_notas->bind_param("sssi", $nota_parcial1, $nota_parcial2, $nota_parcial3, $matricula);
       } else {
         // Insertar nuevas notas
-        $sql_insertar_notas = "INSERT INTO notas (matricula, nota_parcial1, nota_parcial2, nota_parcial3, id_nivel) VALUES (?, ?, ?, ?, ?)";
+        $sql_insertar_notas = "INSERT INTO notas (nota_parcial1, nota_parcial2, nota_parcial3, id_nivel) VALUES (?, ?, ?, ?)";
         $stmt_insertar_notas = $conexion->prepare($sql_insertar_notas);
-        $stmt_insertar_notas->bind_param("siiii", $matricula, $nota_parcial1, $nota_parcial2, $nota_parcial3, $id_nivel);
+        $stmt_insertar_notas->bind_param("iiii", $nota_parcial1, $nota_parcial2, $nota_parcial3, $id_nivel);
       }
 
       if (($result_verificar_notas->num_rows > 0 && $stmt_actualizar_notas->execute()) || $stmt_insertar_notas->execute()) {
@@ -440,6 +441,7 @@ if (isset($_FILES['archivoCalificaciones'])) {
                   
                   // Obtener las notas del alumno actual
                   $sql_verificar_notas = "SELECT * FROM notas WHERE matricula = ?";
+                  $sql_verificar_notas = "SELECT * FROM notas join alumnos on notas.id_nota=alumnos.id_nota WHERE alumnos.matricula =?";
                   $stmt_verificar_notas = $conexion->prepare($sql_verificar_notas);
                   $stmt_verificar_notas->bind_param("s", $row['matricula']);
                   $stmt_verificar_notas->execute();

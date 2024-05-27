@@ -1,3 +1,10 @@
+<?php
+if (isset($_POST['volver'])) {
+  header("Location:index.php");
+}
+include "../vinculacion_ingles-main/conn_bd.php";
+?>
+
 <!DOCTYPE html>
 <html lang="es">
 
@@ -5,30 +12,34 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Formulario</title>
+  <link rel="stylesheet" href="estilos/registros.css">
 </head>
 
 <body>
 
-  <h2>Formulario</h2>
+  <h2>REGISTRO</h2>
 
-  <form action="" method="POST">
+  <form action="" method="POST" class="formulario">
 
     <label for="correo">CORREO ELECTRÓNICO:</label><br>
     <input type="email" id="correo" name="correo" required><br>
 
-    <label for="contra">CONTRASEÑA:</label><br>
+    <label for="contrasena">CONTRASEÑA:</label><br>
     <input type="password" id="contrasena" name="contrasena" required><br>
 
-    <label for="contra">MATRICULA:</label><br>
+    <label for="matricula">MATRÍCULA:</label><br>
     <input type="text" id="matricula" name="matricula" required><br>
 
+    <input type="submit" name="enviar" value="REGISTRARSE" class="boton">
 
-    <input type="submit" name="enviar" value="Enviar">
   </form>
-
+  <form action="" method="post" class="formulario">
+    <input type="submit" name="volver" value="VOLVER" class="boton" id="volver">
+  </form>
 </body>
 
 </html>
+
 
 <?php
 
@@ -64,7 +75,7 @@ if (isset($_POST['enviar'])) {
       $fila = $result->fetch_assoc();
       $ultimo_id_usuario = $fila['ultimo_id'];
     }
-  
+
     $sql = "SELECT MAX(id_expediente) as 'ultimo_id' FROM expediente";
     $stmt = $con->prepare($sql);
     $stmt->execute();
@@ -73,7 +84,7 @@ if (isset($_POST['enviar'])) {
       $fila = $result->fetch_assoc();
       $ultimo_id = $fila['ultimo_id'];
     }
-    $ultimo_id=$ultimo_id+1;
+    $ultimo_id = $ultimo_id + 1;
 
     $sql = "SELECT MAX(id_nota) as 'ultimo_id' FROM notas";
     $stmt = $con->prepare($sql);
@@ -83,9 +94,11 @@ if (isset($_POST['enviar'])) {
       $fila = $result->fetch_assoc();
       $ultimo_id_notas = $fila['ultimo_id'];
     }
-    $ultimo_id_notas=$ultimo_id_notas+1;
+    $ultimo_id_notas = $ultimo_id_notas + 1;
 
-    $sql="INSERT INTO `expediente` (`id_expediente`, `nivel`, `lin_captura`, `soli_aspirante`, `act_nac`, `comp_estu`, `ine`, `comp_pago`, `lin_captura_t`, `fecha_pago`, `modalidad`, `horario`) VALUES ($ultimo_id, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL)";
+    $sql="INSERT INTO `notas` (`id_nota`, `nota_parcial1`, `nota_parcial2`, `nota_parcial3`, `id_nivel`) VALUES (NULL, NULL, NULL, NULL, NULL)";
+    $result = $con->query($sql);
+    $sql = "INSERT INTO `expediente` (`id_expediente`, `nivel`, `lin_captura`, `soli_aspirante`, `act_nac`, `comp_estu`, `ine`, `comp_pago`, `lin_captura_t`, `fecha_pago`, `modalidad`, `horario`) VALUES ($ultimo_id, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL)";
     $result = $con->query($sql);
     $sql = "INSERT INTO `alumnos` (`matricula`, `nombre`, `ap_paterno`, `ap_materno`, `edad`, `id_carrera`, `telefono`, `sexo`, `id_nivel`, `id_estatus`, `id_usuarios`, `id_expediente`, `id_nota`) VALUES ($matricula, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, $ultimo_id_usuario, $ultimo_id, $ultimo_id_notas)";
     $result = $con->query($sql);
