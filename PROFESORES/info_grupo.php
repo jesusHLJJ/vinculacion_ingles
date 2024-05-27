@@ -292,7 +292,6 @@ if (isset($_FILES['archivoCalificaciones'])) {
         <button type="submit" class="btn1" id="btnBuscar"><i class="fa fa-search"></i></button>
       </form>
     </div>
-
     <div class="info-container">
       <!-- Información del grupo, modalidad y horario -->
       <h2 class="grupo">Grupo: <?php echo $grupo; ?></h2>
@@ -436,6 +435,9 @@ if (isset($_FILES['archivoCalificaciones'])) {
                   <?php
                   // Aquí debes definir $parcial1, $parcial2 y $parcial3 con valores vacíos por defecto
 
+
+
+                  
                   // Obtener las notas del alumno actual
                   $sql_verificar_notas = "SELECT * FROM notas WHERE matricula = ?";
                   $stmt_verificar_notas = $conexion->prepare($sql_verificar_notas);
