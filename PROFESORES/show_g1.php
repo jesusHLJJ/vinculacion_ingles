@@ -11,6 +11,7 @@ include "../BD.php";
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Grupos</title>
     <link rel="stylesheet" href="../estilos/style_show_groups.css">
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script>
 </head>
 
 <body>
@@ -63,6 +64,34 @@ include "../BD.php";
     <form action="" method="post">
         <input type="submit" id="volver" name="volver" value="VOLVER">
     </form>
+
+    
+<div class="boton-redondo3">
+    <a id="cerrar" href="#">
+        <img class="imagen" src="../imagenes/cerrar_sesion_icono.png" alt="Botón Redondo3">
+    </a>
+</div>
+<h2 class="button-description3">Cerrar sesión</h2>
+
+
+<script>
+document.getElementById("cerrar").addEventListener("click", function() {
+  // Mostrar una alerta con SweetAlert
+  Swal.fire({
+    title: '¿Deseas cerrar sesión?',
+    icon: 'warning',
+    showCancelButton: true,
+    confirmButtonColor: '#3085d6',
+    cancelButtonColor: '#d33',
+    confirmButtonText: 'Sí, cerrar sesión'
+  }).then((result) => {
+    if (result.isConfirmed) {
+      // Si el usuario confirma, redirecciona a la otra página
+      window.location.href = "../CONTROLADORES/cerrar_sesion.php";
+    }
+  });
+});
+</script>
 
 </body>
 

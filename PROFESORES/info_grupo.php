@@ -5,7 +5,7 @@
 
   // Inicializar la variable de mensaje
   $mensaje = "";
-$id_carrera = ''; 
+  $id_carrera = '';
   // Si se ha enviado el formulario (se ha presionado el botón "Guardar")
   if ($_SERVER["REQUEST_METHOD"] == "POST") {
     // Recibir los datos del formulario
@@ -80,7 +80,7 @@ $id_carrera = '';
     // Realizar la consulta SQL para buscar coincidencias en el nombre
     $sql_buscar = "SELECT alumnos.matricula, alumnos.nombre, alumnos.ap_paterno, alumnos.ap_materno, carreras.nombre_carrera, alumnos.telefono FROM alumnos JOIN carreras on carreras.id_carrera = alumnos.id_carrera WHERE (nombre LIKE '%$search%' OR ap_paterno LIKE '%$search%' OR ap_materno LIKE '%$search%') AND id_nivel = ?";
     $sql_buscar = "SELECT alumnos.matricula, alumnos.nombre, alumnos.ap_paterno, alumnos.ap_materno, alumnos.id_carrera, carreras.nombre_carrera, alumnos.telefono FROM alumnos JOIN carreras on carreras.id_carrera = alumnos.id_carrera JOIN niveles on alumnos.id_nivel = niveles.id_nivel JOIN notas on alumnos.id_nota = notas.id_nota WHERE (nombre LIKE '%$search%' OR ap_paterno LIKE '%$search%' OR ap_materno LIKE '%$search%' or  notas.nota_parcial1 LIKE '%$search%' OR  notas.nota_parcial2 LIKE'%$search%' or  notas.nota_parcial3 LIKE '%$search%') AND niveles.id_nivel = ?";
-    
+
     $stmt_buscar = $conexion->prepare($sql_buscar);
     $stmt_buscar->bind_param("i", $id_nivel);
     $stmt_buscar->execute();
@@ -93,12 +93,12 @@ $id_carrera = '';
     $stmt_alumnos->execute();
     $result_alumnos = $stmt_alumnos->get_result();
   }
-
   if (isset($_FILES['archivo2'])) {
     // Obtener el nombre del profesor y sus apellidos de las variables de sesión
     $nombre_profesor = isset($_SESSION['nombre_profesor']) ? $_SESSION['nombre_profesor'] : '';
     $ap_paterno = isset($_SESSION['ap_1']) ? $_SESSION['ap_1'] : '';
     $ap_materno = isset($_SESSION['ap_2']) ? $_SESSION['ap_2'] : '';
+    $id_nivel = $_SESSION['id_nivel']; 
 
     // Combinar el nombre y los apellidos para formar el nombre completo
     $nombre_completo = $nombre_profesor . "_" . $ap_paterno . "_" . $ap_materno;
@@ -117,13 +117,27 @@ $id_carrera = '';
     // Construir la ruta completa del archivo
     $ruta_completa = $carpeta . '/' . $nombre_archivo;
 
-    // Mover el archivo subido a la carpeta destino
-    if (move_uploaded_file($_FILES['archivo2']['tmp_name'], $ruta_completa)) {
-      // Si se movió correctamente, insertar la ruta en la base de datos
-      $sql = "INSERT INTO documentos_profesor (avance_profesor) VALUES (?)";
-      $stmt = $conexion->prepare($sql);
-      $stmt->bind_param("s", $ruta_completa);
+    // Verificar si ya existe un documento para este nivel
+    $sql_verificacion = "SELECT COUNT(*) as count FROM documentos_profesor WHERE id_nivel = ?";
+    $stmt_verificacion = $conexion->prepare($sql_verificacion);
+    $stmt_verificacion->bind_param("i", $id_nivel);
+    $stmt_verificacion->execute();
+    $result_verificacion = $stmt_verificacion->get_result();
+    $row_verificacion = $result_verificacion->fetch_assoc();
+    $num_documentos = $row_verificacion['count'];
+    echo $num_documentos; 
+    if ($num_documentos > 0) {
+        // Si ya existe un documento para este nivel, actualiza en lugar de insertar
+        $sql = "UPDATE documentos_profesor SET avance_profesor = ? WHERE id_nivel = ?";
+    } else {
+        // Si no existe un documento para este nivel, inserta uno nuevo
+        $sql = "INSERT INTO documentos_profesor (avance_profesor, id_nivel) VALUES (?, ?)";
+    }
 
+    $stmt = $conexion->prepare($sql);
+    $stmt->bind_param("si", $ruta_completa, $id_nivel);
+
+    if (move_uploaded_file($_FILES['archivo2']['tmp_name'], $ruta_completa)) {
       // Ejecutar la consulta SQL
       if ($stmt->execute()) {
         $mensaje = "Éxito al subir y registrar el archivo.";
@@ -136,14 +150,72 @@ $id_carrera = '';
       $mensaje = "Error al mover el archivo subido.";
       $tipo_mensaje = "error";
     }
+}
+
+
+if (isset($_FILES['archivoCalificaciones'])) {
+
+  // Obtener el nombre del profesor y sus apellidos de las variables de sesión
+  $nombre_profesor = isset($_SESSION['nombre_profesor']) ? $_SESSION['nombre_profesor'] : '';
+  $ap_paterno = isset($_SESSION['ap_1']) ? $_SESSION['ap_1'] : '';
+  $ap_materno = isset($_SESSION['ap_2']) ? $_SESSION['ap_2'] : '';
+  $id_nivel = $_SESSION['id_nivel']; 
+
+  // Combinar el nombre y los apellidos para formar el nombre completo
+  $nombre_completo = $nombre_profesor . "_" . $ap_paterno . "_" . $ap_materno;
+
+  // Crear la ruta de la carpeta
+  $carpeta = "../DOCUMENTOS_PROFESOR/" . $nombre_completo;
+
+  // Verificar si la carpeta ya existe, si no, crearla
+  if (!file_exists($carpeta)) {
+      mkdir($carpeta, 0777, true);
   }
 
-  if (isset($_FILES['archivoCalificaciones'])) {
+  $nombre_archivo = basename($_FILES["archivoCalificaciones"]["name"]);
+  $ruta_completa = $carpeta . '/' . $nombre_archivo;
+
+  if (move_uploaded_file($_FILES['archivoCalificaciones']['tmp_name'], $ruta_completa)) {
+      // Verificar si ya existe un documento para este nivel
+      $sql_verificacion = "SELECT COUNT(*) as count FROM documentos_nivel WHERE id_nivel = ?";
+      $stmt_verificacion = $conexion->prepare($sql_verificacion);
+      $stmt_verificacion->bind_param("i", $id_nivel);
+      $stmt_verificacion->execute();
+      $result_verificacion = $stmt_verificacion->get_result();
+      $row_verificacion = $result_verificacion->fetch_assoc();
+      $num_documentos = $row_verificacion['count'];
+
+      if ($num_documentos > 0) {
+          // Si ya existe un documento para este nivel, actualiza en lugar de insertar
+          $sql = "UPDATE documentos_nivel SET acta_calificacion = ? WHERE id_nivel = ?";
+      } else {
+          // Si no existe un documento para este nivel, inserta uno nuevo
+          $sql = "INSERT INTO documentos_nivel (acta_calificacion, id_nivel) VALUES (?, ?)";
+      }
+
+      $stmt = $conexion->prepare($sql);
+      $stmt->bind_param("si", $ruta_completa, $id_nivel);
+
+      if ($stmt->execute()) {
+          $mensaje = "Éxito al subir y registrar el archivo de calificaciones.";
+      } else {
+          $mensaje = "Error al registrar el archivo de calificaciones en la base de datos.";
+          $tipo_mensaje = "error";
+      }
+  } else {
+      $mensaje = "Error al mover el archivo de calificaciones subido.";
+      $tipo_mensaje = "error";
+  }
+}
+
+
+  if (isset($_FILES['archivoPlaneacion'])) {
 
     // Obtener el nombre del profesor y sus apellidos de las variables de sesión
     $nombre_profesor = isset($_SESSION['nombre_profesor']) ? $_SESSION['nombre_profesor'] : '';
     $ap_paterno = isset($_SESSION['ap_1']) ? $_SESSION['ap_1'] : '';
     $ap_materno = isset($_SESSION['ap_2']) ? $_SESSION['ap_2'] : '';
+    $id_nivel = $_SESSION['id_nivel']; 
 
     // Combinar el nombre y los apellidos para formar el nombre completo
     $nombre_completo = $nombre_profesor . "_" . $ap_paterno . "_" . $ap_materno;
@@ -156,30 +228,39 @@ $id_carrera = '';
       mkdir($carpeta, 0777, true);
     }
 
-    $nombre_archivo = basename($_FILES["archivoCalificaciones"]["name"]);
+    $nombre_archivo = basename($_FILES["archivoPlaneacion"]["name"]);
     $ruta_completa = $carpeta . '/' . $nombre_archivo;
 
-    if (move_uploaded_file($_FILES['archivoCalificaciones']['tmp_name'], $ruta_completa)) {
-      $sql = "INSERT INTO documentos_nivel (acta_calificacion) VALUES (?)";
-      $stmt = $conexion->prepare($sql);
-      $stmt->bind_param("s", $ruta_completa);
+    // Verificar si el documento ya existe para este nivel
+    $sql_verificacion = "SELECT COUNT(*) as count FROM documentos_profesor WHERE id_nivel = ?";
+    $stmt_verificacion = $conexion->prepare($sql_verificacion);
+    $stmt_verificacion->bind_param("i", $id_nivel);
+    $stmt_verificacion->execute();
+    $result_verificacion = $stmt_verificacion->get_result();
+    $row_verificacion = $result_verificacion->fetch_assoc();
+    $num_documentos = $row_verificacion['count'];
 
-      if ($stmt->execute()) {
-        $mensaje = "Éxito al subir y registrar el archivo de calificaciones.";
-      } else {
-        $mensaje = "Error al registrar el archivo de calificaciones en la base de datos.";
-        $tipo_mensaje = "error";
-      }
+    if ($num_documentos > 0) {
+        // Si ya existe un documento para este nivel, actualiza en lugar de insertar
+        $sql = "UPDATE documentos_profesor SET plan_profesor = ? WHERE id_nivel = ?";
     } else {
-      $mensaje = "Error al mover el archivo de calificaciones subido.";
-      $tipo_mensaje = "error";
+        // Si no existe un documento para este nivel, inserta uno nuevo
+        $sql = "INSERT INTO documentos_profesor (plan_profesor, id_nivel) VALUES (?, ?)";
     }
-  }
 
+    $stmt = $conexion->prepare($sql);
+    $stmt->bind_param("si", $ruta_completa, $id_nivel);
 
-
-
+    if ($stmt->execute()) {
+        $mensaje = "Éxito al subir y registrar el archivo de planeación.";
+    } else {
+        $mensaje = "Error al registrar el archivo de planeación en la base de datos.";
+        $tipo_mensaje = "error";
+    }
+}
+  
   ?>
+
   <!DOCTYPE html>
   <html lang="es">
 
@@ -220,11 +301,8 @@ $id_carrera = '';
     </div>
 
     <button id="mostrarTodos" class="btn2">Todos</button>
-
-
-
     <header>
-      <div class="logo">Alumnos</div>
+      <div class="logo">ALUMNOS</div>
       <div class="bars">
         <div class="line"></div>
         <div class="line"></div>
@@ -255,17 +333,33 @@ $id_carrera = '';
             </div>
           </li>
           <li>
-            <a href="#">Descargar avance programatico</a>
+            <a href="descargar_avance.php?id_nivel=<?php echo $id_nivel; ?>">Descargar avance programatico</a>
           </li>
           <li>
-            <a href="descargar_tabla.php">Descargar planeación</a>
+            <a href="descargar_plan.php?id_nivel=<?php echo $id_nivel; ?>">Descargar planeación</a>
           </li>
           <li>
-            <a href="#">Subir planeación</a>
+            <a href="#" id="openModalPlaneacion">Subir planeación</a>
+
+            <div id="modalPlaneacion" class="modal">
+              <div class="modal-content">
+                <div class="modal-header">
+                  <h2>Subir planeación</h2>
+                  <span class="close">&times;</span>
+                </div>
+                <div class="modal-body">
+                  <form method="POST" enctype="multipart/form-data" id="uploadPlaneacionForm">
+                    <input type="file" name="archivoPlaneacion" id="archivoPlaneacion">
+                    <label for="archivoPlaneacion">Cargar archivo de planeación</label>
+                    <button class="custom-button" type="submit"><i class="fas fa-upload"></i></button>
+                  </form>
+                </div>
+              </div>
+            </div>
+
           </li>
           <li>
             <a href="#" id="openModalBtn">Subir avance programático</a>
-
             <div id="modal" class="modal">
               <div class="modal-content">
                 <div class="modal-header">
@@ -282,6 +376,9 @@ $id_carrera = '';
                 </div>
               </div>
             </div>
+          </li>
+          <li>
+            <a href="descargar_tabla.php">Generar</a>
           </li>
           <li>
             <a id="cerrar" href="#" class="active">Cerrar sesion</a>
@@ -303,16 +400,16 @@ $id_carrera = '';
         <table id="miTabla" class="table">
           <thead>
             <tr>
-              <th>Matrícula</th>
-              <th>Nombre</th>
-              <th>Apellido Paterno</th>
-              <th>Apellido Materno</th>
-              <th>Carrera</th>
-              <th>Teléfono</th>
-              <th>Parcial 1</th>
-              <th>Parcial 2</th>
-              <th>Parcial 3</th>
-              <th>Acciones</th>
+              <th>MATRICULA</th>
+              <th>NOMBRE</th>
+              <th>APELLIDO PATERNO</th>
+              <th>APELLIDO MATERNO</th>
+              <th>CARRERA</th>
+              <th>TELEFONO</th>
+              <th>PARCIAL 1</th>
+              <th>PARCIAL 2</th>
+              <th>PARCIAL 3</th>
+              <th>ACCIONES</th>
             </tr>
           </thead>
           <tbody>
@@ -324,14 +421,14 @@ $id_carrera = '';
                   <td><input type="text" name="ap_paterno" value="<?php echo $row['ap_paterno']; ?>"></td>
                   <td><input type="text" name="ap_materno" value="<?php echo $row['ap_materno']; ?>"></td>
                   <td>
-                    <select name="id_carrera">
+                    <select name="id_carrera" class="styled-select">
                       <option value="1" <?php echo $row['id_carrera'] == 1 ? 'selected' : ''; ?>>INGENIERIA EN SISTEMAS COMPUTACIONALES</option>
                       <option value="2" <?php echo $row['id_carrera'] == 2 ? 'selected' : ''; ?>>INGENIERIA ELECTRONICA</option>
                       <option value="3" <?php echo $row['id_carrera'] == 3 ? 'selected' : ''; ?>>INGENIERIA AMBIENTAL</option>
                       <option value="4" <?php echo $row['id_carrera'] == 4 ? 'selected' : ''; ?>>INGENIERIA BIOMEDICA</option>
                       <option value="5" <?php echo $row['id_carrera'] == 5 ? 'selected' : ''; ?>>INGENIERIA INFORMATICA</option>
-                      <option value="6" <?php echo $row['id_carrera'] == 6 ? 'selected' : ''; ?>>LICENCIATURA EN ADMINISTRACION</option> 
-                      <option value="7" <?php echo $row['id_carrera'] == 7 ? 'selected' : ''; ?>>ARQUITECTURA</option>           
+                      <option value="6" <?php echo $row['id_carrera'] == 6 ? 'selected' : ''; ?>>LICENCIATURA EN ADMINISTRACION</option>
+                      <option value="7" <?php echo $row['id_carrera'] == 7 ? 'selected' : ''; ?>>ARQUITECTURA</option>
                     </select>
                   </td>
 
@@ -462,6 +559,25 @@ $id_carrera = '';
       closeBtn.addEventListener("click", function() {
         modal.style.display = "none";
       });
+
+
+      document.getElementById("openModalPlaneacion").addEventListener("click", function() {
+        document.getElementById("modalPlaneacion").style.display = "block";
+      });
+
+      // Cerrar modal de subir planeación al hacer clic en el botón de cerrar
+      document.querySelector("#modalPlaneacion .close").addEventListener("click", function() {
+        document.getElementById("modalPlaneacion").style.display = "none";
+      });
+
+      // Cerrar la ventana modal si el usuario hace clic fuera de ella
+      window.onclick = function(event) {
+        var modalPlaneacion = document.getElementById("modalPlaneacion");
+        if (event.target == modalPlaneacion) {
+          modalPlaneacion.style.display = "none";
+        }
+      };
+
 
       document.getElementById("openModalCalificaciones").addEventListener("click", function() {
         document.getElementById("modalCalificaciones").style.display = "block";
