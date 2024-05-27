@@ -19,7 +19,10 @@ body {
 h1 {
     text-align: center;
     margin-top: 20px;
-    color: #007bff;
+    color: #ffbb00; 
+    font-family: Arial, Helvetica, sans-serif;
+    font-weight: bold;
+    background-color: rgb(81, 81, 81); 
 }
 
 .grupos {
@@ -33,6 +36,8 @@ h1 {
     background-color: #fff;
     border-radius: 5px;
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    font-weight: bold;
+    font-family: Arial, Helvetica, sans-serif;
 }
 
 .groups summary {
@@ -50,14 +55,15 @@ h1 {
     display: block;
     padding: 10px;
     text-decoration: none;
-    background-color: #4CAF50;
-    color: #fff;
-    border-radius: 0 0 5px 5px;
+    background-color: #ffbb00; 
+    color: #070707;
     text-align: center;
 }
 
+
 .groups a:hover {
-    background-color: #45a049;
+    color: #fff;
+    background-color: rgb(81, 81, 81);
 }
 form {
     text-align: center;
@@ -67,14 +73,56 @@ form {
 input[type="submit"] {
     width: 40%;
     padding: 10px 20px;
-    background-color: #ff0000;
-    color: #fff;
+    background-color: rgb(81, 81, 81);
+    color: #ffffff;
     border: none;
     border-radius: 100px;
     cursor: pointer;
     margin-top: 5px; /* Ajustado para reducir la separación del botón con otros elementos */
+    font-weight: bold;
 }
 
 input[type="submit"]:hover {
-    background-color: #8d1e1e;
+    background-color: #ffbb00; 
+}
+
+.boton-redondo3 {
+    position: fixed;
+    z-index: 1;
+}
+
+.boton-redondo3 {
+    bottom: 20px;
+    right: 30px;
+    width: 70px; /* Ajusta el tamaño del botón según tus necesidades */
+    height: 70px; /* Ajusta el tamaño del botón según tus necesidades */
+    border-radius: 50%;
+    overflow: hidden;
+    box-shadow: 0 0 0 3px #ccc; /* Grosor y color del borde */
+    transition: box-shadow 0.3s ease; /* Transición suave */
+    cursor: pointer;
+    
+}
+
+.boton-redondo3:hover {
+    box-shadow: 0 0 0 5px #e70303; /* Cambiar el color del borde al pasar el ratón */
+}
+
+.boton-redondo3 .imagen {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.button-description3 {
+    color: #000000; /* Color del texto */
+    font-family: Arial, sans-serif; /* Tipo de fuente */
+    text-align: right; /* Alineación del texto */
+    position: fixed;
+    bottom: 5px; /* Distancia desde la parte inferior */
+    right: 16px; /* Distancia desde la parte derecha */
+    margin: 0;
+    top: 655px;
+    font-size: 17px;
 }

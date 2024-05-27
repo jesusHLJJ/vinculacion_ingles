@@ -41,13 +41,37 @@ if (isset($_POST['volver'])) {
 
 
 <?php
-include "conn_bd.php";
+
+
+    $conexion = mysqli_connect('localhost', 'root', '', 'vinculacion_ingles');
+        if (!$conexion){
+            echo('Conexion fallida');
+        }else{
+            
+        }
 
 if (isset($_POST['enviar'])) {
   $correo = $_POST['correo'];
   $contrasena = $_POST['contrasena'];
   $matricula = $_POST['matricula'];
 
+<<<<<<< HEAD
+    $HASH = password_hash($contrasena, PASSWORD_DEFAULT);
+    $sql="INSERT INTO `usuarios` (`correo`, `contrasena`, `id_tipo`) VALUES ('$correo', '$HASH', 2)";
+    echo $sql;
+    $result = $conexion->query($sql);
+    if ($result === TRUE) {
+      $sql="INSERT INTO `profesores` ('nombre', `id_usuarios`) VALUES ($matricula, 0)";
+      echo $sql;
+      $result = $conexion->query($sql);
+      if ($result === TRUE) {
+          header('Location: index.php');
+      } else {
+          echo "Error al insertar el registro: ";
+      }
+    } else {
+        echo "No se inserto nada: ";
+=======
   $HASH = password_hash($contrasena, PASSWORD_DEFAULT);
   $sql = "INSERT INTO `usuarios` (`correo`, `contrasena`, `id_tipo`) VALUES ('$correo', '$HASH', 3)";
   $result = $con->query($sql);
@@ -66,6 +90,7 @@ if (isset($_POST['enviar'])) {
       // Obtener el nombre de la fila
       $fila = $result->fetch_assoc();
       $ultimo_id_usuario = $fila['ultimo_id'];
+>>>>>>> 718376fd223e8868fd1cad97dad5eefbad480e41
     }
 
     $sql = "SELECT MAX(id_expediente) as 'ultimo_id' FROM expediente";

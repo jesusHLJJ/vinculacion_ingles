@@ -20,6 +20,10 @@ body {
   .titulo-bienvenida {
     text-align: center;
     margin-bottom: 20px;
+    background-color: rgb(81, 81, 81);
+    color: #ffbb00; 
+    font-weight: bold;
+    font-family: Arial, Helvetica, sans-serif;
   }
 
   .boton-regresar {
@@ -30,26 +34,26 @@ body {
     height: 40px; /* Ajusta el tamaño del botón según tus necesidades */
     border-radius: 20px; /* Ajusta el radio para obtener una forma redonda */
     overflow: hidden;
-    box-shadow: 0 0 0 3px #000000; /* Grosor y color del borde */
+    box-shadow: 0 0 0 3px #ffbb00;  /* Grosor y color del borde */
     transition: box-shadow 0.3s ease; /* Transición suave */
     cursor: pointer;
     display: flex;
     justify-content: center;
     align-items: center;
     background-color: #ffffff; /* Color de fondo del botón */
-    color: #f60101; /* Color del texto */
+    color: #000000; /* Color del texto en negro */
     font-size: 16px; /* Tamaño de fuente */
     font-weight: bold; /* Grosor de la fuente */
-    text-decoration: none; /* Sin subrayado para el texto del botón */
 }
 
 .boton-regresar:hover {
-    box-shadow: 0 0 0 5px #000000; /* Cambiar el color del borde al pasar el ratón */
+    box-shadow: 0 0 0 5px #ffbb00;  /* Cambiar el color del borde al pasar el ratón */
 }
 
   form label {
     display: block;
     margin-bottom: 5px;
+    font-weight: bold;
   }
 
   form input[type="text"],
@@ -60,21 +64,45 @@ body {
     border: 1px solid #ccc;
     border-radius: 5px;
     box-sizing: border-box;
+    border-radius: 25px;
+    background-color:#ccc;
+    font-weight: bold;
   }
 
+  form input[type="number"],
+  form select {
+    width: calc(100% - 22px); /* Ajuste para compensar el padding */
+    padding: 10px;
+    margin-bottom: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    box-sizing: border-box;
+    text-align: center;
+    border-radius: 25px;
+    background-color:#ccc;
+    font-weight: bold;
+  }
   form input[type="submit"] {
     width: 100%;
-    background-color: #007bff;
-    color: white;
+    background-color: #ffffff; /* Color de fondo */
+    color: rgb(9, 9, 9);
     padding: 10px;
-    border: none;
-    border-radius: 5px;
+    border: 2px solid #ffbb00; /* Color del borde */
+    border-radius: 25px; /* Borde redondeado */
     cursor: pointer;
-    transition: background-color 0.3s ease;
-  }
+    transition: background-color 0.3s ease, color 0.3s ease; /* Transición suave para fondo y color */
+    font-weight: bold;
+}
+
+/* Opcional: cambio de fondo y borde al pasar el cursor */
+form input[type="submit"]:hover {
+    background-color: #ffbb00; /* Cambia el color de fondo al pasar el cursor */
+    color: #ffffff; /* Cambia el color del texto al pasar el cursor */
+    border-color: #ffbb00; /* Mantén el color del borde al pasar el cursor */
+}
 
   form input[type="submit"]:hover {
-    background-color: #1b65b4;
+    background-color: rgb(81, 81, 81);
   }
 
   .boton-redondo3 {
@@ -96,7 +124,7 @@ body {
 }
 
 .boton-redondo3:hover {
-    box-shadow: 0 0 0 5px #4CAF50; /* Cambiar el color del borde al pasar el ratón */
+    box-shadow: 0 0 0 5px #e70303; /* Cambiar el color del borde al pasar el ratón */
 }
 
 .boton-redondo3 .imagen {
