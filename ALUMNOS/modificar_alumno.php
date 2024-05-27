@@ -151,8 +151,6 @@ if (isset($_POST['modificar'])) {
     $f_numero = $_POST['numero'];
     $f_carrera = $_POST['carrera'];
     $sql = "update alumnos set nombre='$f_nombre',ap_paterno='$f_ap_pa',ap_materno='$f_ap_ma',edad=$f_edad,sexo='$f_sexo',telefono='$f_numero',id_carrera=$f_carrera where matricula='$t_matricula'";
-    echo $sql;
-
     $sql_query = mysqli_query($con, $sql);
     if ($sql_query) {
         echo "operacion realizada con exito";

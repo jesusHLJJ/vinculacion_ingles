@@ -108,7 +108,6 @@ if (isset($_POST['reinscribirse'])) {
         $const_anterior_extension = pathinfo($const_anterior, PATHINFO_EXTENSION);
         $const_anterior_tmp = $_FILES['const_anterior']['tmp_name'];
         $const_anterior_route = "archivos/usuario_expediente_" . $expediente . "_reinscripcion/".$nivel_cursar."nivel_const_anterior." . $const_anterior_extension;
-        echo $const_anterior_route;
         move_uploaded_file($const_anterior_tmp, $const_anterior_route);
     }
 
@@ -132,7 +131,6 @@ if (isset($_POST['reinscribirse'])) {
     $sql="INSERT INTO documento_expediente (`id_expediente`, `nivel`, `const_na`, `comp_pago`, `lin_captura`, `lin_captura_t`, `fecha_entrega`) VALUES ($expediente, $nivel_cursar, '$const_anterior_route','$comp_pago_route', '$lin_captura_d_route','$linea_captura','$fecha_pago')";
     $result = $con->query($sql);
     if ($result) {
-        echo "Se cargaron los archivos correctamente para reinscripcion";
     } else {
         echo "NO se cargaron los archivos correctamente, pero si funciona inscripcion";
     }

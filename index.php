@@ -18,19 +18,20 @@
             <h1>INICIAR SESIÓN</h1>
 
             <div class="input-box">
-                <input type="email" id="correo" name="correo" placeholder="Correo electronico" required>
+                <input type="email" id="correo" name="correo" placeholder="CORREO ELECTRONICO" required>
                 <i class='bx bxs-user'></i>
             </div>
 
             <div class="input-box">
-                <input type="password" id="pass" name="pass" placeholder="Contraseña" required>
+                <input type="password" id="pass" name="pass" placeholder="CONTRASEÑA" required>
                 <i class='bx bxs-lock-alt'></i>
             </div>
            
-            <button type="submit" class="btn">Entrar</button>
+            <button type="submit" class="btn">ENTRAR</button>
+            <br><br>
             
             <div class="olvide-c">
-                <a href="registros.php">Registrarse</a>
+                <a href="registros.php">REGISTRARSE</a>
             </div>
         </form>
     </div>
