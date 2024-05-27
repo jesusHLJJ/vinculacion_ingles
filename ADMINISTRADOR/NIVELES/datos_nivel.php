@@ -1,5 +1,5 @@
 <?php
-include "../../db.php";
+include "../../BD.php";
 
 $sql = "SELECT niveles.id_nivel, niveles.nivel, niveles.grupo, profesores.nombre, niveles.cupo_max, periodos.periodo, niveles.modalidad, niveles.horario, niveles.aula FROM niveles JOIN profesores ON niveles.id_profesor = profesores.id_profesor JOIN periodos ON niveles.id_periodo = periodos.id_periodo";
 $result = $conexion->query($sql);

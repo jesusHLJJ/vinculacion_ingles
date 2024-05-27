@@ -1,5 +1,5 @@
 <?php
-include "../../db.php";
+include "../../BD.php";
 
 $sql = "SELECT documentos_profesor.id_documento, niveles.grupo, documentos_profesor.planeacion_estrategica, documentos_profesor.avance_programatico_1, documentos_profesor.avance_programatico_2, documentos_profesor.avance_programatico_3, documentos_profesor.planecion_profesor, documentos_profesor.avance_profesor_1, documentos_profesor.avance_profesor_2, documentos_profesor.avance_profesor_3 FROM documentos_profesor JOIN niveles ON documentos_profesor.id_nivel = niveles.id_nivel";
 

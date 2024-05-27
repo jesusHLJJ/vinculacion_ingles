@@ -11,7 +11,7 @@ document.addEventListener('DOMContentLoaded', function() {
             // Si el usuario confirma la acción
             if (result.isConfirmed) {
                 // Redirigir a tu documento PHP para cerrar la sesión
-                window.location.href = '../../VALIDACIONES/cerrar_sesion.php';
+                window.location.href = '../../CONTROLADORES/cerrar_sesion.php';
             }
         });
     });

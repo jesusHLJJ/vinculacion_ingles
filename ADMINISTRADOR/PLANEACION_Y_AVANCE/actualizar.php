@@ -1,5 +1,5 @@
 <?php
-include "../../db.php";
+include "../../BD.php";
 
 if (isset($_POST['id']) && isset($_POST['nivel'])) {
     $id = $_POST['id'];

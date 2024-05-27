@@ -5,7 +5,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>PROFESORES</title>
-    <link rel="stylesheet" href="../../CSS/administrador.css">
+    <link rel="stylesheet" href="../../estilos/administrador.css">
     <!--DataTables-->
     <link href="https://cdn.datatables.net/2.0.5/css/dataTables.bootstrap5.min.css" rel="stylesheet">
     <link href="https://cdn.datatables.net/buttons/3.0.2/css/buttons.bootstrap5.min.css" rel="stylesheet">
@@ -82,8 +82,8 @@
     <!--SweetAlert2-->
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <!-- JS -->
-    <script src="../../JS/ADMININISTRADOR/profesores.js"></script>
-    <script src="../../JS/ADMININISTRADOR/cerrar_sesion.js"></script>
+    <script src="../../JS/ADMINISTRADOR/profesores.js"></script>
+    <script src="../../JS/ADMINISTRADOR/cerrar_sesion.js"></script>
 </body>
 
 </html>

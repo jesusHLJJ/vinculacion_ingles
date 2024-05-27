@@ -191,6 +191,8 @@ if (isset($_POST['inscribirse'])) {
 
 
     //CONSULTA PARA ALMACENAR LAS RUTAS
+    $sql="update alumnos set id_estatus=1 where id_expediente=$expediente";
+    $result = $con->query($sql);
     $sql = "update expediente set nivel=$nivel_cursar, lin_captura='$lin_captura_d_route',soli_aspirante='$soli_aspirante_route',act_nac='$act_nacimiento_route',comp_estu='$comp_estudios_route',ine='$ine_route',comp_pago='$comp_pago_route',lin_captura_t='$linea_captura',fecha_pago='$fecha_pago',modalidad='$modalidad',horario='$horario' where id_expediente=$expediente";
     $result = $con->query($sql);
     if ($result) {
