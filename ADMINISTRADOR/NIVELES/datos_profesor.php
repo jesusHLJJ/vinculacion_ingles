@@ -1,7 +1,7 @@
 <?php
-include "../../BD.php";
+include "../../db.php";
 
-$sql = "SELECT profesores.id_profesor, profesores.nombres FROM profesores";
+$sql = "SELECT * FROM profesores WHERE estatus = 'Activo'";
 $result = $conexion->query($sql);
 
 $profesores = [];

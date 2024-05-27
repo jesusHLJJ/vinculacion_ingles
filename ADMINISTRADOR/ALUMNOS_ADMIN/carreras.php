@@ -1,20 +1,20 @@
 <?php
 include "../../db.php";
 
-$sql = "SELECT * FROM periodos";
+$sql = "SELECT * FROM carreras";
 $result = $conexion->query($sql);
 
-$periodos = [];
+$carreras = [];
 
 if ($result->num_rows > 0) {
     // Convertir resultados de la consulta a un array asociativo
     while ($row = $result->fetch_assoc()) {
-        $periodos[] = $row;
+        $carreras[] = $row;
     }
 }
 
 $conexion->close();
 
-// Retornar los profesores en formato JSON
-echo json_encode($periodos);
+// Retornar las carreras en formato JSON
+echo json_encode($carreras);
 ?>

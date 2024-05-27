@@ -1,0 +1,172 @@
+*{
+    box-sizing: border-box;
+    margin: 0;
+}
+
+body{
+    width: 100%;
+    height: 100%;
+    background-image: linear-gradient(rgba(0,0,0,0.5), rgba(0,0,0,0.5)), url('../IMAGENES/admin.jpg');
+    background-size: cover;
+    background-position: center center;
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+}
+
+header{
+    width: 100%;
+    height: 100px;
+    background-color: cadetblue;
+}
+
+main{
+    width: 100%;
+    height: calc(90vh - 100px);
+}
+
+.contenedor{
+    width: 100%;
+    height: 100%;
+}
+
+.contenedor-menu{
+    width: 100%;
+    height: 100%;
+}
+
+.menu-lista{
+    width: 100%;
+    height: 100%;
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+}
+
+.opcion{
+    list-style: none;
+}
+
+.opcion a{
+    text-decoration: none;
+    color: white;
+}
+
+.opcion a:hover{
+    color: rgb(184, 184, 184);
+}
+
+.disabled {
+    pointer-events: none; /* Evita que el enlace sea clickeable */
+    cursor: not-allowed; /* Cambia el cursor a "no permitido" */
+}
+
+.principal{
+    width: 100%;
+    height: calc(100vh);
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    margin: 0;
+}
+
+.contenedor-inicio{
+    padding: 30px;
+    background-color: rgb(95, 158, 160, 0.8);
+    border-radius: 5%;
+}
+
+.contenedor-menu-inicio{
+    display: flex;
+}
+
+.menu-lista-inicio{
+    padding: 0;
+    margin: 0;
+}
+
+.opcion-inicio{
+    list-style: none;
+    margin: 10px;
+}
+
+.opcion-inicio a{
+    text-decoration: none;
+    color: white;
+}
+
+.opcion-inicio a:hover{
+    color: rgb(184, 184, 184);
+}
+
+.close{
+    padding: 30px;
+}
+
+.dt-search,
+.dt-length{
+    padding: 10px 0;
+}
+
+.contenedor-drh {
+    width: 100%;
+    height: calc(70vh);
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    padding: 30px;
+}
+
+.grupos {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    grid-gap: 50px;
+}
+
+.icon{
+    min-width: 50px;
+    font-size: 100px;
+    text-align: center;
+}
+
+.level {
+    width: 200px;
+    height: 200px;
+    text-align: center;
+    background: rgb(170, 170, 170, 0.8);
+    border-radius: 10%;
+    padding: 20px;
+}
+
+h2{
+    text-align: center;
+    color: #1a2537;
+    font-size: 40px;
+}
+.link{
+    text-decoration: none;
+    color: #1a2537;
+    font-weight: 600;
+}
+
+.link:hover{
+    color: cadetblue;
+}
+
+label{
+    color: white;
+}
+
+.dt-info{
+    color: white;
+}
+
+.contenido{
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+    align-items: center;
+    margin-top: 20px;
+}
