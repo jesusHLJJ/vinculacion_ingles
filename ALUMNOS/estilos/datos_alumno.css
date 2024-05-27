@@ -30,7 +30,8 @@ span{
 
 .botones{
     margin-top: 40px;
-    display: block; 
+    display: flex;
+    justify-content: space-between;
 }
 
 .botones input:hover{
@@ -46,10 +47,11 @@ span{
     border-radius: 10px; /* Borde redondeado */
     font-size: 30px; /* Tamaño del texto */
     width: 250px;
+   
+    
 }
 
 .botones #volver{
-    position: fixed;
     bottom: 20px;
     right: 20px;
     padding: 10px 20px;
@@ -67,7 +69,6 @@ span{
 }
 
 .botones #modificar{
-    position: fixed;
     bottom: 100px;
     right: 20px;
     padding: 10px 20px;
