@@ -1,8 +1,8 @@
 // Array de URLs de las imágenes
 var images = [
     {src: "../imagenes/recurso_profesor_1.jpg", href: "../PROFESORES/show_g1.php"},
-    {src: "../imagenes/recurso_profesor_2.jpg", href: "../PROFESORES/show_g2.php"},
-    {src: "../imagenes/recurso_profesor_3.jpg", href: "../PROFESORES/show_g3.php"},
+    {src: "../imagenes/recurso_profesor_22.jpg", href: "../PROFESORES/show_g2.php"},
+    {src: "../imagenes/recurso_profesor_33.jpg", href: "../PROFESORES/show_g3.php"},
     {src: "../imagenes/recurso_profesor_4.jpg", href: "../PROFESORES/show_g4.php"},
     {src: "../imagenes/recurso_profesor_5.jpg", href: "../PROFESORES/show_g5.php"},
     {src: "../imagenes/recurso_profesor_6.jpg", href: "../PROFESORES/show_g6.php"}

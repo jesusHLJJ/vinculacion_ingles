@@ -17,7 +17,7 @@ body{
 
 .wrapper {
     width:420px;
-    background:transparent;
+    background-image: linear-gradient(to bottom, #606060, #2f2f2f);
     backdrop-filter: blur(20px);
     box-shadow:0 0 100px rgba(255, 0, 0, 0.2);
     border: 2px solid rgba(255,255,255,.2);
@@ -30,6 +30,8 @@ body{
     font-size: 40px;
     text-align: center;
     text-decoration-line:underline;
+    color: rgb(255, 255, 255);
+    width: 100%;
 }
 
 .wrapper .input-box{
@@ -98,13 +100,27 @@ body{
     color:#333;
     font-weight:600;
 }
+
+.wrapper .btn:hover{
+  
+    background:#000000;
+    border:5px solid white;
+    color:white;
+    
+}
 .olvide-c{
     font-size: 15.5px;
     text-align: center;
     font-weight: 600;
     margin-top: 20px 20px 0;
-    
+}
 
+.olvide-c a:hover{
+    color: black;
+    background-color: white;
+    border-radius: 30px;
+    justify-content: center;
+    display: flex;
 }
 
 .olvide-c a{

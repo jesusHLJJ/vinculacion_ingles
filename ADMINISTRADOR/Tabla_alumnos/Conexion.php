@@ -4,7 +4,7 @@ $host = "localhost";
 $user = "root";
 $pass = "";
 $puert = "3308";
-$db = "vinculacion_ingles";
+$db = "tabla_alumno";
 
 $conec = mysqli_connect($host, $user, $pass, $db, $puert);
 

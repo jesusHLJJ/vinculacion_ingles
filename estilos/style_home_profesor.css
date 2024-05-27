@@ -1,8 +1,80 @@
+body{
+            /* Configuración del fondo */
+            /*background-image: linear-gradient(rgba(0,0,0,0.1), rgba(0,0,0,0.1)), url('https://images.unsplash.com/photo-1552860512-13148a37d7a2?q=80&w=1000&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MTJ8fGxpZ2h0JTIwYmx1ZXxlbnwwfHwwfHx8MA%3D%3D');
+            */
+            background-size: cover;
+            background-repeat: no-repeat;
+            background-attachment: fixed;
+            font-size: 20px;
+            font-family: Arial, sans-serif;
+            font-weight: bold;
+}
+.navbar {
+    position: absolute; 
+    top: 0;
+    bottom: 0;
+    height: 100%;
+    left: 0;
+    background-color: rgb(81, 81, 81);
+    width: 65px;
+    overflow: hidden;   
+    transition: width 0.2s linear;
+    box-shadow: 0 20px 35px rgba(0,0,0,0.1);
+
+}
+.navbar:hover{
+    width: 180px;
+    transition: all 0.5s ease;
+    background-color: #969695;
+}
+.navbar ul {
+    list-style-type: none; /* Quitar viñetas */
+    margin: 0;
+    padding: 0;
+}
+
+.navbar ul li {
+    margin-bottom: 35px; /* Espacio entre elementos */
+}
+
+.navbar ul li a {
+    text-decoration: none;
+    color: #333; /* Color de texto */
+    display: flex; /* Mostrar elementos en línea */
+    align-items: center; /* Alinear verticalmente */
+}
+
+.small-image {
+    width: 60px; /* Ancho de la imagen pequeña */
+    height: 60px;
+    margin-right: 5px; /* Espacio entre la imagen y el texto */
+    border-radius: 100%;
+}
+
+.nav-item {
+    display: none; /* Ocultar los textos por defecto */
+}
+
+.navbar ul li:hover .nav-item {
+    display: inline-block; /* Mostrar los textos al hacer hover */
+}
+.logout{
+    position:absolute;
+    bottom: 0;
+}
+.logout:hover{
+    color: red;
+    transition: all 2s ease;
+}
+
 .titulo-bienvenida {
-    color: #000000; /* Color del texto */
+    color: #ffbb00; /* Color del texto */
     font-family: Arial, sans-serif; /* Tipo de fuente */
     text-align: center; /* Alineación del texto */
     margin-top: 20px; /* Espacio superior */
+    background-color: rgb(81, 81, 81);
+    
+    
 }
 .container {
     text-align: center;
@@ -203,12 +275,13 @@
 .button {
     display: inline-block;
     padding: 10px 20px;
-    background-color: #007bff;
-    color: #fff;
-    border: none;
+    background-color: #fff;
+    color: #000000;
+    border: 3px solid #ffbb00;
     cursor: pointer;
     border-radius: 5px;
     margin-top: 20px;
+    font-weight: bold;
 }
 
 .button-description {

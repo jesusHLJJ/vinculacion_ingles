@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>PROFESORES</title>
+    <title>ALUMNOS</title>
     <!--DataTables-->
     <link href="https://cdn.datatables.net/2.0.5/css/dataTables.bootstrap5.min.css" rel="stylesheet">
     <link href="https://cdn.datatables.net/buttons/3.0.2/css/buttons.bootstrap5.min.css" rel="stylesheet">
@@ -13,49 +13,46 @@
     <!--Font-Awesome-->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" integrity="sha512-SnH5WK+bZxgPHs44uWIX+LLJAJ9/2PkPKZ5QiAj6Ta86w+fsb2TkcmfRyVX3pBnMFcV7oQPJkl9QevSCWr3W6A==" crossorigin="anonymous" referrerpolicy="no-referrer" />
 </head>
-
 <body>
     <header>
         <nav class="contenedor" id="contenedor">
             <ul class="lista">
-                <li class="menu"><a href="index.php">HOME</a></li>
-                <li class="menu">PROFESORES</li>
-                <li class="menu"><a href="niveles.php">NIVELES</a></li>
+                <li class="menu"><a href="../index.php">HOME</a></li>
+                <li class="menu"><a href="../profesores.php">PROFESORES</a></li>
+                <li class="menu"><a href="../niveles.php">NIVEL</li>
                 <li class="menu"><a href="">AVANCE PROGRAMATICO</a></li>
-                <li class="menu"><a href="../ADMINISTRADOR/Tabla_alumnos/tabla_alumnos.php">ALUMNOS</a></li>
+                <li class="menu">ALUMNOS</a></li>
                 <li class="menu"><a href="">ACTAS DE CALIFICACION</a></li>
             </ul>
         </nav>
     </header>
 
+    <center><h1>ALUMNOS</h1></center>
     <div class="container my-5">
         <div class="row">
-            <table id="profesores" class="table table-striped" style="width:100%">
-                <thead>
-                    <tr>
-                        <th>ID</th>
-                        <th>NOMBRE</th>
-                        <th>ESTATUS</th>
-                        <th>EDAD</th>
-                        <th>ESTADO CIVIL</th>
+                <table id="alumnos" class="table table-striped" style="width: 100%">
+                    <thead>
+                        <tr>
+                        <th>MATRICULA</th>
+                        <th>NOMBRES</th>
+                        <th>AP. PATERNO</th>
+                        <th>AP. MATERNO</th>
+                        <th>CARRERA</th>
+                        <th>TELEFONO</th>
                         <th>SEXO</th>
-                        <th>DOMICILIO</th>
-                        <th>RFC</th>
-                        <th>TURNO</th>
-                        <th></th>
-                    </tr>
-                </thead>
+                        <th>NIVEL</th>
+                        <th>ESTATUS</th>
+                        <th>USUARIOS</th>
+                        </tr>
+                    </thead>
 
-                <tbody id="table_profesor">
+                <tbody id="table_alumnos">
 
                 </tbody>
 
-                <tfoot>
-                </tfoot>
-            </table>
+                </table>
         </div>
     </div>
-
     <!--JQuery-->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js" integrity="sha512-v2CJ7UaYy4JwqLDIrZUI/4hqeoQieOmAZNXBeQyjo21dadnwR+8ZaIJVT8EE2iyI61OV8e6M8PP2/4hpQINQ/g==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
     <!--DataTables-->
@@ -73,6 +70,7 @@
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
     <!--SweetAlert2-->
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-    <script src="../JS/admin_profesores.js"></script>
+    <script src="../JS/Java.JS"></script>
+    <script src="../JS/SweetAlert.js"></script>
 </body>
 </html>

@@ -1,11 +1,12 @@
 <?php
 session_start();
+include "../conn_bd.php";
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
-    // Inicias la sesión PHP
     if (isset($_POST['volver'])) {
         header("Location:alumnos.php");
     }
 }
+$expediente = $_SESSION['id_expediente'];
 ?>
 
 <!DOCTYPE html>
@@ -20,7 +21,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
 <body>
     <h1>REINSCRIBIRSE</h1>
-    <form action="subir.php" method="POST" enctype="multipart/form-data">
+    <form action="" method="POST" enctype="multipart/form-data">
         <div class="form_datos">
 
             <label for="lin_captura">LINEA DE CAPTURA</label>
@@ -50,8 +51,9 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             <label for="horario">HORARIO</label>
             <select name="horario" id="horario" required>
                 <option value=''>Selecciona una opción...</option>
-                <option value='1'>8:00 a 12:00 hrs</option>
-                <option value='2'>13:00 a 16:00 hrs</option>
+                <option value='1'>8:00 a 12:00</option>
+                <option value='2'>12:00 a 16:00</option>
+
             </select><br><br><br>
         </div>
         <h3>DOCUMENTOS EN FORMATO PDF NO MAYOR A 2MB</h3>
@@ -73,7 +75,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             <br><br><br>
         </div>
 
-        <input id="reinscribirse" type="submit" value="REINSCRIBIRSE" required><br>
+        <input id="reinscribirse" name="reinscribirse" type="submit" value="REINSCRIBIRSE" required><br>
 
     </form>
     <form action="" method="post">
@@ -83,3 +85,55 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 </body>
 
 </html>
+
+<?php
+if (isset($_POST['reinscribirse'])) {
+    //DATOS
+    $linea_captura = $_POST['lin_captura'];
+    $fecha_pago = $_POST['fe_pago'];
+    $nivel_cursar = $_POST['nivel'];
+    $modalidad = $_POST['modalidad'];
+    $horario = $_POST['horario'];
+
+    //DOCUMENTOS
+
+    $const_anterior = '';
+    $comp_pago =  '';
+    $lin_captura_d =  '';
+
+    //COPIAR DOCUMENTOS A LA CARPETA DE USUARIO CORRESPONDIENTE
+
+    $const_anterior = $_FILES['const_anterior']['name'];
+    if ($const_anterior != '') {
+        $const_anterior_extension = pathinfo($const_anterior, PATHINFO_EXTENSION);
+        $const_anterior_tmp = $_FILES['const_anterior']['tmp_name'];
+        $const_anterior_route = "archivos/usuario_expediente_" . $expediente . "_reinscripcion/".$nivel_cursar."nivel_const_anterior." . $const_anterior_extension;
+        move_uploaded_file($const_anterior_tmp, $const_anterior_route);
+    }
+
+    $comp_pago = $_FILES['comp_pago']['name'];
+    if ($comp_pago != '') {
+        $comp_pago_extension = pathinfo($comp_pago, PATHINFO_EXTENSION);
+        $comp_pago_tmp = $_FILES['comp_pago']['tmp_name'];
+        $comp_pago_route = "archivos/usuario_expediente_" . $expediente . "_reinscripcion/".$nivel_cursar."nivel_comp_pago." . $comp_pago_extension;
+        move_uploaded_file($comp_pago_tmp, $comp_pago_route);
+    }
+
+    $lin_captura_d = $_FILES['lin_captura_d']['name'];
+    if ($lin_captura_d != '') {
+        $lin_captura_d_extension = pathinfo($lin_captura_d, PATHINFO_EXTENSION);
+        $lin_captura_d_tmp = $_FILES['lin_captura_d']['tmp_name'];
+        $lin_captura_d_route = "archivos/usuario_expediente_" . $expediente . "_reinscripcion/".$nivel_cursar."nivel_lin_captura_d." . $lin_captura_d_extension;
+        move_uploaded_file($lin_captura_d_tmp,  $lin_captura_d_route);
+    }
+
+    //CONSULTA PARA ALMACENAR LAS RUTAS
+    $sql="INSERT INTO documento_expediente (`id_expediente`, `nivel`, `const_na`, `comp_pago`, `lin_captura`, `lin_captura_t`, `fecha_entrega`) VALUES ($expediente, $nivel_cursar, '$const_anterior_route','$comp_pago_route', '$lin_captura_d_route','$linea_captura','$fecha_pago')";
+    $result = $con->query($sql);
+    if ($result) {
+    } else {
+        echo "NO se cargaron los archivos correctamente, pero si funciona inscripcion";
+    }
+}
+
+?>
