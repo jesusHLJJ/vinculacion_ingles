@@ -1,5 +1,5 @@
 <?php
-include "../../db.php";
+include "../../BD.php";
 
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     if (!empty($_POST['estatus']) && !empty($_POST['id'])) {

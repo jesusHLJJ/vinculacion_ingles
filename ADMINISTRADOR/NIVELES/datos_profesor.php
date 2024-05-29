@@ -1,5 +1,5 @@
 <?php
-include "../../db.php";
+include "../../BD.php";
 
 $sql = "SELECT * FROM profesores WHERE estatus = 'Activo'";
 $result = $conexion->query($sql);

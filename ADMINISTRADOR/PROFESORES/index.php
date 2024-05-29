@@ -83,7 +83,11 @@
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <!-- JS -->
     <script src="../../JS/ADMINISTRADOR/profesores.js"></script>
+<<<<<<< HEAD
     <script src="../../JS/ADMININISTRADOR/cerrar_sesion.js"></script>
+=======
+    <script src="../../JS/ADMINISTRADOR/cerrar_sesion.js"></script>
+>>>>>>> dc9f7d9bd3732540b99440d7e17edf841d482eb7
 </body>
 
 </html>

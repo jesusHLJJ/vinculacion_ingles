@@ -16,7 +16,7 @@ body{
 /* Estilos para el contenedor */
 .info-container {
     position: absolute;
-    left: 150px; /* Colocar el contenedor a 150px del borde izquierdo */
+    left: 250px; /* Colocar el contenedor a 150px del borde izquierdo */
     top: 142px; /* Colocar el contenedor a 150px del borde superior */
     background-color: rgb(81, 81, 81);
     padding: 10px; /* Espacio interior */
@@ -30,9 +30,14 @@ body{
     font-size: 1.1em; /* Tamaño de fuente más pequeño */
     font-weight: bold;
     margin-bottom: 5px; /* Margen inferior más pequeño */
-
 }
 
+
+.info-container:hover{
+    background-color:#cc5800; /* Color de fondo oscuro */
+    transform: scale(1.1); /* Aumenta el tamaño del botón al 110% */
+
+}
 .container{
     position: absolute;
     left: 48%;
@@ -95,6 +100,10 @@ body{
     color:#000000;
     transition: .5s;
     font-weight: bold;
+}
+.btn2:hover {
+    background-color:#cc5800; /* Color de fondo oscuro */
+    transform: scale(1.1); /* Aumenta el tamaño del botón al 110% */
 }
 
 .container:hover input {
@@ -211,12 +220,10 @@ header{
     font-weight: bold;
     transition: transform 0.3s ease; /* Transición suave */
 }
-
 .table tbody tr td .btn:hover {
+    background-color:#cc5800; /* Color de fondo oscuro */
     transform: scale(1.1); /* Aumenta el tamaño del botón al pasar el cursor */
 }
-
-
 .table input[type="text"] {
     font-family: Arial, Helvetica, sans-serif;
 background-color: transparent; /* Establecer el fondo transparente */
@@ -350,7 +357,6 @@ label{
     cursor: pointer;
     box-shadow: 5px 15px 25px rgb(0, 0, 0.35);
     border-radius: 3px;
-
 }
 
 .custom-button {
@@ -460,3 +466,85 @@ label:active{
     background-color: #c50707;
   }
   
+ /* Estilos para el botón */
+ button[name="na"] {
+    position: absolute;
+    right: 120px;
+    top: 190px;
+    padding: 10px 20px; /* Padding interno */
+    background-color: #ffbb00; /* Color de fondo */
+    color: rgb(8, 8, 8); /* Color del texto */
+    border: 2px solid #000; /* Contorno de color negro */
+    border-radius: 10px; /* Bordes redondeados */
+    cursor: pointer; /* Cursor al pasar por encima */
+    transition: background-color 0.3s; /* Transición suave */
+    font-weight: bold;
+}
+
+
+/* Estilo al pasar el cursor por encima */
+button[name="na"]:hover {
+    background-color:#cc5800; /* Color de fondo oscuro */
+    transform: scale(1.1);
+}
+
+button[name="np"] {
+    position: absolute;
+    right: 370px;
+    top:190px;
+    padding: 10px 20px; /* Padding interno */
+    background-color: #ffbb00; /* Color de fondo */
+    color: rgb(8, 8, 8); /* Color del texto */
+    border: 2px solid #000; /* Contorno de color negro */
+    border-radius: 10px; /* Bordes redondeados */
+    cursor: pointer; /* Cursor al pasar por encima */
+    transition: background-color 0.3s; /* Transición suave */
+    font-weight: bold;
+}
+
+
+/* Estilo al pasar el cursor por encima */
+button[name="np"]:hover {
+    background-color:#cc5800; /* Color de fondo oscuro */
+    transform: scale(1.1); /* Aumenta el tamaño del botón al 110% */
+}
+
+button[name="buscar_na"] {
+    position: absolute;
+    left: 20px;
+    top: 190px;
+    padding: 10px 20px; /* Padding interno */
+    background-color: #ffbb00; /* Color de fondo */
+    color: rgb(8, 8, 8); /* Color del texto */
+    border: 2px solid #000; /* Contorno de color negro */
+    border-radius: 10px; /* Bordes redondeados */
+    cursor: pointer; /* Cursor al pasar por encima */
+    transition: background-color 0.3s; /* Transición suave */
+    font-weight: bold;
+}
+
+/* Estilo al pasar el cursor por encima */
+button[name="buscar_na"]:hover {
+    background-color:#cc5800; /* Color de fondo oscuro */
+    transform: scale(1.1); /* Aumenta el tamaño del botón al 110% */
+}
+button[name="buscar_np"] {
+    position: absolute;
+    left: 90px;
+    top: 190px;
+    padding: 10px 20px; /* Padding interno */
+    background-color: #ffbb00; /* Color de fondo */
+    color: rgb(8, 8, 8); /* Color del texto */
+    border: 2px solid #000; /* Contorno de color negro */
+    border-radius: 10px; /* Bordes redondeados */
+    cursor: pointer; /* Cursor al pasar por encima */
+    transition: background-color 0.3s; /* Transición suave */
+    font-weight: bold;
+}
+
+/* Estilo al pasar el cursor por encima */
+button[name="buscar_np"]:hover {
+    background-color:#cc5800; /* Color de fondo oscuro */
+    transform: scale(1.1); /* Aumenta el tamaño del botón al 110% */
+}
+

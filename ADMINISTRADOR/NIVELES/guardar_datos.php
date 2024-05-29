@@ -1,6 +1,6 @@
 <?php
 // Incluir tu archivo de conexión a la base de datos
-include "../../db.php";
+include "../../BD.php";
 
 // Verificar si se recibieron los datos del formulario
 if (isset($_POST['nivel'], $_POST['grupo'], $_POST['profesor'], $_POST['cupo_max'], $_POST['periodo'], $_POST['modalidad'], $_POST['horario'], $_POST['aula'])) {

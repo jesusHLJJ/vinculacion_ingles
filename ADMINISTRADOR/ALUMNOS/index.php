@@ -83,8 +83,13 @@
     <!--SweetAlert2-->
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <!-- JS -->
+<<<<<<< HEAD:ADMINISTRADOR/ALUMNOS/index.php
     <script src="../../JS/ADMININISTRADOR/cerrar_sesion.js"></script>
     <script src="../../JS/ADMINISTRADOR/alumnos.js"></script>
+=======
+    <script src="../../JS/ADMINISTRADOR/alumnos.js"></script>
+    <script src="../../JS/ADMINISTRADOR/cerrar_sesion.js"></script>
+>>>>>>> dc9f7d9bd3732540b99440d7e17edf841d482eb7:ADMINISTRADOR/ALUMNOS_ADMIN/index.php
 </body>
 
 </html>

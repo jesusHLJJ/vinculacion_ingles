@@ -139,7 +139,7 @@ function agregarNuevoUsuario() {
       formData.append("avance1", formValues.avance1);
 
       $.ajax({
-        url: "../../ADMINISTRADOR/PLANEACION_Y_AVANCE/guardar_datos.php",
+        url: "../../PLANEACION_Y_AVANCE/guardar_datos.php",
         type: "post",
         processData: false,
         contentType: false,

@@ -18,7 +18,7 @@ if (isset($_POST['cerrar_sesion'])) {
 
 $id_nivel = $_SESSION['id_nivel'];
 // Realizar la consulta SQL para obtener los datos de los alumnos
-$sql = "SELECT alumnos.matricula, alumnos.nombre, alumnos.ap_paterno, alumnos.ap_materno, carreras.nombre_carrera, alumnos.telefono 
+$sql = "SELECT alumnos.matricula, alumnos.nombre, alumnos.ap_paterno, alumnos.ap_materno, carreras.nombre_carrera, alumnos.telefono,alumnos.id_nota 
 FROM alumnos join carreras on alumnos.id_carrera = carreras.id_carrera where alumnos.id_nivel = $id_nivel";
 $resultado = mysqli_query($conexion, $sql);
 
@@ -101,7 +101,7 @@ if (mysqli_num_rows($resultado) > 0) {
               <th>PARCIAL 1</th>
               <th>PARCIAL 2</th>
               <th>PARCIAL 3</th>
-              <th>ACCIONES</th>
+              
           </tr>
         </thead>
         <tbody>
@@ -115,7 +115,7 @@ if (mysqli_num_rows($resultado) > 0) {
               <td><?php echo $alumno['telefono']; ?></td>
               <?php
               // Obtener las notas del alumno actual
-              $sql_verificar_notas = "SELECT * FROM notas WHERE matricula = ?";
+              $sql_verificar_notas = "SELECT * FROM notas join alumnos on notas.id_nota=alumnos.id_nota WHERE alumnos.matricula =?";
               $stmt_verificar_notas = $conexion->prepare($sql_verificar_notas);
               $stmt_verificar_notas->bind_param("s", $alumno['matricula']);
               $stmt_verificar_notas->execute();

@@ -3,11 +3,27 @@
 include "../BD.php";
 
 session_start();
-if (isset($_GET['id_nivel'])) {
+if (isset($_GET['id_nivel']) && isset($_GET['parcial'])) {
     $id_nivel = intval($_GET['id_nivel']);
-    echo $id_nivel;
-    // Obtener la ruta del archivo desde la base de datos
-    $sql = "SELECT avance_programatico FROM documentos_profesor WHERE id_nivel = ?";
+    $parcial = intval($_GET['parcial']);
+    $column_name = '';
+
+    switch ($parcial) {
+        case 1:
+            $column_name = 'avance_programatico_1';
+            break;
+        case 2:
+            $column_name = 'avance_programatico_2';
+            break;
+        case 3:
+            $column_name = 'avance_programatico_3';
+            break;
+        default:
+            header("Location: info_grupo.php");
+            exit();
+    }
+
+    $sql = "SELECT $column_name FROM documentos_profesor WHERE id_nivel = ?";
     $stmt = $conexion->prepare($sql);
     $stmt->bind_param("i", $id_nivel);
     $stmt->execute();
@@ -15,7 +31,7 @@ if (isset($_GET['id_nivel'])) {
 
     if ($result->num_rows > 0) {
         $row = $result->fetch_assoc();
-        $file_path = $row['avance_programatico'];
+        $file_path = $row[$column_name];
 
         if (file_exists($file_path)) {
             // Forzar la descarga del archivo
@@ -27,7 +43,7 @@ if (isset($_GET['id_nivel'])) {
             header('Pragma: public');
             header('Content-Length: ' . filesize($file_path));
             readfile($file_path);
-            exit;
+            exit();
         } else {
             header("Location: info_grupo.php");
             exit();

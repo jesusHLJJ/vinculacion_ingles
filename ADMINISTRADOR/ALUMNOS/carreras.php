@@ -1,5 +1,5 @@
 <?php
-include "../../db.php";
+include "../../BD.php";
 
 $sql = "SELECT * FROM carreras";
 $result = $conexion->query($sql);

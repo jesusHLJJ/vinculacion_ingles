@@ -16,7 +16,6 @@
     $id_carrera = isset($_POST["id_carrera"]) ? $_POST["id_carrera"] : '';
     $telefono = isset($_POST["telefono"]) ? $_POST["telefono"] : '';
 
-
     $nota_parcial1 = isset($_POST["parcial1"]) ? $_POST["parcial1"] : '';
     $nota_parcial2 = isset($_POST["parcial2"]) ? $_POST["parcial2"] : '';
     $nota_parcial3 = isset($_POST["parcial3"]) ? $_POST["parcial3"] : '';
@@ -40,7 +39,8 @@
     //nuevo
     if ($stmt_actualizar->execute()) {
       // Verificar si ya existen notas para el alumno
-      $sql_verificar_notas = "SELECT * FROM notas WHERE matricula = ?";
+      //$sql_verificar_notas = "SELECT * FROM notas WHERE matricula = ?";
+      $sql_verificar_notas = "SELECT * FROM notas join alumnos on notas.id_nota=notas.id_nota WHERE alumnos.matricula =?";
       $stmt_verificar_notas = $conexion->prepare($sql_verificar_notas);
       $stmt_verificar_notas->bind_param("s", $matricula);
       $stmt_verificar_notas->execute();
@@ -48,14 +48,14 @@
 
       if ($result_verificar_notas->num_rows > 0) {
         // Actualizar las notas existentes
-        $sql_actualizar_notas = "UPDATE notas SET nota_parcial1=?, nota_parcial2=?, nota_parcial3=? WHERE matricula=?";
+        $sql_actualizar_notas = "update notas join alumnos on notas.id_nota=alumnos.id_nota set notas.nota_parcial1=?,notas.nota_parcial2=?,notas.nota_parcial3=? where alumnos.matricula=?";
         $stmt_actualizar_notas = $conexion->prepare($sql_actualizar_notas);
-        $stmt_actualizar_notas->bind_param("ssss", $nota_parcial1, $nota_parcial2, $nota_parcial3, $matricula);
+        $stmt_actualizar_notas->bind_param("sssi", $nota_parcial1, $nota_parcial2, $nota_parcial3, $matricula);
       } else {
         // Insertar nuevas notas
-        $sql_insertar_notas = "INSERT INTO notas (matricula, nota_parcial1, nota_parcial2, nota_parcial3, id_nivel) VALUES (?, ?, ?, ?, ?)";
+        $sql_insertar_notas = "INSERT INTO notas (nota_parcial1, nota_parcial2, nota_parcial3, id_nivel) VALUES (?, ?, ?, ?)";
         $stmt_insertar_notas = $conexion->prepare($sql_insertar_notas);
-        $stmt_insertar_notas->bind_param("siiii", $matricula, $nota_parcial1, $nota_parcial2, $nota_parcial3, $id_nivel);
+        $stmt_insertar_notas->bind_param("iiii", $nota_parcial1, $nota_parcial2, $nota_parcial3, $id_nivel);
       }
 
       if (($result_verificar_notas->num_rows > 0 && $stmt_actualizar_notas->execute()) || $stmt_insertar_notas->execute()) {
@@ -85,7 +85,51 @@
     $stmt_buscar->bind_param("i", $id_nivel);
     $stmt_buscar->execute();
     $result_alumnos = $stmt_buscar->get_result();
+  } elseif (isset($_POST["buscar_na"])) {
+    // Realizar la consulta SQL para buscar alumnos con calificaciones "N/A"
+    $sql_buscar_na = "SELECT alumnos.matricula, alumnos.nombre, alumnos.ap_paterno, alumnos.ap_materno, carreras.id_carrera,carreras.nombre_carrera, alumnos.telefono FROM alumnos JOIN carreras ON carreras.id_carrera = alumnos.id_carrera JOIN notas ON alumnos.id_nota = notas.id_nota WHERE (notas.nota_parcial1 = 'N/A' OR notas.nota_parcial2 = 'N/A' OR notas.nota_parcial3 = 'N/A') AND notas.id_nivel = ?";
+    
+    // Preparar la consulta SQL
+    if ($stmt_buscar_na = $conexion->prepare($sql_buscar_na)) {
+        // Vincular el parámetro
+        $stmt_buscar_na->bind_param("i", $id_nivel);
+        
+        // Ejecutar la consulta
+        if ($stmt_buscar_na->execute()) {
+            // Obtener el resultado
+            $result_alumnos = $stmt_buscar_na->get_result();
+            $mensaje="Se aplico el filtro de alumnos con N/A";
+        } else {
+            // Manejar el error de ejecución de la consulta
+            echo "Error al ejecutar la consulta: " . $stmt_buscar_na->error;
+        }
+    } else {
+        // Manejar el error de preparación de la consulta
+        echo "Error al preparar la consulta: " . $conexion->error;
+    }
+} elseif (isset($_POST["buscar_np"])) {
+  // Realizar la consulta SQL para buscar alumnos con calificaciones "N/A"
+  $sql_buscar_na = "SELECT alumnos.matricula, alumnos.nombre, alumnos.ap_paterno, alumnos.ap_materno, carreras.id_carrera,carreras.nombre_carrera, alumnos.telefono FROM alumnos JOIN carreras ON carreras.id_carrera = alumnos.id_carrera JOIN notas ON alumnos.id_nota = notas.id_nota WHERE (notas.nota_parcial1 = 'N/P' OR notas.nota_parcial2 = 'N/P' OR notas.nota_parcial3 = 'N/P') AND notas.id_nivel = ?";
+  
+  // Preparar la consulta SQL
+  if ($stmt_buscar_na = $conexion->prepare($sql_buscar_na)) {
+      // Vincular el parámetro
+      $stmt_buscar_na->bind_param("i", $id_nivel);
+      
+      // Ejecutar la consulta
+      if ($stmt_buscar_na->execute()) {
+          // Obtener el resultado
+          $result_alumnos = $stmt_buscar_na->get_result();
+          $mensaje="Se aplico el filtro de alumnos con N/P";
+      } else {
+          // Manejar el error de ejecución de la consulta
+          echo "Error al ejecutar la consulta: " . $stmt_buscar_na->error;
+      }
   } else {
+      // Manejar el error de preparación de la consulta
+      echo "Error al preparar la consulta: " . $conexion->error;
+  }
+}else {
     // Si no se envió un término de búsqueda, mostrar todos los registros
     $sql_alumnos = "SELECT alumnos.matricula, alumnos.nombre, alumnos.ap_paterno, alumnos.ap_materno, carreras.id_carrera,carreras.nombre_carrera, telefono FROM alumnos JOIN carreras on carreras.id_carrera = alumnos.id_carrera WHERE id_nivel = ?";
     $stmt_alumnos = $conexion->prepare($sql_alumnos);
@@ -93,12 +137,191 @@
     $stmt_alumnos->execute();
     $result_alumnos = $stmt_alumnos->get_result();
   }
-  if (isset($_FILES['archivo2'])) {
+
+
+
+  if ($_SERVER["REQUEST_METHOD"] == "POST") {
+    if (isset($_POST['submit1'])) {
+      $nombre_profesor = isset($_SESSION['nombre_profesor']) ? $_SESSION['nombre_profesor'] : '';
+      $ap_paterno = isset($_SESSION['ap_1']) ? $_SESSION['ap_1'] : '';
+      $ap_materno = isset($_SESSION['ap_2']) ? $_SESSION['ap_2'] : '';
+      $id_nivel = $_SESSION['id_nivel'];
+
+      // Combinar el nombre y los apellidos para formar el nombre completo
+      $nombre_completo = $nombre_profesor . "_" . $ap_paterno . "_" . $ap_materno;
+
+      // Crear la ruta de la carpeta
+      $carpeta = "../DOCUMENTOS_PROFESOR/" . $nombre_completo;
+
+      // Verificar si la carpeta ya existe, si no, crearla
+      if (!file_exists($carpeta)) {
+        mkdir($carpeta, 0777, true);
+      }
+
+      // Obtener el nombre del archivo subido
+      $nombre_archivo = basename($_FILES["archivo1"]["name"]);
+
+      // Construir la ruta completa del archivo
+      $ruta_completa = $carpeta . '/' . $nombre_archivo;
+
+      // Verificar si ya existe un documento para este nivel
+      $sql_verificacion = "SELECT COUNT(*) as count FROM documentos_profesor WHERE id_nivel = ?";
+      $stmt_verificacion = $conexion->prepare($sql_verificacion);
+      $stmt_verificacion->bind_param("i", $id_nivel);
+      $stmt_verificacion->execute();
+      $result_verificacion = $stmt_verificacion->get_result();
+      $row_verificacion = $result_verificacion->fetch_assoc();
+      $num_documentos = $row_verificacion['count'];
+      echo $num_documentos;
+      if ($num_documentos > 0) {
+        // Si ya existe un documento para este nivel, actualiza en lugar de insertar
+        $sql = "UPDATE documentos_profesor SET avance_profesor_1 = ? WHERE id_nivel = ?";
+      } else {
+        // Si no existe un documento para este nivel, inserta uno nuevo
+        $sql = "INSERT INTO documentos_profesor (avance_profesor_1, id_nivel) VALUES (?, ?)";
+      }
+
+      $stmt = $conexion->prepare($sql);
+      $stmt->bind_param("si", $ruta_completa, $id_nivel);
+
+      if (move_uploaded_file($_FILES['archivo1']['tmp_name'], $ruta_completa)) {
+        // Ejecutar la consulta SQL
+        if ($stmt->execute()) {
+          $mensaje = "Éxito al subir y registrar el archivo.";
+        } else {
+          $mensaje = "Error al registrar el archivo en la base de datos.";
+          $tipo_mensaje = "error";
+        }
+      } else {
+        // Si hubo un error al mover el archivo, mostrar un mensaje de error
+        $mensaje = "Error al mover el archivo subido.";
+        $tipo_mensaje = "error";
+      }
+
+      //segundo
+    } elseif (isset($_POST['submit2'])) {
+      $nombre_profesor = isset($_SESSION['nombre_profesor']) ? $_SESSION['nombre_profesor'] : '';
+      $ap_paterno = isset($_SESSION['ap_1']) ? $_SESSION['ap_1'] : '';
+      $ap_materno = isset($_SESSION['ap_2']) ? $_SESSION['ap_2'] : '';
+      $id_nivel = $_SESSION['id_nivel'];
+
+      // Combinar el nombre y los apellidos para formar el nombre completo
+      $nombre_completo = $nombre_profesor . "_" . $ap_paterno . "_" . $ap_materno;
+
+      // Crear la ruta de la carpeta
+      $carpeta = "../DOCUMENTOS_PROFESOR/" . $nombre_completo;
+
+      // Verificar si la carpeta ya existe, si no, crearla
+      if (!file_exists($carpeta)) {
+        mkdir($carpeta, 0777, true);
+      }
+
+      // Obtener el nombre del archivo subido
+      $nombre_archivo = basename($_FILES["archivo2"]["name"]);
+
+      // Construir la ruta completa del archivo
+      $ruta_completa = $carpeta . '/' . $nombre_archivo;
+
+      // Verificar si ya existe un documento para este nivel
+      $sql_verificacion = "SELECT COUNT(*) as count FROM documentos_profesor WHERE id_nivel = ?";
+      $stmt_verificacion = $conexion->prepare($sql_verificacion);
+      $stmt_verificacion->bind_param("i", $id_nivel);
+      $stmt_verificacion->execute();
+      $result_verificacion = $stmt_verificacion->get_result();
+      $row_verificacion = $result_verificacion->fetch_assoc();
+      $num_documentos = $row_verificacion['count'];
+      echo $num_documentos;
+      if ($num_documentos > 0) {
+        // Si ya existe un documento para este nivel, actualiza en lugar de insertar
+        $sql = "UPDATE documentos_profesor SET avance_profesor_2 = ? WHERE id_nivel = ?";
+      } else {
+        // Si no existe un documento para este nivel, inserta uno nuevo
+        $sql = "INSERT INTO documentos_profesor (avance_profesor_2, id_nivel) VALUES (?, ?)";
+      }
+
+      $stmt = $conexion->prepare($sql);
+      $stmt->bind_param("si", $ruta_completa, $id_nivel);
+
+      if (move_uploaded_file($_FILES['archivo2']['tmp_name'], $ruta_completa)) {
+        // Ejecutar la consulta SQL
+        if ($stmt->execute()) {
+          $mensaje = "Éxito al subir y registrar el archivo.";
+        } else {
+          $mensaje = "Error al registrar el archivo en la base de datos.";
+          $tipo_mensaje = "error";
+        }
+      } else {
+        // Si hubo un error al mover el archivo, mostrar un mensaje de error
+        $mensaje = "Error al mover el archivo subido.";
+        $tipo_mensaje = "error";
+      }
+    } elseif (isset($_POST['submit3'])) {
+      $nombre_profesor = isset($_SESSION['nombre_profesor']) ? $_SESSION['nombre_profesor'] : '';
+      $ap_paterno = isset($_SESSION['ap_1']) ? $_SESSION['ap_1'] : '';
+      $ap_materno = isset($_SESSION['ap_2']) ? $_SESSION['ap_2'] : '';
+      $id_nivel = $_SESSION['id_nivel'];
+
+      // Combinar el nombre y los apellidos para formar el nombre completo
+      $nombre_completo = $nombre_profesor . "_" . $ap_paterno . "_" . $ap_materno;
+
+      // Crear la ruta de la carpeta
+      $carpeta = "../DOCUMENTOS_PROFESOR/" . $nombre_completo;
+
+      // Verificar si la carpeta ya existe, si no, crearla
+      if (!file_exists($carpeta)) {
+        mkdir($carpeta, 0777, true);
+      }
+
+      // Obtener el nombre del archivo subido
+      $nombre_archivo = basename($_FILES["archivo3"]["name"]);
+
+      // Construir la ruta completa del archivo
+      $ruta_completa = $carpeta . '/' . $nombre_archivo;
+
+      // Verificar si ya existe un documento para este nivel
+      $sql_verificacion = "SELECT COUNT(*) as count FROM documentos_profesor WHERE id_nivel = ?";
+      $stmt_verificacion = $conexion->prepare($sql_verificacion);
+      $stmt_verificacion->bind_param("i", $id_nivel);
+      $stmt_verificacion->execute();
+      $result_verificacion = $stmt_verificacion->get_result();
+      $row_verificacion = $result_verificacion->fetch_assoc();
+      $num_documentos = $row_verificacion['count'];
+      echo $num_documentos;
+      if ($num_documentos > 0) {
+        // Si ya existe un documento para este nivel, actualiza en lugar de insertar
+        $sql = "UPDATE documentos_profesor SET avance_profesor_3 = ? WHERE id_nivel = ?";
+      } else {
+        // Si no existe un documento para este nivel, inserta uno nuevo
+        $sql = "INSERT INTO documentos_profesor (avance_profesor_3, id_nivel) VALUES (?, ?)";
+      }
+
+      $stmt = $conexion->prepare($sql);
+      $stmt->bind_param("si", $ruta_completa, $id_nivel);
+
+      if (move_uploaded_file($_FILES['archivo3']['tmp_name'], $ruta_completa)) {
+        // Ejecutar la consulta SQL
+        if ($stmt->execute()) {
+          $mensaje = "Éxito al subir y registrar el archivo.";
+        } else {
+          $mensaje = "Error al registrar el archivo en la base de datos.";
+          $tipo_mensaje = "error";
+        }
+      } else {
+        $mensaje = "Error al mover el archivo subido.";
+        $tipo_mensaje = "error";
+      }
+    } else {
+    }
+  }
+
+
+  if (isset($_FILES['archivoCalificaciones'])) {
+
     // Obtener el nombre del profesor y sus apellidos de las variables de sesión
     $nombre_profesor = isset($_SESSION['nombre_profesor']) ? $_SESSION['nombre_profesor'] : '';
     $ap_paterno = isset($_SESSION['ap_1']) ? $_SESSION['ap_1'] : '';
     $ap_materno = isset($_SESSION['ap_2']) ? $_SESSION['ap_2'] : '';
-    $id_nivel = $_SESSION['id_nivel']; 
+    $id_nivel = $_SESSION['id_nivel'];
 
     // Combinar el nombre y los apellidos para formar el nombre completo
     $nombre_completo = $nombre_profesor . "_" . $ap_paterno . "_" . $ap_materno;
@@ -111,71 +334,10 @@
       mkdir($carpeta, 0777, true);
     }
 
-    // Obtener el nombre del archivo subido
-    $nombre_archivo = basename($_FILES["archivo2"]["name"]);
-
-    // Construir la ruta completa del archivo
+    $nombre_archivo = basename($_FILES["archivoCalificaciones"]["name"]);
     $ruta_completa = $carpeta . '/' . $nombre_archivo;
 
-    // Verificar si ya existe un documento para este nivel
-    $sql_verificacion = "SELECT COUNT(*) as count FROM documentos_profesor WHERE id_nivel = ?";
-    $stmt_verificacion = $conexion->prepare($sql_verificacion);
-    $stmt_verificacion->bind_param("i", $id_nivel);
-    $stmt_verificacion->execute();
-    $result_verificacion = $stmt_verificacion->get_result();
-    $row_verificacion = $result_verificacion->fetch_assoc();
-    $num_documentos = $row_verificacion['count'];
-    echo $num_documentos; 
-    if ($num_documentos > 0) {
-        // Si ya existe un documento para este nivel, actualiza en lugar de insertar
-        $sql = "UPDATE documentos_profesor SET avance_profesor = ? WHERE id_nivel = ?";
-    } else {
-        // Si no existe un documento para este nivel, inserta uno nuevo
-        $sql = "INSERT INTO documentos_profesor (avance_profesor, id_nivel) VALUES (?, ?)";
-    }
-
-    $stmt = $conexion->prepare($sql);
-    $stmt->bind_param("si", $ruta_completa, $id_nivel);
-
-    if (move_uploaded_file($_FILES['archivo2']['tmp_name'], $ruta_completa)) {
-      // Ejecutar la consulta SQL
-      if ($stmt->execute()) {
-        $mensaje = "Éxito al subir y registrar el archivo.";
-      } else {
-        $mensaje = "Error al registrar el archivo en la base de datos.";
-        $tipo_mensaje = "error";
-      }
-    } else {
-      // Si hubo un error al mover el archivo, mostrar un mensaje de error
-      $mensaje = "Error al mover el archivo subido.";
-      $tipo_mensaje = "error";
-    }
-}
-
-
-if (isset($_FILES['archivoCalificaciones'])) {
-
-  // Obtener el nombre del profesor y sus apellidos de las variables de sesión
-  $nombre_profesor = isset($_SESSION['nombre_profesor']) ? $_SESSION['nombre_profesor'] : '';
-  $ap_paterno = isset($_SESSION['ap_1']) ? $_SESSION['ap_1'] : '';
-  $ap_materno = isset($_SESSION['ap_2']) ? $_SESSION['ap_2'] : '';
-  $id_nivel = $_SESSION['id_nivel']; 
-
-  // Combinar el nombre y los apellidos para formar el nombre completo
-  $nombre_completo = $nombre_profesor . "_" . $ap_paterno . "_" . $ap_materno;
-
-  // Crear la ruta de la carpeta
-  $carpeta = "../DOCUMENTOS_PROFESOR/" . $nombre_completo;
-
-  // Verificar si la carpeta ya existe, si no, crearla
-  if (!file_exists($carpeta)) {
-      mkdir($carpeta, 0777, true);
-  }
-
-  $nombre_archivo = basename($_FILES["archivoCalificaciones"]["name"]);
-  $ruta_completa = $carpeta . '/' . $nombre_archivo;
-
-  if (move_uploaded_file($_FILES['archivoCalificaciones']['tmp_name'], $ruta_completa)) {
+    if (move_uploaded_file($_FILES['archivoCalificaciones']['tmp_name'], $ruta_completa)) {
       // Verificar si ya existe un documento para este nivel
       $sql_verificacion = "SELECT COUNT(*) as count FROM documentos_nivel WHERE id_nivel = ?";
       $stmt_verificacion = $conexion->prepare($sql_verificacion);
@@ -186,27 +348,27 @@ if (isset($_FILES['archivoCalificaciones'])) {
       $num_documentos = $row_verificacion['count'];
 
       if ($num_documentos > 0) {
-          // Si ya existe un documento para este nivel, actualiza en lugar de insertar
-          $sql = "UPDATE documentos_nivel SET acta_calificacion = ? WHERE id_nivel = ?";
+        // Si ya existe un documento para este nivel, actualiza en lugar de insertar
+        $sql = "UPDATE documentos_nivel SET acta_calificacion = ? WHERE id_nivel = ?";
       } else {
-          // Si no existe un documento para este nivel, inserta uno nuevo
-          $sql = "INSERT INTO documentos_nivel (acta_calificacion, id_nivel) VALUES (?, ?)";
+        // Si no existe un documento para este nivel, inserta uno nuevo
+        $sql = "INSERT INTO documentos_nivel (acta_calificacion, id_nivel) VALUES (?, ?)";
       }
 
       $stmt = $conexion->prepare($sql);
       $stmt->bind_param("si", $ruta_completa, $id_nivel);
 
       if ($stmt->execute()) {
-          $mensaje = "Éxito al subir y registrar el archivo de calificaciones.";
+        $mensaje = "Éxito al subir y registrar el archivo de calificaciones.";
       } else {
-          $mensaje = "Error al registrar el archivo de calificaciones en la base de datos.";
-          $tipo_mensaje = "error";
+        $mensaje = "Error al registrar el archivo de calificaciones en la base de datos.";
+        $tipo_mensaje = "error";
       }
-  } else {
+    } else {
       $mensaje = "Error al mover el archivo de calificaciones subido.";
       $tipo_mensaje = "error";
+    }
   }
-}
 
 
   if (isset($_FILES['archivoPlaneacion'])) {
@@ -215,7 +377,7 @@ if (isset($_FILES['archivoCalificaciones'])) {
     $nombre_profesor = isset($_SESSION['nombre_profesor']) ? $_SESSION['nombre_profesor'] : '';
     $ap_paterno = isset($_SESSION['ap_1']) ? $_SESSION['ap_1'] : '';
     $ap_materno = isset($_SESSION['ap_2']) ? $_SESSION['ap_2'] : '';
-    $id_nivel = $_SESSION['id_nivel']; 
+    $id_nivel = $_SESSION['id_nivel'];
 
     // Combinar el nombre y los apellidos para formar el nombre completo
     $nombre_completo = $nombre_profesor . "_" . $ap_paterno . "_" . $ap_materno;
@@ -241,24 +403,24 @@ if (isset($_FILES['archivoCalificaciones'])) {
     $num_documentos = $row_verificacion['count'];
 
     if ($num_documentos > 0) {
-        // Si ya existe un documento para este nivel, actualiza en lugar de insertar
-        $sql = "UPDATE documentos_profesor SET plan_profesor = ? WHERE id_nivel = ?";
+      // Si ya existe un documento para este nivel, actualiza en lugar de insertar
+      $sql = "UPDATE documentos_profesor SET plan_profesor = ? WHERE id_nivel = ?";
     } else {
-        // Si no existe un documento para este nivel, inserta uno nuevo
-        $sql = "INSERT INTO documentos_profesor (plan_profesor, id_nivel) VALUES (?, ?)";
+      // Si no existe un documento para este nivel, inserta uno nuevo
+      $sql = "INSERT INTO documentos_profesor (plan_profesor, id_nivel) VALUES (?, ?)";
     }
 
     $stmt = $conexion->prepare($sql);
     $stmt->bind_param("si", $ruta_completa, $id_nivel);
 
     if ($stmt->execute()) {
-        $mensaje = "Éxito al subir y registrar el archivo de planeación.";
+      $mensaje = "Éxito al subir y registrar el archivo de planeación.";
     } else {
-        $mensaje = "Error al registrar el archivo de planeación en la base de datos.";
-        $tipo_mensaje = "error";
+      $mensaje = "Error al registrar el archivo de planeación en la base de datos.";
+      $tipo_mensaje = "error";
     }
-}
-  
+  }
+
   ?>
 
   <!DOCTYPE html>
@@ -276,7 +438,6 @@ if (isset($_FILES['archivoCalificaciones'])) {
   </head>
 
   <body>
-
     <?php if (!empty($mensaje)) : ?>
       <script>
         swal({
@@ -292,7 +453,6 @@ if (isset($_FILES['archivoCalificaciones'])) {
         <button type="submit" class="btn1" id="btnBuscar"><i class="fa fa-search"></i></button>
       </form>
     </div>
-
     <div class="info-container">
       <!-- Información del grupo, modalidad y horario -->
       <h2 class="grupo">Grupo: <?php echo $grupo; ?></h2>
@@ -333,8 +493,22 @@ if (isset($_FILES['archivoCalificaciones'])) {
             </div>
           </li>
           <li>
-            <a href="descargar_avance.php?id_nivel=<?php echo $id_nivel; ?>">Descargar avance programatico</a>
+            <a href="#" id="openModalDescargar">Descargar avance programatico</a>
           </li>
+
+          <div id="modalDescargar" class="modal">
+            <div class="modal-content">
+              <div class="modal-header">
+                <h2>Seleccione el parcial</h2>
+                <span class="close">&times;</span>
+              </div>
+              <div class="modal-body">
+                <button class="custom-button" onclick="downloadFile(<?php echo $id_nivel; ?>, 1)">Parcial 1</button>
+                <button class="custom-button" onclick="downloadFile(<?php echo $id_nivel; ?>, 2)">Parcial 2</button>
+                <button class="custom-button" onclick="downloadFile(<?php echo $id_nivel; ?>, 3)">Parcial 3</button>
+              </div>
+            </div>
+          </div>
           <li>
             <a href="descargar_plan.php?id_nivel=<?php echo $id_nivel; ?>">Descargar planeación</a>
           </li>
@@ -356,7 +530,6 @@ if (isset($_FILES['archivoCalificaciones'])) {
                 </div>
               </div>
             </div>
-
           </li>
           <li>
             <a href="#" id="openModalBtn">Subir avance programático</a>
@@ -367,11 +540,18 @@ if (isset($_FILES['archivoCalificaciones'])) {
                   <span class="close">&times;</span>
                 </div>
                 <div class="modal-body">
-                  <!-- Formulario de carga de archivos -->
-                  <form method="POST" enctype="multipart/form-data" id="uploadForm">
+                  <form method="POST" enctype="multipart/form-data">
+                    <input type="file" name="archivo1" id="archivo1">
+                    <label for="archivo1">Parcial 1</label>
+                    <button class="custom-button" type="submit" name="submit1"><i class="fas fa-upload"></i></button>
+
                     <input type="file" name="archivo2" id="archivo2">
-                    <label for="archivo2">Cargar archivo</label>
-                    <button class="custom-button" type="submit"><i class="fas fa-upload"></i></button>
+                    <label for="archivo2">Parcial 2</label>
+                    <button class="custom-button" type="submit" name="submit2"><i class="fas fa-upload"></i></button>
+
+                    <input type="file" name="archivo3" id="archivo3">
+                    <label for="archivo3">Parcial 3</label>
+                    <button class="custom-button" type="submit" name="submit3"><i class="fas fa-upload"></i></button>
                   </form>
                 </div>
               </div>
@@ -436,8 +616,10 @@ if (isset($_FILES['archivoCalificaciones'])) {
                   <?php
                   // Aquí debes definir $parcial1, $parcial2 y $parcial3 con valores vacíos por defecto
 
+
                   // Obtener las notas del alumno actual
                   $sql_verificar_notas = "SELECT * FROM notas WHERE matricula = ?";
+                  $sql_verificar_notas = "SELECT * FROM notas join alumnos on notas.id_nota=alumnos.id_nota WHERE alumnos.matricula =?";
                   $stmt_verificar_notas = $conexion->prepare($sql_verificar_notas);
                   $stmt_verificar_notas->bind_param("s", $row['matricula']);
                   $stmt_verificar_notas->execute();
@@ -451,7 +633,6 @@ if (isset($_FILES['archivoCalificaciones'])) {
                     $parcial3 = $row_notas['nota_parcial3'];
                   }
                   ?>
-
                   <td><input type="text" name="parcial1" value="<?php echo htmlspecialchars($parcial1); ?>"></td>
                   <td><input type="text" name="parcial2" value="<?php echo htmlspecialchars($parcial2); ?>"></td>
                   <td><input type="text" name="parcial3" value="<?php echo htmlspecialchars($parcial3); ?>"></td>
@@ -584,7 +765,7 @@ if (isset($_FILES['archivoCalificaciones'])) {
       });
 
       // Cerrar modal de subir calificaciones al hacer clic en el botón de cerrar
-      document.getElementsByClassName("close")[1].addEventListener("click", function() {
+      document.getElementsByClassName("close")[0].addEventListener("click", function() {
         document.getElementById("modalCalificaciones").style.display = "none";
       });
       // Cerrar la ventana modal si el usuario hace clic fuera de ella
@@ -602,6 +783,218 @@ if (isset($_FILES['archivoCalificaciones'])) {
         });
       }
     </script>
+
+    <script>
+      // JavaScript para manejar el modal
+      var modalDescargar = document.getElementById("modalDescargar");
+      var btnDescargar = document.getElementById("openModalDescargar");
+      var spanClose = document.getElementsByClassName("close")[1];
+
+      btnDescargar.onclick = function() {
+        modalDescargar.style.display = "block";
+      }
+
+      spanClose.onclick = function() {
+        modalDescargar.style.display = "none";
+      }
+
+      window.onclick = function(event) {
+        if (event.target == modalDescargar) {
+          modalDescargar.style.display = "none";
+        }
+      }
+
+      function downloadFile(idNivel, parcial) {
+        window.location.href = "descargar_avance.php?id_nivel=" + idNivel + "&parcial=" + parcial;
+      }
+    </script>
+
+    <script>
+      $(document).ready(function() {
+        $('#mostrar-notas-na').click(function() {
+          // Matrícula del alumno (puedes cambiarlo dinámicamente si es necesario)
+          let matricula = '123456'; // Reemplaza con la matrícula real
+
+          // Realizar la solicitud AJAX
+          $.ajax({
+            url: 'obtener_notas_na.php', // Archivo PHP que realiza la consulta
+            type: 'POST',
+            data: {
+              matricula: matricula
+            },
+            dataType: 'json',
+            success: function(response) {
+              if (response.total_notas_na !== undefined) {
+                // Mostrar el SweetAlert con el resultado
+                Swal.fire({
+                  title: 'Total de alumnos con N/A',
+                  text: 'Total de notas con "N/A": ' + response.total_notas_na,
+                  icon: 'info',
+                  confirmButtonText: 'Aceptar'
+                });
+              } else {
+                // Mostrar error si no se encontraron registros
+                Swal.fire({
+                  title: 'Error',
+                  text: response.error,
+                  icon: 'error',
+                  confirmButtonText: 'Aceptar'
+                });
+              }
+            },
+            error: function(xhr, status, error) {
+              // Manejar errores de la solicitud AJAX
+              Swal.fire({
+                title: 'Error',
+                text: 'Ocurrió un error al obtener los datos.',
+                icon: 'error',
+                confirmButtonText: 'Aceptar'
+              });
+            }
+          });
+        });
+      });
+    </script>
+
+    <!-- Modal -->
+    <div class="modal fade" id="modalSubirDocumentos" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+      <div class="modal-dialog" role="document">
+        <div class="modal-content">
+          <form method="POST" enctype="multipart/form-data" action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?>">
+            <div class="modal-header">
+              <h5 class="modal-title" id="exampleModalLabel">Subir Documentos de <span id="nombreAlumno"></span></h5>
+              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+              </button>
+            </div>
+            <div class="modal-body">
+              <label for="archivoParcial1">Subir documento parcial 1:</label>
+              <input type="file" name="archivoParcial1" id="archivoParcial1" accept=".pdf">
+              <label for="archivoParcial2">Subir documento parcial 2:</label>
+              <input type="file" name="archivoParcial2" id="archivoParcial2" accept=".pdf">
+              <label for="archivoParcial3">Subir documento parcial 3:</label>
+              <input type="file" name="archivoParcial3" id="archivoParcial3" accept=".pdf">
+            </div>
+            <div class="modal-footer">
+              <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
+              <button type="submit" name="subirDocumentos" class="btn btn-primary">Subir</button>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+
+    <form method="post" action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?>">
+      <button type="submit" name="na">TOTAL DE ALUMNOS CON N/A</button>
+    </form>
+
+    <form method="post" action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?>">
+      <button type="submit" name="np">TOTAL DE ALUMNOS CON N/P</button>
+    </form>
+
+    <form method="post" action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?>">
+      <button type="submit" name="buscar_na">N/A</button>
+    </form>
+
+    <form method="post" action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?>">
+      <button type="submit" name="buscar_np">N/P</button>
+    </form>
+
+
+    <?php
+
+
+    if (isset($_POST['na'])) {
+      $id_nivel = $_SESSION['id_nivel'];
+
+      // Consulta SQL para contar el total de notas "N/A"
+      $sql_verificar_notas = "SELECT COUNT(*) AS total_notas_na 
+                      FROM notas 
+                      WHERE id_nivel = ?
+                      AND (nota_parcial1 = 'N/A' OR nota_parcial2 = 'N/A' OR nota_parcial3 = 'N/A')";
+
+      // Verificar si la consulta se prepara correctamente
+      if ($stmt = $conexion->prepare($sql_verificar_notas)) {
+        // Vincular los parámetros
+        $stmt->bind_param("s", $id_nivel);
+
+        // Ejecutar la consulta
+        $stmt->execute();
+
+        // Obtener el resultado
+        $result = $stmt->get_result();
+
+        // Verificar si se encontraron registros
+        if ($row = $result->fetch_assoc()) {
+          // Obtener el total de notas "N/A"
+          $total_notas_na = $row['total_notas_na'];
+          // Mostrar un Sweet Alert con el total de reprobados
+          echo '<script>';
+          echo "swal('Total de reprobados con N/A:', '$total_notas_na', 'info');";
+          echo '</script>';
+        } else {
+          // Mostrar un Sweet Alert si no se encontraron registros
+          echo '<script>';
+          echo "swal('Total de reprobados con N/A:', 'No se encontraron registros', 'info');";
+          echo '</script>';
+        }
+
+        // Cerrar la declaración
+        $stmt->close();
+      } else {
+        // Mostrar un Sweet Alert si hay un error al preparar la consulta
+        echo '<script>';
+        echo "swal('Error', 'Error al preparar la consulta', 'error');";
+        echo '</script>';
+      }
+    }
+    if (isset($_POST['np'])) {
+      $id_nivel = $_SESSION['id_nivel'];
+
+      // Consulta SQL para contar el total de notas "N/A"
+      $sql_verificar_notas = "SELECT COUNT(*) AS total_notas_np 
+                      FROM notas 
+                      WHERE id_nivel = ?
+                      AND (nota_parcial1 = 'N/P' OR nota_parcial2 = 'N/P' OR nota_parcial3 = 'N/P')";
+
+      // Verificar si la consulta se prepara correctamente
+      if ($stmt = $conexion->prepare($sql_verificar_notas)) {
+        // Vincular los parámetros
+        $stmt->bind_param("s", $id_nivel);
+
+        // Ejecutar la consulta
+        $stmt->execute();
+
+        // Obtener el resultado
+        $result = $stmt->get_result();
+
+        // Verificar si se encontraron registros
+        if ($row = $result->fetch_assoc()) {
+          // Obtener el total de notas "N/A"
+          $total_notas_na = $row['total_notas_np'];
+          // Mostrar un Sweet Alert con el total de reprobados
+          echo '<script>';
+          echo "swal('Total de reprobados con N/P:', '$total_notas_na', 'info');";
+          echo '</script>';
+        } else {
+          // Mostrar un Sweet Alert si no se encontraron registros
+          echo '<script>';
+          echo "swal('Total de reprobados con N/P:', 'No se encontraron registros', 'info');";
+          echo '</script>';
+        }
+
+        // Cerrar la declaración
+        $stmt->close();
+      } else {
+        // Mostrar un Sweet Alert si hay un error al preparar la consulta
+        echo '<script>';
+        echo "swal('Error', 'Error al preparar la consulta', 'error');";
+        echo '</script>';
+      }
+    }
+
+    ?>
+
   </body>
 
   </html>
