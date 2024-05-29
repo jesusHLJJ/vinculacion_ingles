@@ -5,7 +5,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>PLANEACION Y AVANCES</title>
-    <link rel="stylesheet" href="../../CSS/administrador.css">
+    <link rel="stylesheet" href="../../estilos/administrador.css">
     <!--DataTables-->
     <link href="https://cdn.datatables.net/2.0.5/css/dataTables.bootstrap5.min.css" rel="stylesheet">
     <link href="https://cdn.datatables.net/buttons/3.0.2/css/buttons.bootstrap5.min.css" rel="stylesheet">
@@ -24,7 +24,7 @@
                     <li class="opcion"><a href="../PROFESORES/"><i class="fa-solid fa-chalkboard-user"></i> PROFESORES</a></li>
                     <li class="opcion"><a href="../NIVELES/"><i class="fa-solid fa-user-group"></i> NIVELES</a></li>
                     <li class="opcion disabled"><a href="../PLANEACION_Y_AVANCE/"><i class="fa-solid fa-file"></i> PLANEACION Y AVANCE</a></li>
-                    <li class="opcion"><a href="../ALUMNOS_ADMIN/"><i class="fa-solid fa-user"></i> ALUMNOS</a></li>
+                    <li class="opcion"><a href="../ALUMNOS/"><i class="fa-solid fa-user"></i> ALUMNOS</a></li>
                     <li class="opcion"><a href="../ACTAS_Y_CONSTANCIAS/"><i class="fa-solid fa-file"></i> ACTAS Y CONSTANCIAS</a></li>
                 </ul>
             </nav>
@@ -34,7 +34,7 @@
     <main>
         <div class="container my-5 table-responsive" id="contenedor_tabla">
             <div class="row">
-                <table id="grupos" class="table table-dark">
+                <table id="grupos" class="table table-striped">
                     <thead>
                         <tr>
                             <th class="text-center">ID</th>
@@ -85,7 +85,7 @@
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <!-- JS -->
     <script src="../../JS/ADMININISTRADOR/cerrar_sesion.js"></script>
-    <script src="../../JS/ADMININISTRADOR/planeacion.js"></script>
+    <script src="../../JS/ADMINISTRADOR/planeacion.js"></script>
 </body>
 
 </html>

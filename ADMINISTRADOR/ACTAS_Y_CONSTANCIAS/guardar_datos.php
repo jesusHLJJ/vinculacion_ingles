@@ -1,6 +1,6 @@
 <?php
 // Incluir el archivo de conexión a la base de datos
-include "../../db.php";
+include "../../BD.php";
 
 // Verificar si se recibieron los datos esperados
 if (isset($_POST['nivel']) && isset($_FILES['constancias'])) {

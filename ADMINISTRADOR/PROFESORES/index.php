@@ -5,7 +5,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>PROFESORES</title>
-    <link rel="stylesheet" href="../../CSS/administrador.css">
+    <link rel="stylesheet" href="../../estilos/administrador.css">
     <!--DataTables-->
     <link href="https://cdn.datatables.net/2.0.5/css/dataTables.bootstrap5.min.css" rel="stylesheet">
     <link href="https://cdn.datatables.net/buttons/3.0.2/css/buttons.bootstrap5.min.css" rel="stylesheet">
@@ -24,7 +24,7 @@
                     <li class="opcion disabled"><a href=""><i class="fa-solid fa-chalkboard-user"></i> PROFESORES</a></li>
                     <li class="opcion"><a href="../NIVELES/"><i class="fa-solid fa-user-group"></i> NIVELES</a></li>
                     <li class="opcion"><a href="../PLANEACION_Y_AVANCE/"><i class="fa-solid fa-file"></i> PLANEACION Y AVANCE</a></li>
-                    <li class="opcion"><a href="../ALUMNOS_ADMIN/"><i class="fa-solid fa-user"></i> ALUMNOS</a></li>
+                    <li class="opcion"><a href="../ALUMNOS/"><i class="fa-solid fa-user"></i> ALUMNOS</a></li>
                     <li class="opcion"><a href="../ACTAS_Y_CONSTANCIAS/"><i class="fa-solid fa-file"></i> ACTAS Y CONSTANCIAS</a></li>
                 </ul>
             </nav>
@@ -34,7 +34,7 @@
     <main>
         <div class="container my-5 table-responsive">
             <div class="row">
-                <table id="profesores" class="table table-dark" style="width:100%">
+                <table id="profesores" class="table table-striped" style="width:100%">
                     <thead>
                         <tr>
                             <th>ID</th>
@@ -82,7 +82,7 @@
     <!--SweetAlert2-->
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <!-- JS -->
-    <script src="../../JS/ADMININISTRADOR/profesores.js"></script>
+    <script src="../../JS/ADMINISTRADOR/profesores.js"></script>
     <script src="../../JS/ADMININISTRADOR/cerrar_sesion.js"></script>
 </body>
 

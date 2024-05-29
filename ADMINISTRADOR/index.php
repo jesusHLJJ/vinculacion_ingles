@@ -5,7 +5,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>HOME</title>
-    <link rel="stylesheet" href="../CSS/administrador.css">
+    <link rel="stylesheet" href="../estilos/administrador.css">
     <!-- FONT AWESOME -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
     <!--Bootstrap-->
@@ -21,7 +21,7 @@
                     <li class="opcion-inicio"><a href="PROFESORES/"><i class="fa-solid fa-chalkboard-user"></i> PROFESORES</a></li>
                     <li class="opcion-inicio"><a href="NIVELES/"><i class="fa-solid fa-user-group"></i> NIVELES</a></li>
                     <li class="opcion-inicio"><a href="PLANEACION_Y_AVANCE/"><i class="fa-solid fa-file"></i> PLANEACION Y AVANCE</a></li>
-                    <li class="opcion-inicio"><a href="ALUMNOS_ADMIN/"><i class="fa-solid fa-user"></i> ALUMNOS</a></li>
+                    <li class="opcion-inicio"><a href="ALUMNOS/"><i class="fa-solid fa-user"></i> ALUMNOS</a></li>
                     <li class="opcion-inicio"><a href="ACTAS_Y_CONSTANCIAS/"><i class="fa-solid fa-file"></i> ACTAS Y CONSTANCIAS</a></li>
                 </ul>
             </nav>

@@ -6,7 +6,6 @@
 body{
     width: 100%;
     height: 100%;
-    background-image: linear-gradient(rgba(0,0,0,0.5), rgba(0,0,0,0.5)), url('../IMAGENES/admin.jpg');
     background-size: cover;
     background-position: center center;
     background-repeat: no-repeat;
@@ -16,7 +15,7 @@ body{
 header{
     width: 100%;
     height: 100px;
-    background-color: cadetblue;
+    background-color: rgb(81, 81, 81);
 }
 
 main{
@@ -48,11 +47,11 @@ main{
 
 .opcion a{
     text-decoration: none;
-    color: white;
+    color: #ffbb00;;
 }
 
 .opcion a:hover{
-    color: rgb(184, 184, 184);
+    color: rgb(81, 184, 184);
 }
 
 .disabled {
@@ -61,7 +60,12 @@ main{
 }
 
 .principal{
-    width: 100%;
+    font-family: Arial, Helvetica, sans-serif;
+    margin: 0;
+    padding: 0;
+
+    font-size: 30px;
+    
     height: calc(100vh);
     display: flex;
     flex-direction: column;
@@ -71,11 +75,6 @@ main{
     margin: 0;
 }
 
-.contenedor-inicio{
-    padding: 30px;
-    background-color: rgb(95, 158, 160, 0.8);
-    border-radius: 5%;
-}
 
 .contenedor-menu-inicio{
     display: flex;
@@ -87,17 +86,24 @@ main{
 }
 
 .opcion-inicio{
-    list-style: none;
-    margin: 10px;
+    margin-bottom: 25px;
+    display: block;
+    font-size: 40px;
+    border-radius: 100px;
+    width: 1200px;
+    border: 3px solid #ffbb00;
+    font-weight: bold;
+    box-shadow: 0 6px 40px rgba(0, 0, 0, 0.1);
 }
+
 
 .opcion-inicio a{
     text-decoration: none;
-    color: white;
+    color: rgb(0, 0, 0);
 }
 
 .opcion-inicio a:hover{
-    color: rgb(184, 184, 184);
+    color: #ffbb00;
 }
 
 .close{
@@ -142,7 +148,7 @@ main{
 
 h2{
     text-align: center;
-    color: #1a2537;
+    color: #ffbb00;
     font-size: 40px;
 }
 .link{
@@ -169,4 +175,20 @@ label{
     justify-content: space-around;
     align-items: center;
     margin-top: 20px;
+}
+
+.close{
+    position: absolute;
+    bottom: 10%;
+    right: 20px;
+    font-size: 40px;
+    width: 500px;
+}
+
+label{
+    color: black;
+}
+
+.dt-info{
+    color: black;
 }
