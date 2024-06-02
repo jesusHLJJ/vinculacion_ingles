@@ -134,6 +134,7 @@ if (isset($_POST['reinscribirse'])) {
     $sql="INSERT INTO documento_expediente (`id_expediente`, `nivel`, `const_na`, `comp_pago`, `lin_captura`, `lin_captura_t`, `fecha_entrega`) VALUES ($expediente, $nivel_cursar, '$const_anterior_route','$comp_pago_route', '$lin_captura_d_route','$linea_captura','$fecha_pago')";
     $result = $con->query($sql);
     if ($result) {
+        header("Location:elegir_grupo.php?nivel=$nivel_cursar&expediente=$expediente");
     } else {
         echo "NO se cargaron los archivos correctamente, pero si funciona inscripcion";
     }

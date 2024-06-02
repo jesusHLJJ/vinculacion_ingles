@@ -9,7 +9,23 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
 $ingreso = $_SESSION['correo'];
 $expediente = $_SESSION['id_expediente'];
+$matricula = $_SESSION['matricula'];
+
+//SACAR EL CUPO DEL GRUPO DEL ALUMNO
+$sql = "select niveles.cupo_max from niveles";
+$stmt = $con->prepare($sql);
+$stmt->execute();
+$result = $stmt->get_result();
+//Verificar si se encontraron resultados
+if ($result->num_rows > 0) {
+    // Obtener el nombre de la fila
+    $fila = $result->fetch_assoc();
+    $cupo_max = $fila['cupo_max'];
+}
+
 ?>
+
+
 
 <!DOCTYPE html>
 <html lang="es">
@@ -19,7 +35,6 @@ $expediente = $_SESSION['id_expediente'];
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>INSCRIBIRSE</title>
     <link rel="stylesheet" href="estilos/inscribirse.css">
-
 </head>
 
 <body>
@@ -43,6 +58,12 @@ $expediente = $_SESSION['id_expediente'];
                 <option value='5'>NIVEL 5</option>
                 <option value='6'>NIVEL 6</option>
             </select><br>
+
+
+
+
+         
+
 
             <label for="modalidad">MODALIDAD</label>
             <select name="modalidad" id="modalidad" required>
@@ -105,6 +126,12 @@ $expediente = $_SESSION['id_expediente'];
     </form>
     <script src="java/inscribirse.js"></script>
 </body>
+
+
+
+
+
+
 
 </html>
 
@@ -191,12 +218,12 @@ if (isset($_POST['inscribirse'])) {
 
 
     //CONSULTA PARA ALMACENAR LAS RUTAS
-    $sql="update alumnos set id_estatus=1 where id_expediente=$expediente";
+    $sql = "update alumnos set id_estatus=1 where id_expediente=$expediente";
     $result = $con->query($sql);
     $sql = "update expediente set nivel=$nivel_cursar, lin_captura='$lin_captura_d_route',soli_aspirante='$soli_aspirante_route',act_nac='$act_nacimiento_route',comp_estu='$comp_estudios_route',ine='$ine_route',comp_pago='$comp_pago_route',lin_captura_t='$linea_captura',fecha_pago='$fecha_pago',modalidad='$modalidad',horario='$horario' where id_expediente=$expediente";
     $result = $con->query($sql);
     if ($result) {
-        echo "Se cargaron los archivos correctamente";
+        header("Location:elegir_grupo.php?nivel=$nivel_cursar&expediente=$expediente");
     } else {
         echo "NO se cargaron los archivos correctamente";
     }

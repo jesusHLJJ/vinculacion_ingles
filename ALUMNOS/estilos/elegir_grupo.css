@@ -1,0 +1,56 @@
+/* estilos/elegir_grupo.css */
+
+body {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    margin: 0;
+    background-color: #333; /* Fondo gris oscuro */
+    font-family: Arial, sans-serif;
+    color: #fff; /* Texto blanco */
+}
+
+form {
+    background-color: #444; /* Fondo del formulario un poco más claro */
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+    text-align: center;
+    width: 80%;
+}
+
+label {
+    display: block;
+    margin-bottom: 10px;
+    font-weight: bold;
+    color: #ffa500; /* Naranja */
+}
+
+select, input[type="submit"] {
+    width: 100%;
+    padding: 10px;
+    margin-bottom: 15px;
+    border: 1px solid #555;
+    border-radius: 5px;
+    font-size: 16px;
+}
+
+input[type="submit"] {
+    background-color: #ffa500; /* Naranja */
+    color: #fff;
+    cursor: pointer;
+    border: none;
+}
+
+input[type="submit"]:hover {
+    background-color: #ff8c00; /* Naranja oscuro */
+}
+
+option {
+    color: #000; /* Texto negro dentro del select */
+}
+
+span {
+    color: white;
+}
