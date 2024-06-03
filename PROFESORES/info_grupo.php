@@ -314,10 +314,9 @@
     }
   }
 
-
-  if (isset($_FILES['archivoCalificaciones'])) {
-
-    // Obtener el nombre del profesor y sus apellidos de las variables de sesión
+  if ($_SERVER["REQUEST_METHOD"] == "POST") {
+    if (isset($_POST['c1'])) {
+              // Obtener el nombre del profesor y sus apellidos de las variables de sesión
     $nombre_profesor = isset($_SESSION['nombre_profesor']) ? $_SESSION['nombre_profesor'] : '';
     $ap_paterno = isset($_SESSION['ap_1']) ? $_SESSION['ap_1'] : '';
     $ap_materno = isset($_SESSION['ap_2']) ? $_SESSION['ap_2'] : '';
@@ -334,10 +333,10 @@
       mkdir($carpeta, 0777, true);
     }
 
-    $nombre_archivo = basename($_FILES["archivoCalificaciones"]["name"]);
+    $nombre_archivo = basename($_FILES["cali1"]["name"]);
     $ruta_completa = $carpeta . '/' . $nombre_archivo;
 
-    if (move_uploaded_file($_FILES['archivoCalificaciones']['tmp_name'], $ruta_completa)) {
+    if (move_uploaded_file($_FILES['cali1']['tmp_name'], $ruta_completa)) {
       // Verificar si ya existe un documento para este nivel
       $sql_verificacion = "SELECT COUNT(*) as count FROM documentos_nivel WHERE id_nivel = ?";
       $stmt_verificacion = $conexion->prepare($sql_verificacion);
@@ -348,7 +347,7 @@
       $num_documentos = $row_verificacion['count'];
 
       if ($num_documentos > 0) {
-        // Si ya existe un documento para este nivel, actualiza en lugar de insertar
+        // Si ya existe un documento para este nivel,  actualiza en lugar de insertar
         $sql = "UPDATE documentos_nivel SET acta_calificacion = ? WHERE id_nivel = ?";
       } else {
         // Si no existe un documento para este nivel, inserta uno nuevo
@@ -368,9 +367,115 @@
       $mensaje = "Error al mover el archivo de calificaciones subido.";
       $tipo_mensaje = "error";
     }
+      //segundo
+    } elseif (isset($_POST['c2'])) {
+          // Obtener el nombre del profesor y sus apellidos de las variables de sesión
+    $nombre_profesor = isset($_SESSION['nombre_profesor']) ? $_SESSION['nombre_profesor'] : '';
+    $ap_paterno = isset($_SESSION['ap_1']) ? $_SESSION['ap_1'] : '';
+    $ap_materno = isset($_SESSION['ap_2']) ? $_SESSION['ap_2'] : '';
+    $id_nivel = $_SESSION['id_nivel'];
+
+    // Combinar el nombre y los apellidos para formar el nombre completo
+    $nombre_completo = $nombre_profesor . "_" . $ap_paterno . "_" . $ap_materno;
+
+    // Crear la ruta de la carpeta
+    $carpeta = "../DOCUMENTOS_PROFESOR/" . $nombre_completo;
+
+    // Verificar si la carpeta ya existe, si no, crearla
+    if (!file_exists($carpeta)) {
+      mkdir($carpeta, 0777, true);
+    }
+
+    $nombre_archivo = basename($_FILES["cali2"]["name"]);
+    $ruta_completa = $carpeta . '/' . $nombre_archivo;
+
+    if (move_uploaded_file($_FILES['cali2']['tmp_name'], $ruta_completa)) {
+      // Verificar si ya existe un documento para este nivel
+      $sql_verificacion = "SELECT COUNT(*) as count FROM documentos_nivel WHERE id_nivel = ?";
+      $stmt_verificacion = $conexion->prepare($sql_verificacion);
+      $stmt_verificacion->bind_param("i", $id_nivel);
+      $stmt_verificacion->execute();
+      $result_verificacion = $stmt_verificacion->get_result();
+      $row_verificacion = $result_verificacion->fetch_assoc();
+      $num_documentos = $row_verificacion['count'];
+
+      if ($num_documentos > 0) {
+        // Si ya existe un documento para este nivel,  actualiza en lugar de insertar
+        $sql = "UPDATE documentos_nivel SET acta_calificacion_2 = ? WHERE id_nivel = ?";
+      } else {
+        // Si no existe un documento para este nivel, inserta uno nuevo
+        $sql = "INSERT INTO documentos_nivel (acta_calificacion_2, id_nivel) VALUES (?, ?)";
+      }
+
+      $stmt = $conexion->prepare($sql);
+      $stmt->bind_param("si", $ruta_completa, $id_nivel);
+
+      if ($stmt->execute()) {
+        $mensaje = "Éxito al subir y registrar el archivo de calificaciones.";
+      } else {
+        $mensaje = "Error al registrar el archivo de calificaciones en la base de datos.";
+        $tipo_mensaje = "error";
+      }
+    } else {
+      $mensaje = "Error al mover el archivo de calificaciones subido.";
+      $tipo_mensaje = "error";
+    }
+      
+    } elseif (isset($_POST['c3'])) {
+               // Obtener el nombre del profesor y sus apellidos de las variables de sesión
+    $nombre_profesor = isset($_SESSION['nombre_profesor']) ? $_SESSION['nombre_profesor'] : '';
+    $ap_paterno = isset($_SESSION['ap_1']) ? $_SESSION['ap_1'] : '';
+    $ap_materno = isset($_SESSION['ap_2']) ? $_SESSION['ap_2'] : '';
+    $id_nivel = $_SESSION['id_nivel'];
+
+    // Combinar el nombre y los apellidos para formar el nombre completo
+    $nombre_completo = $nombre_profesor . "_" . $ap_paterno . "_" . $ap_materno;
+
+    // Crear la ruta de la carpeta
+    $carpeta = "../DOCUMENTOS_PROFESOR/" . $nombre_completo;
+
+    // Verificar si la carpeta ya existe, si no, crearla
+    if (!file_exists($carpeta)) {
+      mkdir($carpeta, 0777, true);
+    }
+
+    $nombre_archivo = basename($_FILES["cali3"]["name"]);
+    $ruta_completa = $carpeta . '/' . $nombre_archivo;
+
+    if (move_uploaded_file($_FILES['cali3']['tmp_name'], $ruta_completa)) {
+      // Verificar si ya existe un documento para este nivel
+      $sql_verificacion = "SELECT COUNT(*) as count FROM documentos_nivel WHERE id_nivel = ?";
+      $stmt_verificacion = $conexion->prepare($sql_verificacion);
+      $stmt_verificacion->bind_param("i", $id_nivel);
+      $stmt_verificacion->execute();
+      $result_verificacion = $stmt_verificacion->get_result();
+      $row_verificacion = $result_verificacion->fetch_assoc();
+      $num_documentos = $row_verificacion['count'];
+
+      if ($num_documentos > 0) {
+        // Si ya existe un documento para este nivel,  actualiza en lugar de insertar
+        $sql = "UPDATE documentos_nivel SET acta_calificacion_3 = ? WHERE id_nivel = ?";
+      } else {
+        // Si no existe un documento para este nivel, inserta uno nuevo
+        $sql = "INSERT INTO documentos_nivel (acta_calificacion_3, id_nivel) VALUES (?, ?)";
+      }
+
+      $stmt = $conexion->prepare($sql);
+      $stmt->bind_param("si", $ruta_completa, $id_nivel);
+
+      if ($stmt->execute()) {
+        $mensaje = "Éxito al subir y registrar el archivo de calificaciones.";
+      } else {
+        $mensaje = "Error al registrar el archivo de calificaciones en la base de datos.";
+        $tipo_mensaje = "error";
+      }
+    } else {
+      $mensaje = "Error al mover el archivo de calificaciones subido.";
+      $tipo_mensaje = "error";
+    }
+    } else {
+    }
   }
-
-
   if (isset($_FILES['archivoPlaneacion'])) {
 
     // Obtener el nombre del profesor y sus apellidos de las variables de sesión
@@ -483,10 +588,18 @@
                   <span class="close">&times;</span>
                 </div>
                 <div class="modal-body">
-                  <form method="POST" enctype="multipart/form-data" id="uploadCalificacionesForm">
-                    <input type="file" name="archivoCalificaciones" id="archivoCalificaciones">
-                    <label for="archivoCalificaciones">Cargar archivo de calificaciones</label>
-                    <button class="custom-button" type="submit"><i class="fas fa-upload"></i></button>
+                  <form method="POST" enctype="multipart/form-data">
+                    <input type="file" name="cali1" id="cali1">
+                    <label for="cali1">Parcial 1</label>
+                    <button class="custom-button" type="submit" name="c1"><i class="fas fa-upload"></i></button>
+
+                    <input type="file" name="cali2" id="cali2">
+                    <label for="cali2">Parcial 2</label>
+                    <button class="custom-button" type="submit" name="c2"><i class="fas fa-upload"></i></button>
+
+                    <input type="file" name="cali3" id="cali3">
+                    <label for="cali3">Parcial 3</label>
+                    <button class="custom-button" type="submit" name="c3"><i class="fas fa-upload"></i></button>
                   </form>
                 </div>
               </div>

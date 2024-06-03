@@ -1,0 +1,12 @@
+Starting Websocket Server on port 32658
+Starting Websocket Server on port 32660
+IP Address to listen on is 127.0.0.1
+Initialize SSL
+WebServer active on port 32658
+HTTP server running OK
+SSL Success
+StartSoftwareAgent
+BCS Version 5.60
+WebServer active on port 32660
+HTTP server running OK
+StopSoftwareAgent
