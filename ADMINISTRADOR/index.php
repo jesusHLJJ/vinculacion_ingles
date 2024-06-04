@@ -1,3 +1,15 @@
+<?php
+session_start();
+
+if (!isset($_SESSION['tipo'])) {
+    header('location: ../');
+} else {
+    if ($_SESSION['tipo'] != 1) {
+        header('location: ../');
+    }
+}
+?>
+
 <!DOCTYPE html>
 <html lang="es">
 

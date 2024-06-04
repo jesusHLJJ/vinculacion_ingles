@@ -1,4 +1,24 @@
 <?php
+session_start();
+
+if (isset($_SESSION['tipo'])) {
+    switch ($_SESSION['tipo']) {
+        case 1: // Tutor
+            header('location: ADMINISTRADOR/');
+            break;
+            case 2: // Administrador
+                header('location: PROFESORES/');
+            break;
+        case 3: // Alumno
+
+            header('location: ALUMNOS/alumnos.php');
+            break;
+        default:
+    }
+}
+?>
+
+<?php
 if (isset($_POST['volver'])) {
   header("Location:index.php");
 }

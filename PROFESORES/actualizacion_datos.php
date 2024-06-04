@@ -1,6 +1,14 @@
 <?php
 include "../BD.php";
 session_start();
+
+if (!isset($_SESSION['tipo'])) {
+    header('location: ../');
+} else {
+    if ($_SESSION['tipo'] != 2) {
+        header('location: ../');
+    }
+}
 $correo = $_SESSION['correo'];
 
 // Realizar la consulta para obtener los datos del profesor

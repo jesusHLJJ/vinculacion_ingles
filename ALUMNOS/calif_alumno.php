@@ -1,6 +1,14 @@
 <?php
 session_start();
-include "../conn_bd.php";
+
+if (!isset($_SESSION['tipo'])) {
+    header('location: ../');
+} else {
+    if ($_SESSION['tipo'] != 2) {
+        header('location: ../');
+    }
+}
+include "../BD.php";
 $primer_parcial = '';
 $segundo_parcial = '';
 $tercer_parcial = '';
@@ -15,7 +23,7 @@ if (isset($_POST['volver'])) {
 
 // OBTENEMOS LAS CALIFICACIONES DEL ALUMNO
 $sql = "select notas.nota_parcial1,notas.nota_parcial2,notas.nota_parcial3,niveles.nivel,profesores.nombre,profesores.ap_paterno,profesores.ap_materno from notas join alumnos on notas.id_nota=alumnos.id_nota join niveles on alumnos.id_nivel=niveles.id_nivel join profesores on niveles.id_profesor=profesores.id_profesor where alumnos.matricula=$matricula";
-$stmt = $con->prepare($sql);
+$stmt = $conexion->prepare($sql);
 $stmt->execute();
 $result = $stmt->get_result();
 if ($result->num_rows > 0) {

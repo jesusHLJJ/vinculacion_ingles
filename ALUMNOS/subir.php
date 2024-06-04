@@ -1,4 +1,4 @@
-<?PHP include '../conn_bd.php';
+<?PHP include '../BD.php';
 session_start();
 $ingreso = $_SESSION['correo'];
 $matricula = $_SESSION['matricula'];
