@@ -1,8 +1,8 @@
   <?php
+  
   include "../BD.php";
 
-  session_start();
-
+session_start(); 
   // Inicializar la variable de mensaje
   $mensaje = "";
   $id_carrera = '';
@@ -137,9 +137,6 @@
     $stmt_alumnos->execute();
     $result_alumnos = $stmt_alumnos->get_result();
   }
-
-
-
   if ($_SERVER["REQUEST_METHOD"] == "POST") {
     if (isset($_POST['submit1'])) {
       $nombre_profesor = isset($_SESSION['nombre_profesor']) ? $_SESSION['nombre_profesor'] : '';
