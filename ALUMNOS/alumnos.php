@@ -115,7 +115,7 @@ if ($alumno == "  ") {                          //IF PARA LA PRIMERA VEZ QUE ENT
     <h1><?php echo $alumno; ?></h1>
     <div class="contenedor_botones">
         <form action='' method="POST">
-            <input type='submit' name="actas" value="VER ACTAS/CALIFICACIONES">
+            <input type='submit' name="actas" value="CONSTANCIAS DE LIBERACION">
             <input type='submit' name="inscribirse" value="INSCRIBIRSE">
             <input type='submit' name="reinscribirse" value="REINSCRIBIRSE">
             <input type='submit' name="datos_alumno" value="VER MIS DATOS">

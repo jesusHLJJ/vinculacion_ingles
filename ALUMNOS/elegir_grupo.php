@@ -4,7 +4,7 @@ session_start();
 if (!isset($_SESSION['tipo'])) {
     header('location: ../');
 } else {
-    if ($_SESSION['tipo'] != 2) {
+    if ($_SESSION['tipo'] != 3) {
         header('location: ../');
     }
 }
@@ -44,7 +44,7 @@ $expediente = $_GET['expediente'];
                     $id_nivel = $row['id_nivel'];
                     $grupo = $row["grupo"];
 
-                    $sql = "select count(*) as total_alumnos,niveles.cupo_max from alumnos join niveles on alumnos.id_nivel=niveles.id_nivel where alumnos.id_nivel=$id_nivel";
+                    $sql = "select count(*) as total_alumnos,niveles.cupo_max from niveles left join alumnos on alumnos.id_nivel=niveles.id_nivel where niveles.id_nivel=$id_nivel";
                     $stmt = $conexion->prepare($sql);
                     $stmt->execute();
                     $result = $stmt->get_result();

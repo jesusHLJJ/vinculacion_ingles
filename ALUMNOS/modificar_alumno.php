@@ -4,7 +4,7 @@ session_start();
 if (!isset($_SESSION['tipo'])) {
     header('location: ../');
 } else {
-    if ($_SESSION['tipo'] != 2) {
+    if ($_SESSION['tipo'] != 3) {
         header('location: ../');
     }
 }

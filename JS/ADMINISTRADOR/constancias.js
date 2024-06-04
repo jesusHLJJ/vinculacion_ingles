@@ -100,6 +100,8 @@ $(document).on("click", ".modificar", async function () {
   var id = $(this).data("id");
   var grupo = $(this).data("grupo");
 
+  console.log(id, grupo);
+
   try {
     const result = await Swal.fire({
       title: `Modificar Documentos ${grupo}`,
@@ -129,7 +131,7 @@ $(document).on("click", ".modificar", async function () {
       }
 
       const response = await $.ajax({
-        url: "../../ADMINSITRADOR/ACTAS_Y_CONSTANCIAS/actualizar.php",
+        url: "../../ADMINISTRADOR/ACTAS_Y_CONSTANCIAS/actulizar.php",
         type: "POST",
         data: formData,
         processData: false,

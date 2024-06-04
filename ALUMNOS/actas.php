@@ -1,8 +1,23 @@
 <?php include '../BD.php';
 session_start();
+$matricula=$_SESSION['matricula'];
 
-//$ruta_archivo = 'C:\Users\da7ca\Desktop\actas_grupo_1A.pdf';
-$ruta_archivo ='C:\Users\da7ca\Documents\Universidad\Servicio social\Documentos de prueba\Documentos de alumno\actas_grupo_1A.pdf';
+$sql="select niveles.grupo,alumnos.id_expediente from alumnos join niveles on alumnos.id_nivel=niveles.id_nivel where matricula=$matricula";
+$stmt = $conexion->prepare($sql);
+$stmt->execute();
+$result = $stmt->get_result();
+//Verificar si se encontraron resultados
+if ($result->num_rows > 0) {
+    // Obtener el nombre de la fila
+    $fila = $result->fetch_assoc();
+    $grupo = $fila['grupo'];
+    $expediente = $fila['id_expediente'];
+}
+
+
+
+
+$ruta_archivo ="../CONSTANCIAS/$grupo/$expediente"."acta.pdf";
 
 
 ?>

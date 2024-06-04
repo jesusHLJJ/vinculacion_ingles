@@ -22,7 +22,7 @@ if (isset($_SESSION['tipo'])) {
 if (isset($_POST['volver'])) {
   header("Location:index.php");
 }
-include "../vinculacion_ingles-main/conn_bd.php";
+include "../vinculacion_ingles-main/BD.php";
 ?>
 
 <!DOCTYPE html>
@@ -78,7 +78,7 @@ if (isset($_POST['enviar'])) {
 
   $HASH = password_hash($contrasena, PASSWORD_DEFAULT);
   $sql = "INSERT INTO `usuarios` (`correo`, `contrasena`, `id_tipo`) VALUES ('$correo', '$HASH', 3)";
-  $result = $con->query($sql);
+  $result = $conexion->query($sql);
 
 
 
@@ -86,7 +86,7 @@ if (isset($_POST['enviar'])) {
 
     //ULTIMO ID DE LA TABLA USUARIOS
     $sql = "select MAX(id_usuario) as 'ultimo_id' from usuarios";
-    $stmt = $con->prepare($sql);
+    $stmt = $conexion->prepare($sql);
     $stmt->execute();
     $result = $stmt->get_result();
     //Verificar si se encontraron resultados
@@ -97,7 +97,7 @@ if (isset($_POST['enviar'])) {
     }
 
     $sql = "SELECT MAX(id_expediente) as 'ultimo_id' FROM expediente";
-    $stmt = $con->prepare($sql);
+    $stmt = $conexion->prepare($sql);
     $stmt->execute();
     $result = $stmt->get_result();
     if ($result->num_rows > 0) {
@@ -107,7 +107,7 @@ if (isset($_POST['enviar'])) {
     $ultimo_id = $ultimo_id + 1;
 
     $sql = "SELECT MAX(id_nota) as 'ultimo_id' FROM notas";
-    $stmt = $con->prepare($sql);
+    $stmt = $conexion->prepare($sql);
     $stmt->execute();
     $result = $stmt->get_result();
     if ($result->num_rows > 0) {
@@ -117,11 +117,11 @@ if (isset($_POST['enviar'])) {
     $ultimo_id_notas = $ultimo_id_notas + 1;
 
     $sql="INSERT INTO `notas` (`id_nota`, `nota_parcial1`, `nota_parcial2`, `nota_parcial3`, `id_nivel`) VALUES (NULL, NULL, NULL, NULL, NULL)";
-    $result = $con->query($sql);
+    $result = $conexion->query($sql);
     $sql = "INSERT INTO `expediente` (`id_expediente`, `nivel`, `lin_captura`, `soli_aspirante`, `act_nac`, `comp_estu`, `ine`, `comp_pago`, `lin_captura_t`, `fecha_pago`, `modalidad`, `horario`) VALUES ($ultimo_id, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL)";
-    $result = $con->query($sql);
+    $result = $conexion->query($sql);
     $sql = "INSERT INTO `alumnos` (`matricula`, `nombre`, `ap_paterno`, `ap_materno`, `edad`, `id_carrera`, `telefono`, `sexo`, `id_nivel`, `id_estatus`, `id_usuarios`, `id_expediente`, `id_nota`) VALUES ($matricula, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, $ultimo_id_usuario, $ultimo_id, $ultimo_id_notas)";
-    $result = $con->query($sql);
+    $result = $conexion->query($sql);
 
 
 
