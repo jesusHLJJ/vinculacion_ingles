@@ -1,10 +1,22 @@
+<?php
+session_start();
+
+if (!isset($_SESSION['tipo'])) {
+    header('location: ../../');
+} else {
+    if ($_SESSION['tipo'] != 1) {
+        header('location: ../../');
+    }
+}
+?>
+
 <!DOCTYPE html>
 <html lang="es">
 
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>CONNSTANCIAS</title>
+    <title>CONSTANCIAS</title>
     <link rel="stylesheet" href="../../estilos/administrador.css">
     <!--DataTables-->
     <link href="https://cdn.datatables.net/2.0.5/css/dataTables.bootstrap5.min.css" rel="stylesheet">
@@ -38,8 +50,10 @@
                     <thead>
                         <tr>
                             <th class="text-center">ID</th>
-                            <th class="text-center">NIVEL</th>
-                            <th class="text-center">ACTAS</th>
+                            <th class="text-center">GRUPO</th>
+                            <th class="text-center">ACTA 1</th>
+                            <th class="text-center">ACTA 2</th>
+                            <th class="text-center">ACTA 3</th>
                             <th class="text-center">CONSTANCIAS</th>
                             <th class="text-center"></th>
                         </tr>

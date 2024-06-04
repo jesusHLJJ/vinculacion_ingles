@@ -1,6 +1,14 @@
 <?php
 session_start();
-include '../conn_bd.php';
+
+if (!isset($_SESSION['tipo'])) {
+    header('location: ../');
+} else {
+    if ($_SESSION['tipo'] != 2) {
+        header('location: ../');
+    }
+}
+include '../BD.php';
 
 $ingreso = $_SESSION['correo'];
 
@@ -19,7 +27,7 @@ $t_id_carrera = '';
 
 //DATOS DEL ALUMNO
 $sql = "select alumnos.matricula,alumnos.nombre,alumnos.ap_paterno,alumnos.ap_materno,alumnos.edad,alumnos.sexo,alumnos.telefono,alumnos.id_carrera from alumnos join usuarios on alumnos.id_usuarios=usuarios.id_usuario where usuarios.correo='$ingreso'";
-$stmt = $con->prepare($sql);
+$stmt = $conexion->prepare($sql);
 $stmt->execute();
 $result = $stmt->get_result();
 //Verificar si se encontraron resultados
@@ -82,7 +90,7 @@ $id_carrera = $t_id_carrera;
             <select name="sexo" id="sexo">
                 <?php
                 $sql="select alumnos.sexo from alumnos join usuarios on alumnos.id_usuarios=usuarios.id_usuario where usuarios.correo='$ingreso'";
-                $stmt = $con->prepare($sql);
+                $stmt = $conexion->prepare($sql);
                 $stmt->execute();
                 $result = $stmt->get_result();
                 //Verificar si se encontraron resultados
@@ -109,7 +117,7 @@ $id_carrera = $t_id_carrera;
                 <option value=''>Selecciona una opción...</option>
                 <?php
                 $sql = "SELECT * FROM carreras";
-                $stmt = $con->prepare($sql);
+                $stmt = $conexion->prepare($sql);
                 $stmt->execute();
                 $result = $stmt->get_result();
                 if ($result->num_rows > 0) {
@@ -151,14 +159,14 @@ if (isset($_POST['modificar'])) {
     $f_numero = $_POST['numero'];
     $f_carrera = $_POST['carrera'];
     $sql = "update alumnos set nombre='$f_nombre',ap_paterno='$f_ap_pa',ap_materno='$f_ap_ma',edad=$f_edad,sexo='$f_sexo',telefono='$f_numero',id_carrera=$f_carrera where matricula='$t_matricula'";
-    $sql_query = mysqli_query($con, $sql);
+    $sql_query = mysqli_query($conexion, $sql);
     if ($sql_query) {
         echo "operacion realizada con exito";
         header("Location: ../ALUMNOS/datos_alumno.php");
     } else {
         echo "ocurrio un error a la hora de hacer la modificacion";
     }
-    mysqli_close($con);
+    mysqli_close($conexion);
 }
 
 if (isset($_POST['volver'])) {

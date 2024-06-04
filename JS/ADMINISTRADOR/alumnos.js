@@ -28,7 +28,7 @@ const initDataTable = async () => {
 
 const listprofesor = async () => {
   try {
-    const response = await fetch("../../ADMINISTRADOR/ALUMNOS_ADMIN/alumnos.php");
+    const response = await fetch("../../ADMINISTRADOR/ALUMNOS/alumnos.php");
     const profesor = await response.json();
 
     let content = ``;
@@ -158,7 +158,7 @@ $(document).on("click", ".modificar", async function () {
 
       // Ejemplo: enviar datos modificados por AJAX
       const response = await $.ajax({
-        url: "actualizar.php",
+        url: "../../ADMINISTRADOR/ALUMNOS/actualizar.php",
         type: "POST",
         data: data,
       });
@@ -207,7 +207,7 @@ document.addEventListener("input", function (e) {
 function obtenerCarreras() {
   return new Promise((resolve, reject) => {
     $.ajax({
-      url: "../../ADMINISTRADOR/ALUMNOS_ADMIN/carreras.php", // Ruta a tu archivo PHP que obtiene la lista de profesores
+      url: "../../ADMINISTRADOR/ALUMNOS/carreras.php", // Ruta a tu archivo PHP que obtiene la lista de profesores
       type: "GET",
       success: function (response) {
         resolve(JSON.parse(response));
@@ -222,7 +222,7 @@ function obtenerCarreras() {
 function obtenerEstatus() {
   return new Promise((resolve, reject) => {
     $.ajax({
-      url: "../../ADMINISTRADOR/ALUMNOS_ADMIN/estatus.php", // Ruta a tu archivo PHP que obtiene la lista de profesores
+      url: "../../ADMINISTRADOR/ALUMNOS/estatus.php", // Ruta a tu archivo PHP que obtiene la lista de profesores
       type: "GET",
       success: function (response) {
         resolve(JSON.parse(response));
@@ -237,7 +237,7 @@ function obtenerEstatus() {
 function obtenerNivel() {
   return new Promise((resolve, reject) => {
     $.ajax({
-      url: "../../ADMINISTRADOR/ALUMNOS_ADMIN/niveles.php", // Ruta a tu archivo PHP que obtiene la lista de profesores
+      url: "../../ADMINISTRADOR/ALUMNOS/niveles.php", // Ruta a tu archivo PHP que obtiene la lista de profesores
       type: "GET",
       success: function (response) {
         resolve(JSON.parse(response));

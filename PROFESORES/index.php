@@ -1,6 +1,15 @@
 <?php
 include "../BD.php";
 session_start();
+
+if (!isset($_SESSION['tipo'])) {
+    header('location: ../');
+} else {
+    if ($_SESSION['tipo'] != 2) {
+        header('location: ../');
+    }
+}
+
 $correo = $_SESSION['correo'];
 // Realizar la consulta para obtener el nombre
 $sql = "select profesores.id_profesor, profesores.nombre, profesores.ap_paterno, profesores.ap_materno, usuarios.correo from profesores JOIN usuarios on usuarios.id_usuario = profesores.id_usuario where usuarios.correo = ?";

@@ -1,5 +1,13 @@
 <?php
 session_start();
+
+if (!isset($_SESSION['tipo'])) {
+    header('location: ../');
+} else {
+    if ($_SESSION['tipo'] != 2) {
+        header('location: ../');
+    }
+}
 include "../BD.php";
 ?>
 

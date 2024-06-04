@@ -1,4 +1,4 @@
-<?php include '../conn_bd.php';
+<?php include '../BD.php';
 session_start();
 
 //$ruta_archivo = 'C:\Users\da7ca\Desktop\actas_grupo_1A.pdf';

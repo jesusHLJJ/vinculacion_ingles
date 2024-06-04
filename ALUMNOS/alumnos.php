@@ -1,17 +1,13 @@
-<?php include '../conn_bd.php';
+<?php include '../BD.php';
 session_start();
-/*
-$id_profesor='';
-$id_periodo='';
-$nombre_grupo='';
-$numero_nivel='';
-$nombres_pro='';
-$ap_pa_pro='';
-$ap_ma_pro='';
-$t_horario='';
-$t_periodo='';
-$nombre_aula='';
-*/
+
+if (!isset($_SESSION['tipo'])) {
+    header('location: ../');
+} else {
+    if ($_SESSION['tipo'] != 3) {
+        header('location: ../');
+    }
+}
 
 $nombre_alumno = '';
 $ap_alumno = '';
@@ -32,7 +28,7 @@ $ingreso = $_SESSION['correo']; //correo electrónico que ingresa a la parte ALU
 
 //DATOS GENERALES
 $sql = "select alumnos.matricula, alumnos.nombre,alumnos.ap_paterno,alumnos.ap_materno,usuarios.correo from alumnos join usuarios on alumnos.id_usuarios=usuarios.id_usuario where usuarios.correo='$ingreso'";
-$stmt = $con->prepare($sql);
+$stmt = $conexion->prepare($sql);
 $stmt->execute();
 $result = $stmt->get_result();
 //Verificar si se encontraron resultados
@@ -48,7 +44,7 @@ if ($result->num_rows > 0) {
 $_SESSION['matricula']=$matricula;
 
 $sql = "select alumnos.id_expediente from alumnos where alumnos.matricula=$matricula";
-$stmt = $con->prepare($sql);
+$stmt = $conexion->prepare($sql);
 //$stmt->bind_param("s", $correo);
 $stmt->execute();
 $result = $stmt->get_result();
@@ -59,7 +55,7 @@ if ($result->num_rows > 0) {
 $_SESSION['id_expediente'] = $id_expediente;
 
 $sql = "select niveles.grupo, niveles.nivel,profesores.nombre,profesores.ap_paterno,niveles.horario,periodos.periodo,niveles.aula from alumnos join  niveles on alumnos.id_nivel=niveles.id_nivel join periodos on niveles.id_periodo=periodos.id_periodo join profesores on niveles.id_profesor=profesores.id_profesor join usuarios on alumnos.id_usuarios=usuarios.id_usuario where usuarios.correo='$ingreso'";
-$stmt = $con->prepare($sql);
+$stmt = $conexion->prepare($sql);
 $stmt->execute();
 $result = $stmt->get_result();
 //Verificar si se encontraron resultados
@@ -75,7 +71,8 @@ if ($result->num_rows > 0) {
     $nombre_aula = $fila['aula'];
 }
 
-mysqli_close($con); //CERRAMOS LA CONEXION SQL PARA QUE NO OCUPE ESPACIO EN LA MEMORIA
+mysqli_close($conexion);
+//CERRAMOS LA CONEXION SQL PARA QUE NO OCUPE ESPACIO EN LA MEMORIA
 
 //header("Location:prestador.php");
 

@@ -1,5 +1,5 @@
 <?php
-include "../../BD.php";
+include "../../DB.php";
 
 $sql = "SELECT id_nivel, nivel FROM niveles";
 $result = $conexion->query($sql);

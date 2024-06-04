@@ -1,6 +1,14 @@
 <?php
 session_start();
-include "../conn_bd.php";
+
+if (!isset($_SESSION['tipo'])) {
+    header('location: ../');
+} else {
+    if ($_SESSION['tipo'] != 2) {
+        header('location: ../');
+    }
+}
+include "../BD.php";
 //$nivel=
 $nivel_seleccionado = $_GET['nivel'];
 $expediente = $_GET['expediente'];
@@ -28,7 +36,7 @@ $expediente = $_GET['expediente'];
             <option value=''>Explorar grupos...</option>
             <?php
             $sql = "SELECT * FROM niveles where nivel=$nivel_seleccionado";
-            $stmt = $con->prepare($sql);
+            $stmt = $conexion->prepare($sql);
             $stmt->execute();
             $result = $stmt->get_result();
             if ($result->num_rows > 0) {
@@ -37,7 +45,7 @@ $expediente = $_GET['expediente'];
                     $grupo = $row["grupo"];
 
                     $sql = "select count(*) as total_alumnos,niveles.cupo_max from alumnos join niveles on alumnos.id_nivel=niveles.id_nivel where alumnos.id_nivel=$id_nivel";
-                    $stmt = $con->prepare($sql);
+                    $stmt = $conexion->prepare($sql);
                     $stmt->execute();
                     $result = $stmt->get_result();
                     if ($result->num_rows > 0) {
@@ -72,7 +80,7 @@ if (isset($_POST['enviar'])) {
     $nivel_elegido = $_POST['grup_disponible'];
     $sql = "update alumnos set id_nivel=$nivel_elegido where id_expediente=$expediente";
     echo $sql;
-    $result = $con->query($sql);
+    $result = $conexion->query($sql);
     header("Location:../ALUMNOS/alumnos.php");
 }
 ?>

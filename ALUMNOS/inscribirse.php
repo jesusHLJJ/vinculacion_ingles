@@ -1,6 +1,14 @@
 <?php
 session_start();
-include "../conn_bd.php";
+
+if (!isset($_SESSION['tipo'])) {
+    header('location: ../');
+} else {
+    if ($_SESSION['tipo'] != 2) {
+        header('location: ../');
+    }
+}
+include "../BD.php";
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
     if (isset($_POST['volver'])) {
         header("Location:alumnos.php");
@@ -13,7 +21,7 @@ $matricula = $_SESSION['matricula'];
 
 //SACAR EL CUPO DEL GRUPO DEL ALUMNO
 $sql = "select niveles.cupo_max from niveles";
-$stmt = $con->prepare($sql);
+$stmt = $conexion->prepare($sql);
 $stmt->execute();
 $result = $stmt->get_result();
 //Verificar si se encontraron resultados

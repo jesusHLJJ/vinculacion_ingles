@@ -1,6 +1,14 @@
 <?php
 session_start();
-include '../conn_bd.php';
+
+if (!isset($_SESSION['tipo'])) {
+    header('location: ../');
+} else {
+    if ($_SESSION['tipo'] != 2) {
+        header('location: ../');
+    }
+}
+include '../BD.php';
 
 $ingreso = $_SESSION['correo'];
 $t_carrera = '99';
@@ -17,7 +25,7 @@ $t_edad='';
 
 //DATOS DEL ALUMNO
 $sql="select alumnos.nombre,alumnos.ap_paterno,alumnos.ap_materno,alumnos.sexo,alumnos.matricula,carreras.nombre_carrera,alumnos.telefono,alumnos.edad from alumnos join carreras on alumnos.id_carrera=carreras.id_carrera join usuarios on alumnos.id_usuarios = usuarios.id_usuario where usuarios.correo='$ingreso'";
-$stmt = $con->prepare($sql);
+$stmt = $conexion->prepare($sql);
 $stmt->execute();
 $result = $stmt->get_result();
 //Verificar si se encontraron resultados

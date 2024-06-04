@@ -8,5 +8,5 @@ header("Cache-Control: no-store, no-cache, must-revalidate");
 header("Pragma: no-cache");
 
 
-header('location: ../index.php');
+header('location: ../');
 exit;

@@ -1,6 +1,14 @@
 <?php
 session_start();
-include "../conn_bd.php";
+
+if (!isset($_SESSION['tipo'])) {
+    header('location: ../');
+} else {
+    if ($_SESSION['tipo'] != 2) {
+        header('location: ../');
+    }
+}
+include "../BD.php";
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
     if (isset($_POST['volver'])) {
         header("Location:alumnos.php");
@@ -129,10 +137,10 @@ if (isset($_POST['reinscribirse'])) {
 
     //CONSULTA PARA ALMACENAR LAS RUTAS
     $sql="update alumnos set id_estatus=2 where id_expediente=$expediente";
-    $result = $con->query($sql);
+    $result = $conexion->query($sql);
 
     $sql="INSERT INTO documento_expediente (`id_expediente`, `nivel`, `const_na`, `comp_pago`, `lin_captura`, `lin_captura_t`, `fecha_entrega`) VALUES ($expediente, $nivel_cursar, '$const_anterior_route','$comp_pago_route', '$lin_captura_d_route','$linea_captura','$fecha_pago')";
-    $result = $con->query($sql);
+    $result = $conexion->query($sql);
     if ($result) {
         header("Location:elegir_grupo.php?nivel=$nivel_cursar&expediente=$expediente");
     } else {
