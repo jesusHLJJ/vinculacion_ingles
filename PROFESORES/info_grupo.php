@@ -16,66 +16,65 @@
   $mensaje = "";
   $id_carrera = '';
   // Si se ha enviado el formulario (se ha presionado el botón "Guardar")
-  if ($_SERVER["REQUEST_METHOD"] == "POST") {
-    // Recibir los datos del formulario
-    $matricula = isset($_POST["matricula"]) ? $_POST["matricula"] : '';
-    $nombre = isset($_POST["nombre"]) ? $_POST["nombre"] : '';
-    $ap_paterno = isset($_POST["ap_paterno"]) ? $_POST["ap_paterno"] : '';
-    $ap_materno = isset($_POST["ap_materno"]) ? $_POST["ap_materno"] : '';
-    $id_carrera = isset($_POST["id_carrera"]) ? $_POST["id_carrera"] : '';
-    $telefono = isset($_POST["telefono"]) ? $_POST["telefono"] : '';
+if ($_SERVER["REQUEST_METHOD"] == "POST") {
+  // Recibir los datos del formulario
+  $matricula = isset($_POST["matricula"]) ? $_POST["matricula"] : '';
+  $nombre = isset($_POST["nombre"]) ? $_POST["nombre"] : '';
+  $ap_paterno = isset($_POST["ap_paterno"]) ? $_POST["ap_paterno"] : '';
+  $ap_materno = isset($_POST["ap_materno"]) ? $_POST["ap_materno"] : '';
+  $id_carrera = isset($_POST["id_carrera"]) ? $_POST["id_carrera"] : '';
+  $telefono = isset($_POST["telefono"]) ? $_POST["telefono"] : '';
 
-    $nota_parcial1 = isset($_POST["parcial1"]) ? $_POST["parcial1"] : '';
-    $nota_parcial2 = isset($_POST["parcial2"]) ? $_POST["parcial2"] : '';
-    $nota_parcial3 = isset($_POST["parcial3"]) ? $_POST["parcial3"] : '';
-    $id_nivel = $_SESSION['id_nivel'];
-    // Actualizar los datos en la base de datos
+  $nota_parcial1 = isset($_POST["parcial1"]) ? $_POST["parcial1"] : '';
+  $nota_parcial2 = isset($_POST["parcial2"]) ? $_POST["parcial2"] : '';
+  $nota_parcial3 = isset($_POST["parcial3"]) ? $_POST["parcial3"] : '';
+  $id_nivel = $_SESSION['id_nivel'];
+
+  // Actualizar los datos en la base de datos
+
+  // Cerrar la conexión existente
 
 
-    //falta cambiar lo de las carreras volverlos listas y agregar el id
-    $sql_actualizar = "UPDATE alumnos SET nombre=?, ap_paterno=?, ap_materno=?, id_carrera=?, telefono=? WHERE matricula=?";
-    //$sql_actualizar = "UPDATE alumnos SET nombre=?, ap_paterno=?, ap_materno=?, id_carrera=?, telefono=? WHERE matricula=?";
-    $stmt_actualizar = $conexion->prepare($sql_actualizar);
-    $stmt_actualizar->bind_param("sssiss", $nombre, $ap_paterno, $ap_materno, $id_carrera, $telefono, $matricula);
+  // Reabrir la conexión
+  include "../BD.php"; // Asegúrate de que la ruta sea correcta
 
-    if ($stmt_actualizar->execute()) {
-      $mensaje = "Los datos se actualizaron correctamente.";
-    } else {
-      var_dump($stmt_actualizar);
-      $mensaje = "Hubo un error al actualizar los datos.";
-    }
+  // Actualizar los datos en la base de datos
+  $sql_actualizar = "UPDATE alumnos SET nombre=?, ap_paterno=?, ap_materno=?, id_carrera=?, telefono=? WHERE matricula=?";
+  $stmt_actualizar = $conexion->prepare($sql_actualizar);
+  $stmt_actualizar->bind_param("ssssis", $nombre, $ap_paterno, $ap_materno, $id_carrera, $telefono, $matricula);
 
-    //nuevo
-    if ($stmt_actualizar->execute()) {
-      // Verificar si ya existen notas para el alumno
-      //$sql_verificar_notas = "SELECT * FROM notas WHERE matricula = ?";
-      $sql_verificar_notas = "SELECT * FROM notas join alumnos on notas.id_nota=notas.id_nota WHERE alumnos.matricula =?";
-      $stmt_verificar_notas = $conexion->prepare($sql_verificar_notas);
-      $stmt_verificar_notas->bind_param("s", $matricula);
-      $stmt_verificar_notas->execute();
-      $result_verificar_notas = $stmt_verificar_notas->get_result();
-
-      if ($result_verificar_notas->num_rows > 0) {
-        // Actualizar las notas existentes
-        $sql_actualizar_notas = "update notas join alumnos on notas.id_nota=alumnos.id_nota set notas.nota_parcial1=?,notas.nota_parcial2=?,notas.nota_parcial3=? where alumnos.matricula=?";
-        $stmt_actualizar_notas = $conexion->prepare($sql_actualizar_notas);
-        $stmt_actualizar_notas->bind_param("sssi", $nota_parcial1, $nota_parcial2, $nota_parcial3, $matricula);
-      } else {
-        // Insertar nuevas notas
-        $sql_insertar_notas = "INSERT INTO notas (nota_parcial1, nota_parcial2, nota_parcial3, id_nivel) VALUES (?, ?, ?, ?)";
-        $stmt_insertar_notas = $conexion->prepare($sql_insertar_notas);
-        $stmt_insertar_notas->bind_param("iiii", $nota_parcial1, $nota_parcial2, $nota_parcial3, $id_nivel);
-      }
-
-      if (($result_verificar_notas->num_rows > 0 && $stmt_actualizar_notas->execute()) || $stmt_insertar_notas->execute()) {
-        $mensaje = "Los datos y las notas se actualizaron correctamente.";
-      } else {
-        $mensaje = "Hubo un error al actualizar las notas.";
-      }
-    } else {
-      $mensaje = "Hubo un error al actualizar los datos.";
-    }
+  if ($stmt_actualizar->execute()) {
+    $mensaje = "Los datos se actualizaron correctamente.";
+    $stmt_actualizar->close();
+  } else {
+    $mensaje = "Hubo un error al actualizar los datos.";
   }
+
+  // Verificar si ya existen notas para el alumno
+  $sql_verificar_notas = "SELECT * FROM notas join alumnos on notas.id_nota=notas.id_nota WHERE alumnos.matricula =?";
+  $stmt_verificar_notas = $conexion->prepare($sql_verificar_notas);
+  $stmt_verificar_notas->bind_param("s", $matricula);
+  $stmt_verificar_notas->execute();
+  $result_verificar_notas = $stmt_verificar_notas->get_result();
+
+  if ($result_verificar_notas->num_rows > 0) {
+    // Actualizar las notas existentes
+    $sql_actualizar_notas = "update notas join alumnos on notas.id_nota=alumnos.id_nota set notas.nota_parcial1=?,notas.nota_parcial2=?,notas.nota_parcial3=? where alumnos.matricula=?";
+    $stmt_actualizar_notas = $conexion->prepare($sql_actualizar_notas);
+    $stmt_actualizar_notas->bind_param("sssi", $nota_parcial1, $nota_parcial2, $nota_parcial3, $matricula);
+  } else {
+    // Insertar nuevas notas
+    $sql_insertar_notas = "INSERT INTO notas (nota_parcial1, nota_parcial2, nota_parcial3, id_nivel) VALUES (?, ?, ?, ?)";
+    $stmt_insertar_notas = $conexion->prepare($sql_insertar_notas);
+    $stmt_insertar_notas->bind_param("iiii", $nota_parcial1, $nota_parcial2, $nota_parcial3, $id_nivel);
+  }
+
+  if (($result_verificar_notas->num_rows > 0 && $stmt_actualizar_notas->execute()) || $stmt_insertar_notas->execute()) {
+    $mensaje = "Los datos y las notas se actualizaron correctamente.";
+  } else {
+    $mensaje = "Hubo un error al actualizar las notas.";
+  }
+}
   $id_nivel = $_SESSION['id_nivel'];
   $grupo = $_SESSION['grupo'];
   $modalidad = $_SESSION['modalidad'];
@@ -84,6 +83,8 @@
   // Verificar si se ha enviado un término de búsqueda
   if (isset($_GET["search"]) && !empty($_GET["search"])) {
     // Sanitizar y obtener el término de búsqueda
+
+    include "../BD.php"; // Asegúrate de que la ruta sea correcta
     $search = mysqli_real_escape_string($conexion, $_GET["search"]);
 
     // Realizar la consulta SQL para buscar coincidencias en el nombre
@@ -94,6 +95,7 @@
     $stmt_buscar->bind_param("i", $id_nivel);
     $stmt_buscar->execute();
     $result_alumnos = $stmt_buscar->get_result();
+    $stmt_buscar->close();
   } elseif (isset($_POST["buscar_na"])) {
     // Realizar la consulta SQL para buscar alumnos con calificaciones "N/A"
     $sql_buscar_na = "SELECT alumnos.matricula, alumnos.nombre, alumnos.ap_paterno, alumnos.ap_materno, carreras.id_carrera,carreras.nombre_carrera, alumnos.telefono FROM alumnos JOIN carreras ON carreras.id_carrera = alumnos.id_carrera JOIN notas ON alumnos.id_nota = notas.id_nota WHERE (notas.nota_parcial1 = 'N/A' OR notas.nota_parcial2 = 'N/A' OR notas.nota_parcial3 = 'N/A') AND notas.id_nivel = ?";
@@ -108,6 +110,7 @@
         // Obtener el resultado
         $result_alumnos = $stmt_buscar_na->get_result();
         $mensaje = "Se aplico el filtro de alumnos con N/A";
+        $stmt_buscar_na->close();
       } else {
         // Manejar el error de ejecución de la consulta
         echo "Error al ejecutar la consulta: " . $stmt_buscar_na->error;
@@ -130,6 +133,7 @@
         // Obtener el resultado
         $result_alumnos = $stmt_buscar_na->get_result();
         $mensaje = "Se aplico el filtro de alumnos con N/P";
+        $stmt_buscar_na->close();
       } else {
         // Manejar el error de ejecución de la consulta
         echo "Error al ejecutar la consulta: " . $stmt_buscar_na->error;
@@ -152,6 +156,8 @@
       $ap_paterno = isset($_SESSION['ap_1']) ? $_SESSION['ap_1'] : '';
       $ap_materno = isset($_SESSION['ap_2']) ? $_SESSION['ap_2'] : '';
       $id_nivel = $_SESSION['id_nivel'];
+
+      include "../BD.php"; // Asegúrate de que la ruta sea correcta
 
       // Combinar el nombre y los apellidos para formar el nombre completo
       $nombre_completo = $nombre_profesor . "_" . $ap_paterno . "_" . $ap_materno;
@@ -182,9 +188,11 @@
       if ($num_documentos > 0) {
         // Si ya existe un documento para este nivel, actualiza en lugar de insertar
         $sql = "UPDATE documentos_profesor SET avance_profesor_1 = ? WHERE id_nivel = ?";
+        $stmt_verificacion->close();
       } else {
         // Si no existe un documento para este nivel, inserta uno nuevo
         $sql = "INSERT INTO documentos_profesor (avance_profesor_1, id_nivel) VALUES (?, ?)";
+        $stmt_verificacion->close();
       }
 
       $stmt = $conexion->prepare($sql);
@@ -211,6 +219,7 @@
       $ap_materno = isset($_SESSION['ap_2']) ? $_SESSION['ap_2'] : '';
       $id_nivel = $_SESSION['id_nivel'];
 
+      include "../BD.php"; // Asegúrate de que la ruta sea correcta
       // Combinar el nombre y los apellidos para formar el nombre completo
       $nombre_completo = $nombre_profesor . "_" . $ap_paterno . "_" . $ap_materno;
 
@@ -240,9 +249,11 @@
       if ($num_documentos > 0) {
         // Si ya existe un documento para este nivel, actualiza en lugar de insertar
         $sql = "UPDATE documentos_profesor SET avance_profesor_2 = ? WHERE id_nivel = ?";
+        $stmt_verificacion->close();
       } else {
         // Si no existe un documento para este nivel, inserta uno nuevo
         $sql = "INSERT INTO documentos_profesor (avance_profesor_2, id_nivel) VALUES (?, ?)";
+        $stmt_verificacion->close();
       }
 
       $stmt = $conexion->prepare($sql);
@@ -266,7 +277,7 @@
       $ap_paterno = isset($_SESSION['ap_1']) ? $_SESSION['ap_1'] : '';
       $ap_materno = isset($_SESSION['ap_2']) ? $_SESSION['ap_2'] : '';
       $id_nivel = $_SESSION['id_nivel'];
-
+      include "../BD.php"; // Asegúrate de que la ruta sea correcta
       // Combinar el nombre y los apellidos para formar el nombre completo
       $nombre_completo = $nombre_profesor . "_" . $ap_paterno . "_" . $ap_materno;
 
@@ -296,9 +307,11 @@
       if ($num_documentos > 0) {
         // Si ya existe un documento para este nivel, actualiza en lugar de insertar
         $sql = "UPDATE documentos_profesor SET avance_profesor_3 = ? WHERE id_nivel = ?";
+        $stmt_verificacion->close();
       } else {
         // Si no existe un documento para este nivel, inserta uno nuevo
         $sql = "INSERT INTO documentos_profesor (avance_profesor_3, id_nivel) VALUES (?, ?)";
+        $stmt_verificacion->close();
       }
 
       $stmt = $conexion->prepare($sql);
@@ -327,7 +340,7 @@
       $ap_paterno = isset($_SESSION['ap_1']) ? $_SESSION['ap_1'] : '';
       $ap_materno = isset($_SESSION['ap_2']) ? $_SESSION['ap_2'] : '';
       $id_nivel = $_SESSION['id_nivel'];
-
+      include "../BD.php"; // Asegúrate de que la ruta sea correcta
       // Combinar el nombre y los apellidos para formar el nombre completo
       $nombre_completo = $nombre_profesor . "_" . $ap_paterno . "_" . $ap_materno;
 
@@ -355,9 +368,11 @@
         if ($num_documentos > 0) {
           // Si ya existe un documento para este nivel,  actualiza en lugar de insertar
           $sql = "UPDATE documentos_nivel SET acta_calificacion = ? WHERE id_nivel = ?";
+          $stmt_verificacion->close();
         } else {
           // Si no existe un documento para este nivel, inserta uno nuevo
           $sql = "INSERT INTO documentos_nivel (acta_calificacion, id_nivel) VALUES (?, ?)";
+          $stmt_verificacion->close(); 
         }
 
         $stmt = $conexion->prepare($sql);
@@ -380,7 +395,7 @@
       $ap_paterno = isset($_SESSION['ap_1']) ? $_SESSION['ap_1'] : '';
       $ap_materno = isset($_SESSION['ap_2']) ? $_SESSION['ap_2'] : '';
       $id_nivel = $_SESSION['id_nivel'];
-
+      include "../BD.php"; // Asegúrate de que la ruta sea correcta
       // Combinar el nombre y los apellidos para formar el nombre completo
       $nombre_completo = $nombre_profesor . "_" . $ap_paterno . "_" . $ap_materno;
 
@@ -408,9 +423,11 @@
         if ($num_documentos > 0) {
           // Si ya existe un documento para este nivel,  actualiza en lugar de insertar
           $sql = "UPDATE documentos_nivel SET acta_calificacion_2 = ? WHERE id_nivel = ?";
+          $stmt_verificacion->close();
         } else {
           // Si no existe un documento para este nivel, inserta uno nuevo
           $sql = "INSERT INTO documentos_nivel (acta_calificacion_2, id_nivel) VALUES (?, ?)";
+          $stmt_verificacion->close();
         }
 
         $stmt = $conexion->prepare($sql);
@@ -432,7 +449,7 @@
       $ap_paterno = isset($_SESSION['ap_1']) ? $_SESSION['ap_1'] : '';
       $ap_materno = isset($_SESSION['ap_2']) ? $_SESSION['ap_2'] : '';
       $id_nivel = $_SESSION['id_nivel'];
-
+      include "../BD.php"; // Asegúrate de que la ruta sea correcta
       // Combinar el nombre y los apellidos para formar el nombre completo
       $nombre_completo = $nombre_profesor . "_" . $ap_paterno . "_" . $ap_materno;
 
@@ -460,9 +477,11 @@
         if ($num_documentos > 0) {
           // Si ya existe un documento para este nivel,  actualiza en lugar de insertar
           $sql = "UPDATE documentos_nivel SET acta_calificacion_3 = ? WHERE id_nivel = ?";
+          $stmt_verificacion->close();
         } else {
           // Si no existe un documento para este nivel, inserta uno nuevo
           $sql = "INSERT INTO documentos_nivel (acta_calificacion_3, id_nivel) VALUES (?, ?)";
+          $stmt_verificacion->close();
         }
 
         $stmt = $conexion->prepare($sql);
@@ -489,6 +508,7 @@
     $ap_materno = isset($_SESSION['ap_2']) ? $_SESSION['ap_2'] : '';
     $id_nivel = $_SESSION['id_nivel'];
 
+    include "../BD.php"; // Asegúrate de que la ruta sea correcta
     // Combinar el nombre y los apellidos para formar el nombre completo
     $nombre_completo = $nombre_profesor . "_" . $ap_paterno . "_" . $ap_materno;
 
@@ -515,9 +535,11 @@
     if ($num_documentos > 0) {
       // Si ya existe un documento para este nivel, actualiza en lugar de insertar
       $sql = "UPDATE documentos_profesor SET plan_profesor = ? WHERE id_nivel = ?";
+      $stmt_verificacion->close();
     } else {
       // Si no existe un documento para este nivel, inserta uno nuevo
       $sql = "INSERT INTO documentos_profesor (plan_profesor, id_nivel) VALUES (?, ?)";
+      $stmt_verificacion->close();
     }
 
     $stmt = $conexion->prepare($sql);
@@ -530,7 +552,6 @@
       $tipo_mensaje = "error";
     }
   }
-
   ?>
 
   <!DOCTYPE html>

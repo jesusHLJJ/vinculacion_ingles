@@ -32,6 +32,9 @@ if ($result->num_rows > 0) {
 } else {
     $nombre = "Nombre no encontrado";
 }
+
+$stmt->close();
+$conexion->close();
 ?>
 <!DOCTYPE html>
 <html lang="es">
