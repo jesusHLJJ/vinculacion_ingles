@@ -33,7 +33,6 @@ if ($result->num_rows > 0) {
     $nombre = "Nombre no encontrado";
 }
 ?>
-
 <!DOCTYPE html>
 <html lang="es">
 <head>
@@ -42,7 +41,6 @@ if ($result->num_rows > 0) {
   <title>profesores</title>
   <link rel="stylesheet" href="../estilos/style_home_profesor.css">
   <script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script>
-  <script src="../JS/script__home_profesor.js"></script>
   
 </head>
 <body>
@@ -71,40 +69,28 @@ if ($result->num_rows > 0) {
     </ul>
 </nav>
 
-
-
 <div class="container">
-
-<div class="icono-izquierdo">
+    <div class="icono-izquierdo">
         <img src="../imagenes/icon_prof.png" alt="Icono">
     </div>
     <div class="icono-derecho">
         <img src="../imagenes/icon_prof.png" alt="Icono">
     </div>
 
-<h1 class="titulo-bienvenida">Bienvenido(a): <?php echo $nombre . ' ' . $ap_pa . ' ' . $ap_ma; ?></h1>
+    <h1 class="titulo-bienvenida">Bienvenido(a): <?php echo $nombre . ' ' . $ap_pa . ' ' . $ap_ma; ?></h1>
 
-<div id="image-gallery">
-    <div id="current-image-container">
-        <a id="current-image-link" href="show_g1.php" onclick="return true;"><img id="current-image" src="https://via.placeholder.com/600x400" alt="Imagen 1"></a>
-        <div id="previous-image-overlay" class="image-overlay" onclick="window.location.href = images[previousIndex].href;"></div>
-        <div id="next-image-overlay" class="image-overlay" onclick="window.location.href = images[nextIndex].href;"></div>
+    <div id="image-gallery">
+        <a href="../PROFESORES/show_g1.php"><img src="../imagenes/recurso_profesor_1.jpg" alt="Imagen 1"></a>
+        <a href="../PROFESORES/show_g2.php"><img src="../imagenes/recurso_profesor_22.jpg" alt="Imagen 2"></a>
+        <a href="../PROFESORES/show_g3.php"><img src="../imagenes/recurso_profesor_33.jpg" alt="Imagen 3"></a>
+        <a href="../PROFESORES/show_g4.php"><img src="../imagenes/recurso_profesor_4.jpg" alt="Imagen 4"></a>
+        <a href="../PROFESORES/show_g5.php"><img src="../imagenes/recurso_profesor_5.jpg" alt="Imagen 5"></a>
+        <a href="../PROFESORES/show_g6.php"><img src="../imagenes/recurso_profesor_6.jpg" alt="Imagen 6"></a>
     </div>
-
-    <br>
-    <button class="button" onclick="cambiarImagen(-1)">ANTERIOR</button>
-    <button class="button" onclick="cambiarImagen(1)">SIGUIENTE</button>
-    
 </div>
-
-
-
-</div>
-
 
 <script>
 document.getElementById("cerrar").addEventListener("click", function() {
-  // Mostrar una alerta con SweetAlert
   Swal.fire({
     title: '¿Deseas cerrar sesión?',
     icon: 'warning',
@@ -114,7 +100,6 @@ document.getElementById("cerrar").addEventListener("click", function() {
     confirmButtonText: 'Sí, cerrar sesión'
   }).then((result) => {
     if (result.isConfirmed) {
-      // Si el usuario confirma, redirecciona a la otra página
       window.location.href = "../CONTROLADORES/cerrar_sesion.php";
     }
   });
