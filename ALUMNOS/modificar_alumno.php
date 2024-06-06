@@ -72,7 +72,7 @@ $id_carrera = $t_id_carrera;
     <div class="contenedor_botones">
         <form action='' method="POST">
 
-            <label>CORREO ELECTRONICO: <br><span>arguello@gmail.com</span></label><br>
+            <label>CORREO ELECTRONICO: <br><span><?php echo $ingreso; ?></span></label><br>
 
             <label for="nombre">NOMBRE(S)</label>
             <input type="text" id="nombre" name="nombre" value="<?php echo $nombres; ?>" required><br>
@@ -84,10 +84,10 @@ $id_carrera = $t_id_carrera;
             <input type="text" id="ap_ma" name="ap_ma" value="<?php echo $ap_ma; ?>" required><br>
 
             <label for="edad">EDAD</label>
-            <input type="text" id="edad" name="edad" value="<?php echo $edad; ?>" required><br>
+            <input type="text" id="edad" name="edad" value="<?php echo $edad; ?>" maxlength="2" required><br>
 
             <label for="sexo">SEXO</label>
-            <select name="sexo" id="sexo">
+            <select name="sexo" id="sexo" required>
                 <?php
                 $sql="select alumnos.sexo from alumnos join usuarios on alumnos.id_usuarios=usuarios.id_usuario where usuarios.correo='$ingreso'";
                 $stmt = $conexion->prepare($sql);
@@ -108,9 +108,10 @@ $id_carrera = $t_id_carrera;
                 }
                 ?>
             </select><br>
+            
 
             <label for="numero">NÚMERO TELEFÓNICO</label>
-            <input type="text" id="numero" name="numero" value="<?php echo $telefono; ?>" required><br>
+            <input type="text" id="numero" name="numero" value="<?php echo $telefono; ?>" maxlength="10" required><br>
 
             <label for="carrera">CARRERA</label>
             <select name="carrera" id="carrera" required>

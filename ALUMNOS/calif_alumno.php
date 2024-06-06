@@ -39,6 +39,7 @@ if ($result->num_rows > 0) {
     echo "No perteneces a algun grupo";
     die();
 }
+mysqli_close($conexion);
 //NOMBRE COMPLETO DEL PROFE
 $nombre_profesor = $nombre . " " . $ap_paterno . " " . $ap_materno;
 ?>

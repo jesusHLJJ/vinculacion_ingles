@@ -32,8 +32,26 @@ $expediente = $_SESSION['id_expediente'];
     <form action="" method="POST" enctype="multipart/form-data">
         <div class="form_datos">
 
+            <script>
+                function formatInput(event) {
+                    let input = event.target;
+                    let value = input.value.replace(/\s+/g, ''); // Elimina todos los espacios
+                    let formattedValue = '';
+
+                    for (let i = 0; i < value.length; i += 6) {
+                        if (i > 0) {
+                            formattedValue += ' ';
+                        }
+                        formattedValue += value.substring(i, i + 6);
+                    }
+
+                    input.value = formattedValue;
+                }
+            </script>
+
+
             <label for="lin_captura">LINEA DE CAPTURA</label>
-            <input type="text" name="lin_captura" id="lin_captura" placeholder="XXXXXX(6) XXXXXX XXXXXX XXXXXX XXX" required><br>
+            <input type="text" name="lin_captura" id="lin_captura" placeholder="XXXXXX(6) XXXXXX XXXXXX XXXXXX XXX" maxlength="31" oninput="formatInput(event)" required><br>
 
             <label for="fe_pago">FECHA DEPAGO</label>
             <input type="date" name="fe_pago" id="fe_pago" required><br>
@@ -115,7 +133,7 @@ if (isset($_POST['reinscribirse'])) {
     if ($const_anterior != '') {
         $const_anterior_extension = pathinfo($const_anterior, PATHINFO_EXTENSION);
         $const_anterior_tmp = $_FILES['const_anterior']['tmp_name'];
-        $const_anterior_route = "archivos/usuario_expediente_" . $expediente . "_reinscripcion/".$nivel_cursar."nivel_const_anterior." . $const_anterior_extension;
+        $const_anterior_route = "archivos/usuario_expediente_" . $expediente . "_reinscripcion/" . $nivel_cursar . "nivel_const_anterior." . $const_anterior_extension;
         move_uploaded_file($const_anterior_tmp, $const_anterior_route);
     }
 
@@ -123,7 +141,7 @@ if (isset($_POST['reinscribirse'])) {
     if ($comp_pago != '') {
         $comp_pago_extension = pathinfo($comp_pago, PATHINFO_EXTENSION);
         $comp_pago_tmp = $_FILES['comp_pago']['tmp_name'];
-        $comp_pago_route = "archivos/usuario_expediente_" . $expediente . "_reinscripcion/".$nivel_cursar."nivel_comp_pago." . $comp_pago_extension;
+        $comp_pago_route = "archivos/usuario_expediente_" . $expediente . "_reinscripcion/" . $nivel_cursar . "nivel_comp_pago." . $comp_pago_extension;
         move_uploaded_file($comp_pago_tmp, $comp_pago_route);
     }
 
@@ -131,21 +149,20 @@ if (isset($_POST['reinscribirse'])) {
     if ($lin_captura_d != '') {
         $lin_captura_d_extension = pathinfo($lin_captura_d, PATHINFO_EXTENSION);
         $lin_captura_d_tmp = $_FILES['lin_captura_d']['tmp_name'];
-        $lin_captura_d_route = "archivos/usuario_expediente_" . $expediente . "_reinscripcion/".$nivel_cursar."nivel_lin_captura_d." . $lin_captura_d_extension;
+        $lin_captura_d_route = "archivos/usuario_expediente_" . $expediente . "_reinscripcion/" . $nivel_cursar . "nivel_lin_captura_d." . $lin_captura_d_extension;
         move_uploaded_file($lin_captura_d_tmp,  $lin_captura_d_route);
     }
 
     //CONSULTA PARA ALMACENAR LAS RUTAS
-    $sql="update alumnos set id_estatus=2 where id_expediente=$expediente";
+    $sql = "update alumnos set id_estatus=2 where id_expediente=$expediente";
     $result = $conexion->query($sql);
 
-    $sql="INSERT INTO documento_expediente (`id_expediente`, `nivel`, `const_na`, `comp_pago`, `lin_captura`, `lin_captura_t`, `fecha_entrega`) VALUES ($expediente, $nivel_cursar, '$const_anterior_route','$comp_pago_route', '$lin_captura_d_route','$linea_captura','$fecha_pago')";
+    $sql = "INSERT INTO documento_expediente (`id_expediente`, `nivel`, `const_na`, `comp_pago`, `lin_captura`, `lin_captura_t`, `fecha_entrega`) VALUES ($expediente, $nivel_cursar, '$const_anterior_route','$comp_pago_route', '$lin_captura_d_route','$linea_captura','$fecha_pago')";
     $result = $conexion->query($sql);
+    mysqli_close($conexion);
     if ($result) {
         header("Location:elegir_grupo.php?nivel=$nivel_cursar&expediente=$expediente");
-    } else {
-        echo "NO se cargaron los archivos correctamente, pero si funciona inscripcion";
-    }
+    } 
 }
 
 ?>

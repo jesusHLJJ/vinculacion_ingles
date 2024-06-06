@@ -44,6 +44,7 @@ if ($result->num_rows > 0) {
 
     $t_edad = $fila['edad'];
 }
+mysqli_close($conexion);
 
 
 
