@@ -8,6 +8,7 @@ body {
     background-repeat: no-repeat; /* Evita que la imagen se repita */
     margin: 0;
     padding: 0;
+    height: 100vh; 
   }
   
   h2 {

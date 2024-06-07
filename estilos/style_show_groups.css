@@ -6,6 +6,7 @@ body {
     background-size: cover; /* Ajusta la imagen para que cubra toda la pantalla */
     background-position: center; /* Centra la imagen */
     background-repeat: no-repeat; /* Evita que la imagen se repita */
+    height: 100vh; 
     margin: 0;
     padding: 0;
    
