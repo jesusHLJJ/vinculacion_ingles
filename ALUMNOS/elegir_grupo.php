@@ -9,22 +9,20 @@ if (!isset($_SESSION['tipo'])) {
     }
 }
 include "../BD.php";
-//$nivel=
+
 $nivel_seleccionado = $_GET['nivel'];
 $expediente = $_GET['expediente'];
-//echo " ".$expediente." \n".$nivel_seleccionado;
 ?>
 
-
-
 <!DOCTYPE html>
-<html lang="en">
+<html lang="es">
 
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>GRUPO</title>
     <link rel="stylesheet" href="estilos/elegir_grupo.css">
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 </head>
 
 <body>
@@ -53,14 +51,13 @@ $expediente = $_GET['expediente'];
                             $total_alumnos = $row['total_alumnos'];
                             $cupo_max = $row["cupo_max"];
 
-
                             if ($total_alumnos == $cupo_max) {
                                 echo '<option value="' . $id_nivel . '"disabled>' . $grupo . ' - GRUPO LLENO</option>';
                             } else {
                                 echo '<option value="' . $id_nivel . '">' . $grupo . '</option>';
                             }
                         }
-                    } 
+                    }
                 }
             }
             $stmt->close();
@@ -70,17 +67,34 @@ $expediente = $_GET['expediente'];
         <input type="submit" name="enviar" value="ELEGIR GRUPO">
     </form>
 
+    <?php
+    if (isset($_POST['enviar'])) {
+        $nivel_elegido = $_POST['grup_disponible'];
+        $sql = "update alumnos set id_nivel=$nivel_elegido where id_expediente=$expediente";
+        $result = $conexion->query($sql);
+
+        if ($result) {
+            echo "<script>
+                    Swal.fire({
+                        title: 'Proceso realizado con éxito',
+                        icon: 'success',
+                        confirmButtonText: 'Aceptar'
+                    }).then(() => {
+                        window.location.href = '../ALUMNOS/alumnos.php';
+                    });
+                  </script>";
+        } else {
+            echo "<script>
+                    Swal.fire({
+                        title: 'Error en el proceso',
+                        text: 'Hubo un problema al actualizar la información. Por favor, inténtalo de nuevo.',
+                        icon: 'error',
+                        confirmButtonText: 'Aceptar'
+                    });
+                  </script>";
+        }
+    }
+    ?>
 </body>
 
 </html>
-
-<?php
-
-if (isset($_POST['enviar'])) {
-    $nivel_elegido = $_POST['grup_disponible'];
-    $sql = "update alumnos set id_nivel=$nivel_elegido where id_expediente=$expediente";
-    echo $sql;
-    $result = $conexion->query($sql);
-    header("Location:../ALUMNOS/alumnos.php");
-}
-?>

@@ -13,7 +13,7 @@ h1{
 }
 
 
-.contenedor_botones input[type="submit"] {
+.contenedor_botones input[type="submit"],input[type="button"] {
     margin-bottom: 25px;
     display: block;
     font-size: 40px;

@@ -9,6 +9,7 @@ if (!isset($_SESSION['tipo'])) {
     }
 }
 
+
 $nombre_alumno = '';
 $ap_alumno = '';
 $am_alumno = '';
@@ -41,7 +42,7 @@ if ($result->num_rows > 0) {
     $am_alumno = $fila['ap_materno'];
 }
 
-$_SESSION['matricula']=$matricula;
+$_SESSION['matricula'] = $matricula;
 
 $sql = "select alumnos.id_expediente from alumnos where alumnos.matricula=$matricula";
 $stmt = $conexion->prepare($sql);
@@ -100,6 +101,8 @@ if ($alumno == "  ") {                          //IF PARA LA PRIMERA VEZ QUE ENT
 //_________________________________________________________________
 
 ?>
+
+
 <!DOCTYPE html>
 <html lang="es">
 
@@ -120,7 +123,8 @@ if ($alumno == "  ") {                          //IF PARA LA PRIMERA VEZ QUE ENT
             <input type='submit' name="reinscribirse" value="REINSCRIBIRSE">
             <input type='submit' name="datos_alumno" value="VER MIS DATOS">
             <input type='submit' name="calif_alumno" value="VER MIS CALIFICACIONES">
-            <input type='submit' id="cerrar" name="cerrar" value="CERRAR SESION">
+            <input type='button' id="cerrar" name="cerrar" value="CERRAR SESION">
+            
         </form>
     </div>
     <div class="tabla_contenido">
@@ -143,6 +147,25 @@ if ($alumno == "  ") {                          //IF PARA LA PRIMERA VEZ QUE ENT
             </tr>
         </table>
     </div>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <script src="js/sweetAlert.js"></script>
+    <script>
+    document.getElementById("cerrar").addEventListener("click", function() {
+      Swal.fire({
+        title: '¿Deseas cerrar sesión?',
+        icon: 'warning',
+        showCancelButton: true,
+        confirmButtonColor: '#3085d6',
+        cancelButtonColor: '#d33',
+        confirmButtonText: 'Sí, cerrar sesión'
+      }).then((result) => {
+        if (result.isConfirmed) {
+          window.location.href = "../CONTROLADORES/cerrar_sesion.php";
+        }
+      });
+    });
+    </script>
+
 </body>
 
 </html>
@@ -161,12 +184,12 @@ if (isset($_POST['inscribirse'])) {
 if (isset($_POST['reinscribirse'])) {
     header("Location: ../ALUMNOS/reinscribirse.php");
 }
-
+/*
 if (isset($_POST['cerrar'])) {
     header("Location: ../index.php");
     session_destroy();
 }
-
+*/
 if (isset($_POST['datos_alumno'])) {
     header("Location: ../ALUMNOS/datos_alumno.php");
 }

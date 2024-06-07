@@ -65,6 +65,7 @@ $id_carrera = $t_id_carrera;
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>MIS DATOS</title>
     <link rel="stylesheet" href="estilos/modificar_alumno.css">
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 </head>
 
 <body>
@@ -89,7 +90,7 @@ $id_carrera = $t_id_carrera;
             <label for="sexo">SEXO</label>
             <select name="sexo" id="sexo" required>
                 <?php
-                $sql="select alumnos.sexo from alumnos join usuarios on alumnos.id_usuarios=usuarios.id_usuario where usuarios.correo='$ingreso'";
+                $sql = "select alumnos.sexo from alumnos join usuarios on alumnos.id_usuarios=usuarios.id_usuario where usuarios.correo='$ingreso'";
                 $stmt = $conexion->prepare($sql);
                 $stmt->execute();
                 $result = $stmt->get_result();
@@ -98,17 +99,17 @@ $id_carrera = $t_id_carrera;
                     // Obtener el nombre de la fila
                     $fila = $result->fetch_assoc();
                     $d_sexo = $fila['sexo'];
-                    if($sexo=='F'){
+                    if ($sexo == 'F') {
                         echo "<option value='M'>MASCULINO</option>";
-                        echo "<option value='F' selected>FEMENINO</option>"; 
-                    }else{
+                        echo "<option value='F' selected>FEMENINO</option>";
+                    } else {
                         echo "<option value='M' selected>MASCULINO</option>";
-                        echo "<option value='F'>FEMENINO</option>"; 
+                        echo "<option value='F'>FEMENINO</option>";
                     }
                 }
                 ?>
             </select><br>
-            
+
 
             <label for="numero">NÚMERO TELEFÓNICO</label>
             <input type="text" id="numero" name="numero" value="<?php echo $telefono; ?>" maxlength="10" required><br>
@@ -144,6 +145,45 @@ $id_carrera = $t_id_carrera;
 
         </form>
     </div>
+    <?php
+    if (isset($_POST['modificar'])) {
+        $f_nombre = $_POST['nombre'];
+        $f_ap_pa = $_POST['ap_pa'];
+        $f_ap_ma = $_POST['ap_ma'];
+        $f_edad = $_POST['edad'];
+        $f_sexo = $_POST['sexo'];
+        $f_numero = $_POST['numero'];
+        $f_carrera = $_POST['carrera'];
+        $sql = "update alumnos set nombre='$f_nombre',ap_paterno='$f_ap_pa',ap_materno='$f_ap_ma',edad=$f_edad,sexo='$f_sexo',telefono='$f_numero',id_carrera=$f_carrera where matricula='$t_matricula'";
+        $sql_query = mysqli_query($conexion, $sql);
+        if ($sql_query) {
+            echo "<script>
+                        Swal.fire({
+                            title: '¡DATOS MODIFICADOS!',
+                            icon: 'success',
+                            confirmButtonText: 'Aceptar',
+                            confirmButtonColor: '#ffbb00'
+                        }).then(() => {
+                            window.location.href = '../ALUMNOS/datos_alumno.php';
+                        });
+                      </script>";
+
+
+
+           // header("Location: ../ALUMNOS/datos_alumno.php");
+        } else {
+            echo "<script>
+            Swal.fire({
+                title: 'Error en el proceso',
+                text: 'Hubo un problema al actualizar la información. Por favor, inténtalo de nuevo.',
+                icon: 'error',
+                confirmButtonText: 'Aceptar'
+            });
+                </script>";
+        }
+        mysqli_close($conexion);
+    }
+    ?>
 
 </body>
 
@@ -151,24 +191,7 @@ $id_carrera = $t_id_carrera;
 
 
 <?php
-if (isset($_POST['modificar'])) {
-    $f_nombre = $_POST['nombre'];
-    $f_ap_pa = $_POST['ap_pa'];
-    $f_ap_ma = $_POST['ap_ma'];
-    $f_edad = $_POST['edad'];
-    $f_sexo = $_POST['sexo'];
-    $f_numero = $_POST['numero'];
-    $f_carrera = $_POST['carrera'];
-    $sql = "update alumnos set nombre='$f_nombre',ap_paterno='$f_ap_pa',ap_materno='$f_ap_ma',edad=$f_edad,sexo='$f_sexo',telefono='$f_numero',id_carrera=$f_carrera where matricula='$t_matricula'";
-    $sql_query = mysqli_query($conexion, $sql);
-    if ($sql_query) {
-        echo "operacion realizada con exito";
-        header("Location: ../ALUMNOS/datos_alumno.php");
-    } else {
-        echo "ocurrio un error a la hora de hacer la modificacion";
-    }
-    mysqli_close($conexion);
-}
+
 
 if (isset($_POST['volver'])) {
     header("Location: ../ALUMNOS/datos_alumno.php");

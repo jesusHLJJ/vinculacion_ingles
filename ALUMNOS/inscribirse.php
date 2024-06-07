@@ -120,7 +120,7 @@ if (isset($_POST['inscribirse'])) {
     mysqli_close($conexion);
     if ($result) {
         header("Location:elegir_grupo.php?nivel=$nivel_cursar&expediente=$expediente");
-    } 
+    }
 }
 
 
@@ -129,8 +129,6 @@ if (isset($_POST['inscribirse'])) {
 
 
 ?>
-
-
 
 <!DOCTYPE html>
 <html lang="es">
