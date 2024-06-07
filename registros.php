@@ -22,7 +22,7 @@ if (isset($_SESSION['tipo'])) {
 if (isset($_POST['volver'])) {
   header("Location:index.php");
 }
-include "../vinculacion_ingles-main/BD.php";
+include "BD.php";
 ?>
 
 <!DOCTYPE html>
