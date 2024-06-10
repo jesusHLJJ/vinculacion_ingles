@@ -6,6 +6,14 @@ body {
     font-size: 30px;
     display: flex;
     justify-content: center;
+    background-image: 
+    linear-gradient(rgba(116, 116, 116, 0.8), rgb(0, 0, 0)),
+    url('../../imagenes/fondo_g.png');
+    background-size: cover; /* Ajusta la imagen para que cubra toda la pantalla */
+    background-position: center; /* Centra la imagen */
+    background-repeat: no-repeat; /* Evita que la imagen se repita */
+    margin: 0; /* Elimina el margen del body para que la imagen cubra toda la ventana */
+    height: 100vh;
 }
 
 .tabla-calificaciones {
@@ -30,6 +38,7 @@ td {
     text-align: center;
     padding: 8px;
     border: 1px solid #333;
+    background-color: #f2f2f2;
 }
 
 

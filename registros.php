@@ -48,7 +48,7 @@ include "BD.php";
     <input type="password" id="contrasena" name="contrasena" required><br>
 
     <label for="matricula">MATRÍCULA:</label><br>
-    <input type="text" id="matricula" name="matricula" required><br>
+    <input type="text" id="matricula" name="matricula" maxlength="9" minlength="9" required><br>
 
     <input type="submit" name="enviar" value="REGISTRARSE" class="boton">
 

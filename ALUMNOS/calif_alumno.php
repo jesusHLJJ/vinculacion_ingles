@@ -13,7 +13,8 @@ $primer_parcial = '';
 $segundo_parcial = '';
 $tercer_parcial = '';
 
-
+error_reporting(0);
+ini_set('display_errors', 0);
 
 $matricula = $_SESSION['matricula'];
 
@@ -35,9 +36,9 @@ if ($result->num_rows > 0) {
     $nombre = $fila['nombre'];
     $ap_paterno = $fila['ap_paterno'];
     $ap_materno = $fila['ap_materno'];
-}else{
-    echo "No perteneces a algun grupo";
-    die();
+} else {
+    echo "<script>var fileExists = false;</script>";
+
 }
 mysqli_close($conexion);
 //NOMBRE COMPLETO DEL PROFE
@@ -52,6 +53,7 @@ $nombre_profesor = $nombre . " " . $ap_paterno . " " . $ap_materno;
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>CALIFICACIONES DE ALUMNO</title>
     <link rel="stylesheet" href="estilos/calif_alumno.css">
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 </head>
 
 <body>
@@ -91,6 +93,19 @@ $nombre_profesor = $nombre . " " . $ap_paterno . " " . $ap_materno;
         </form>
 
     </div>
+
+    <script>
+        if (typeof fileExists !== 'undefined' && !fileExists) {
+            Swal.fire({
+                title: 'NO HAY INFORMACIÓN DISPONIBLE',
+                icon: 'error',
+                confirmButtonText: 'Aceptar',
+                confirmButtonColor: '#ffbb00'
+            }).then(() => {
+                window.location.href = '../ALUMNOS/alumnos.php';
+            });
+        }
+    </script>
 
 
 </body>

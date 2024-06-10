@@ -1,6 +1,17 @@
 <?php
 include '../BD.php';
 session_start();
+
+if (!isset($_SESSION['tipo'])) {
+    header('location: ../');
+} else {
+    if ($_SESSION['tipo'] != 3) {
+        header('location: ../');
+    }
+}
+error_reporting(0);
+ini_set('display_errors', 0);
+
 $matricula = $_SESSION['matricula'];
 
 $sql = "select niveles.grupo, alumnos.id_expediente from alumnos join niveles on alumnos.id_nivel=niveles.id_nivel where matricula=$matricula";

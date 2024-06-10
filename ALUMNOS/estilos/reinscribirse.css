@@ -4,6 +4,9 @@ body {
     padding: 0;
     background-color: #f5f5f5;
     font-size: 30px;
+    background-image: 
+    linear-gradient(rgba(255, 255, 255, 0.8), rgb(0, 0, 0)),
+    url('../../imagenes/fondo_g.png');
 }
 
 h1{

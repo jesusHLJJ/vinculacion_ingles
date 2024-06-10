@@ -15,9 +15,11 @@ body{
     background-position: center;
 }
 
+
+
 .wrapper {
     width:420px;
-    background-image: linear-gradient(to bottom, #606060, #ffc935);
+    background-image: linear-gradient(to bottom, #606060, #000000);
     backdrop-filter: blur(20px);
     box-shadow:0 0 100px rgba(255, 0, 0, 0.2);
     border: 2px solid rgba(255,255,255,.2);
