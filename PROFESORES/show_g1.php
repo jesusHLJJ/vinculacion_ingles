@@ -23,6 +23,29 @@ include "../BD.php";
 </head>
 
 <body>
+
+    <!-- Contenedor del cargador -->
+    <div id="loader">
+        <div class="loader-container">
+            <div class="loader-spinner"></div>
+            <div class="loader-image">
+                <img src="../imagenes/si.jpg" alt="Loading">
+            </div>
+        </div>
+    </div>
+
+    <script>
+        document.addEventListener("DOMContentLoaded", function() {
+            // Simular una carga con un timeout (por ejemplo, una consulta a una API)
+            setTimeout(function() {
+                // Ocultar el cargador
+                document.getElementById("loader").style.display = "none";
+                // Mostrar el contenido
+                document.getElementById("content").style.display = "block";
+            }, 400); // Ajusta el tiempo según sea necesario
+        });
+    </script>
+
     <div class="container">
         <h1>Nivel: 1</h1>
 

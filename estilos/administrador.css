@@ -194,3 +194,54 @@ label{
 .dt-info{
     color: black;
 }
+
+
+ /* Estilos para el contenedor del cargador */
+ #loader {
+    position: fixed;
+    width: 100%;
+    height: 100%;
+    background: rgba(255, 255, 255, 0.8);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 9999;
+}
+
+/* Estilos para el contenedor de la imagen y el spinner */
+.loader-container {
+    position: relative;
+    width: 120px;
+    height: 120px;
+}
+
+/* Estilos para la imagen del cargador */
+.loader-image img {
+    width: 100%; /* La imagen ocupará todo el contenedor */
+    height: 100%; 
+    border-radius: 50%; /* Hace la imagen redonda */
+    position: absolute;
+    top: 20px;
+    left: 15px;
+}
+
+/* Estilos para el spinner */
+.loader-spinner {
+    border: 16px solid #f3f3f3;
+    border-top: 16px solid #3498db;
+    border-radius: 50%;
+    width: 100%;
+    height: 100%;
+    animation: spin 2s linear infinite;
+}
+
+/* Animación del spinner */
+@keyframes spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+}
+
+/* Ocultar el contenido mientras se muestra el cargador */
+#content {
+    display: none;
+}

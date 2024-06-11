@@ -48,12 +48,32 @@ $conexion->close();
 </head>
 <body>
   
+<div id="loader">
+        <div class="loader-container">
+            <div class="loader-spinner"></div>
+            <div class="loader-image">
+                <img src="../imagenes/si.jpg" alt="Loading">
+            </div>
+        </div>
+    </div>
+
+    <script>
+        document.addEventListener("DOMContentLoaded", function() {
+            // Simular una carga con un timeout (por ejemplo, una consulta a una API)
+            setTimeout(function() {
+                // Ocultar el cargador
+                document.getElementById("loader").style.display = "none";
+                // Mostrar el contenido
+                document.getElementById("content").style.display = "block";
+            }, 400); // Ajusta el tiempo según sea necesario
+        });
+    </script>
 <nav class="navbar">
     <ul>
         <li>
           <br>
             <a class="principal" href="actualizacion_datos.php">
-                <img class="small-image" src="https://www.eraeidon.com/eidon/wp-content/uploads/2016/12/usuario-masculino-foto-de-perfil_318-37825.jpg" alt="">
+                <img class="small-image" src="../imagenes/icono_profesor.jpg" alt="">
                 <span class="nav-item">Información personal</span>
             </a>
         </li>

@@ -556,3 +556,54 @@ button[name="buscar_np"]:hover {
     transform: scale(1.1); /* Aumenta el tamaño del botón al 110% */
 }
 
+
+
+ /* Estilos para el contenedor del cargador */
+ #loader {
+    position: fixed;
+    width: 100%;
+    height: 100%;
+    background: rgba(255, 255, 255, 0.7); /* Ajustado para ser casi transparente */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 9999;
+}
+
+
+/* Estilos para el contenedor de la imagen y el spinner */
+.loader-container {
+    position: relative;
+    width: 120px;
+    height: 120px;
+}
+
+/* Estilos para la imagen del cargador */
+.loader-image img {
+    width: 80%; /* La imagen ocupará todo el contenedor */
+    height: 80%; 
+    border-radius: 50%; /* Hace la imagen redonda */
+    position: absolute;
+    top: 12px;
+    left: 11px;
+}
+
+.loader-spinner {
+    border: 16px solid #f57c02;
+    border-top: 16px solid #6b6b6b;
+    border-radius: 50%;
+    width: 100%;
+    height: 100%;
+    animation: spin 2s linear infinite;
+}
+
+/* Animación del spinner */
+@keyframes spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+}
+
+/* Ocultar el contenido mientras se muestra el cargador */
+#content {
+    display: none;
+}
