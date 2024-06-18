@@ -76,13 +76,13 @@ $id_carrera = $t_id_carrera;
             <label>CORREO ELECTRONICO: <br><span><?php echo $ingreso; ?></span></label><br>
 
             <label for="nombre">NOMBRE(S)</label>
-            <input type="text" id="nombre" name="nombre" value="<?php echo $nombres; ?>" required><br>
+            <input type="text" id="nombre" name="nombre" value="<?php echo $nombres; ?>" maxlength="20" required><br>
 
             <label for="ap_pa">APELLIDO PATERNO</label>
-            <input type="text" id="ap_pa" name="ap_pa" value="<?php echo $ap_pa; ?>" required><br>
+            <input type="text" id="ap_pa" name="ap_pa" value="<?php echo $ap_pa; ?>" maxlength="20" required><br>
 
             <label for="ap_ma">APELLIDO MATERNO</label>
-            <input type="text" id="ap_ma" name="ap_ma" value="<?php echo $ap_ma; ?>" required><br>
+            <input type="text" id="ap_ma" name="ap_ma" value="<?php echo $ap_ma; ?>" maxlength="20" required><br>
 
             <label for="edad">EDAD</label>
             <input type="text" id="edad" name="edad" value="<?php echo $edad; ?>" maxlength="2" required><br>

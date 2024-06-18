@@ -169,7 +169,7 @@ if (isset($_POST['inscribirse'])) {
 
 
 
-            <label for="fe_pago">FECHA DEPAGO</label>
+            <label for="fe_pago">FECHA DE PAGO</label>
             <input type="date" name="fe_pago" id="fe_pago" required><br>
 
             <label for="nivel">NIVEL A CURSAR</label>
