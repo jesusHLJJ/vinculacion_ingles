@@ -21,6 +21,7 @@ $am_profesor = '';
 $t_horario = '';
 $t_periodo = '';
 $nombre_aula = '';
+$Bloqueo='';
 
 
 $ingreso = $_SESSION['correo']; //correo electrónico que ingresa a la parte ALUMNO
@@ -97,6 +98,7 @@ if ($alumno == "  ") {                          //IF PARA LA PRIMERA VEZ QUE ENT
     $horario = "AD";
     $periodo = "AD";
     $aula = "AD";
+    $Bloqueo ="Disabled";
 }
 //_________________________________________________________________
 
@@ -118,11 +120,11 @@ if ($alumno == "  ") {                          //IF PARA LA PRIMERA VEZ QUE ENT
     <h1><?php echo $alumno; ?></h1>
     <div class="contenedor_botones">
         <form action='' method="POST">
-            <input type='submit' name="actas" value="CONSTANCIAS DE LIBERACION">
-            <input type='submit' name="inscribirse" value="INSCRIBIRSE">
-            <input type='submit' name="reinscribirse" value="REINSCRIBIRSE">
+            <input type='submit' name="actas" value="CONSTANCIAS DE LIBERACION" <?php echo $Bloqueo;?>>
+            <input type='submit' name="inscribirse" value="INSCRIBIRSE" <?php echo $Bloqueo;?>>
+            <input type='submit' name="reinscribirse" value="REINSCRIBIRSE" <?php echo $Bloqueo;?>>
             <input type='submit' name="datos_alumno" value="VER MIS DATOS">
-            <input type='submit' name="calif_alumno" value="VER MIS CALIFICACIONES">
+            <input type='submit' name="calif_alumno" value="VER MIS CALIFICACIONES" <?php echo $Bloqueo;?>>
             <input type='button' id="cerrar" name="cerrar" value="CERRAR SESION">
             
         </form>

@@ -33,14 +33,20 @@ $expediente = $_GET['expediente'];
         <select name="grup_disponible" id="grup_disponible" required>
             <option value=''>Explorar grupos...</option>
             <?php
+
             $sql = "SELECT * FROM niveles where nivel=$nivel_seleccionado";
+            $sql = "SELECT niveles.id_nivel,niveles.nivel,niveles.grupo,niveles.modalidad,niveles.horario,profesores.nombre FROM niveles join profesores on niveles.id_profesor=profesores.id_profesor where niveles.nivel=$nivel_seleccionado";
             $stmt = $conexion->prepare($sql);
             $stmt->execute();
             $result = $stmt->get_result();
             if ($result->num_rows > 0) {
                 while ($row = $result->fetch_assoc()) {
                     $id_nivel = $row['id_nivel'];
+                    $nivel = $row['nivel'];
                     $grupo = $row["grupo"];
+                    $modalidad = $row["modalidad"];
+                    $horario = $row["horario"];
+                    $profesor = $row["nombre"];
 
                     $sql = "select count(*) as total_alumnos,niveles.cupo_max from niveles left join alumnos on alumnos.id_nivel=niveles.id_nivel where niveles.id_nivel=$id_nivel";
                     $stmt = $conexion->prepare($sql);
@@ -52,16 +58,32 @@ $expediente = $_GET['expediente'];
                             $cupo_max = $row["cupo_max"];
 
                             if ($total_alumnos == $cupo_max) {
-                                echo '<option value="' . $id_nivel . '"disabled>' . $grupo . ' - GRUPO LLENO</option>';
+                                echo '<option value="' . $id_nivel . '"disabled>NIVEL: ' . $nivel . ' /-/ GRUPO: ' . $grupo . ' /-/ MODALIDAD: ' . $modalidad . ' /-/ HORARIO: ' . $horario . ' /-/ PROFESOR(@): ' . $profesor . ' <-----> GRUPO LLENO</option>';
                             } else {
-                                echo '<option value="' . $id_nivel . '">' . $grupo . '</option>';
+                                echo '<option value="' . $id_nivel . '">NIVEL: ' . $nivel . ' /-/ GRUPO: ' . $grupo . ' /-/ MODALIDAD: ' . $modalidad . ' /-/ HORARIO: ' . $horario . ' /-/ PROFESOR(@): ' . $profesor . '</option>';
                             }
                         }
                     }
                 }
+            } else {
+                echo "<script>var fileExists = false;</script>";
             }
+
+
             $stmt->close();
             ?>
+            <script>
+                if (typeof fileExists !== 'undefined' && !fileExists) {
+                    Swal.fire({
+                        title: 'LO SENTIMOS, NO HAY GRUPOS DISPONIBLES PARA \n NIVEL: <?php echo $nivel_seleccionado?>',
+                        icon: 'error',
+                        confirmButtonText: 'Aceptar',
+                        confirmButtonColor: '#ffbb00'
+                    }).then(() => {
+                        window.location.href = '../ALUMNOS/alumnos.php';
+                    });
+                }
+            </script>
         </select><br>
 
         <input type="submit" name="enviar" value="ELEGIR GRUPO">
