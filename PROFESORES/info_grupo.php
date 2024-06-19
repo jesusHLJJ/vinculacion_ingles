@@ -497,7 +497,177 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         $mensaje = "Error al mover el archivo de calificaciones subido.";
         $tipo_mensaje = "error";
       }
-    } else {
+    } 
+    
+    elseif (isset($_POST['a1'])) {
+      // Obtener el nombre del profesor y sus apellidos de las variables de sesión
+      $nombre_profesor = isset($_SESSION['nombre_profesor']) ? $_SESSION['nombre_profesor'] : '';
+      $ap_paterno = isset($_SESSION['ap_1']) ? $_SESSION['ap_1'] : '';
+      $ap_materno = isset($_SESSION['ap_2']) ? $_SESSION['ap_2'] : '';
+      $id_nivel = $_SESSION['id_nivel'];
+      include "../BD.php"; // Asegúrate de que la ruta sea correcta
+      // Combinar el nombre y los apellidos para formar el nombre completo
+      $nombre_completo = $nombre_profesor . "_" . $ap_paterno . "_" . $ap_materno;
+
+      // Crear la ruta de la carpeta
+      $carpeta = "../DOCUMENTOS_PROFESOR/" . $nombre_completo;
+
+      // Verificar si la carpeta ya existe, si no, crearla
+      if (!file_exists($carpeta)) {
+        mkdir($carpeta, 0777, true);
+      }
+
+      $nombre_archivo = basename($_FILES["asis1"]["name"]);
+      $ruta_completa = $carpeta . '/' . $nombre_archivo;
+
+      if (move_uploaded_file($_FILES['asis1']['tmp_name'], $ruta_completa)) {
+        // Verificar si ya existe un documento para este nivel
+        $sql_verificacion = "SELECT COUNT(*) as count FROM documentos_nivel WHERE id_nivel = ?";
+        $stmt_verificacion = $conexion->prepare($sql_verificacion);
+        $stmt_verificacion->bind_param("i", $id_nivel);
+        $stmt_verificacion->execute();
+        $result_verificacion = $stmt_verificacion->get_result();
+        $row_verificacion = $result_verificacion->fetch_assoc();
+        $num_documentos = $row_verificacion['count'];
+
+        if ($num_documentos > 0) {
+          // Si ya existe un documento para este nivel,  actualiza en lugar de insertar
+          $sql = "UPDATE documentos_nivel SET lista_1 = ? WHERE id_nivel = ?";
+          $stmt_verificacion->close();
+        } else {
+          // Si no existe un documento para este nivel, inserta uno nuevo
+          $sql = "INSERT INTO documentos_nivel (lista_1, id_nivel) VALUES (?, ?)";
+          $stmt_verificacion->close();
+        }
+
+        $stmt = $conexion->prepare($sql);
+        $stmt->bind_param("si", $ruta_completa, $id_nivel);
+
+        if ($stmt->execute()) {
+          $mensaje = "Éxito al subir y registrar el archivo de calificaciones.";
+        } else {
+          $mensaje = "Error al registrar el archivo de calificaciones en la base de datos.";
+          $tipo_mensaje = "error";
+        }
+      } else {
+        $mensaje = "Error al mover el archivo de calificaciones subido.";
+        $tipo_mensaje = "error";
+      }
+    } 
+    
+
+    elseif (isset($_POST['a2'])) {
+      // Obtener el nombre del profesor y sus apellidos de las variables de sesión
+      $nombre_profesor = isset($_SESSION['nombre_profesor']) ? $_SESSION['nombre_profesor'] : '';
+      $ap_paterno = isset($_SESSION['ap_1']) ? $_SESSION['ap_1'] : '';
+      $ap_materno = isset($_SESSION['ap_2']) ? $_SESSION['ap_2'] : '';
+      $id_nivel = $_SESSION['id_nivel'];
+      include "../BD.php"; // Asegúrate de que la ruta sea correcta
+      // Combinar el nombre y los apellidos para formar el nombre completo
+      $nombre_completo = $nombre_profesor . "_" . $ap_paterno . "_" . $ap_materno;
+
+      // Crear la ruta de la carpeta
+      $carpeta = "../DOCUMENTOS_PROFESOR/" . $nombre_completo;
+
+      // Verificar si la carpeta ya existe, si no, crearla
+      if (!file_exists($carpeta)) {
+        mkdir($carpeta, 0777, true);
+      }
+
+      $nombre_archivo = basename($_FILES["asis2"]["name"]);
+      $ruta_completa = $carpeta . '/' . $nombre_archivo;
+
+      if (move_uploaded_file($_FILES['asis2']['tmp_name'], $ruta_completa)) {
+        // Verificar si ya existe un documento para este nivel
+        $sql_verificacion = "SELECT COUNT(*) as count FROM documentos_nivel WHERE id_nivel = ?";
+        $stmt_verificacion = $conexion->prepare($sql_verificacion);
+        $stmt_verificacion->bind_param("i", $id_nivel);
+        $stmt_verificacion->execute();
+        $result_verificacion = $stmt_verificacion->get_result();
+        $row_verificacion = $result_verificacion->fetch_assoc();
+        $num_documentos = $row_verificacion['count'];
+
+        if ($num_documentos > 0) {
+          // Si ya existe un documento para este nivel,  actualiza en lugar de insertar
+          $sql = "UPDATE documentos_nivel SET lista_2 = ? WHERE id_nivel = ?";
+          $stmt_verificacion->close();
+        } else {
+          // Si no existe un documento para este nivel, inserta uno nuevo
+          $sql = "INSERT INTO documentos_nivel (lista_2, id_nivel) VALUES (?, ?)";
+          $stmt_verificacion->close();
+        }
+
+        $stmt = $conexion->prepare($sql);
+        $stmt->bind_param("si", $ruta_completa, $id_nivel);
+
+        if ($stmt->execute()) {
+          $mensaje = "Éxito al subir y registrar el archivo de calificaciones.";
+        } else {
+          $mensaje = "Error al registrar el archivo de calificaciones en la base de datos.";
+          $tipo_mensaje = "error";
+        }
+      } else {
+        $mensaje = "Error al mover el archivo de calificaciones subido.";
+        $tipo_mensaje = "error";
+      }
+    } 
+
+    elseif (isset($_POST['a3'])) {
+      // Obtener el nombre del profesor y sus apellidos de las variables de sesión
+      $nombre_profesor = isset($_SESSION['nombre_profesor']) ? $_SESSION['nombre_profesor'] : '';
+      $ap_paterno = isset($_SESSION['ap_1']) ? $_SESSION['ap_1'] : '';
+      $ap_materno = isset($_SESSION['ap_2']) ? $_SESSION['ap_2'] : '';
+      $id_nivel = $_SESSION['id_nivel'];
+      include "../BD.php"; // Asegúrate de que la ruta sea correcta
+      // Combinar el nombre y los apellidos para formar el nombre completo
+      $nombre_completo = $nombre_profesor . "_" . $ap_paterno . "_" . $ap_materno;
+
+      // Crear la ruta de la carpeta
+      $carpeta = "../DOCUMENTOS_PROFESOR/" . $nombre_completo;
+
+      // Verificar si la carpeta ya existe, si no, crearla
+      if (!file_exists($carpeta)) {
+        mkdir($carpeta, 0777, true);
+      }
+
+      $nombre_archivo = basename($_FILES["asis3"]["name"]);
+      $ruta_completa = $carpeta . '/' . $nombre_archivo;
+
+      if (move_uploaded_file($_FILES['asis3']['tmp_name'], $ruta_completa)) {
+        // Verificar si ya existe un documento para este nivel
+        $sql_verificacion = "SELECT COUNT(*) as count FROM documentos_nivel WHERE id_nivel = ?";
+        $stmt_verificacion = $conexion->prepare($sql_verificacion);
+        $stmt_verificacion->bind_param("i", $id_nivel);
+        $stmt_verificacion->execute();
+        $result_verificacion = $stmt_verificacion->get_result();
+        $row_verificacion = $result_verificacion->fetch_assoc();
+        $num_documentos = $row_verificacion['count'];
+
+        if ($num_documentos > 0) {
+          // Si ya existe un documento para este nivel,  actualiza en lugar de insertar
+          $sql = "UPDATE documentos_nivel SET lista_3 = ? WHERE id_nivel = ?";
+          $stmt_verificacion->close();
+        } else {
+          // Si no existe un documento para este nivel, inserta uno nuevo
+          $sql = "INSERT INTO documentos_nivel (lista_3, id_nivel) VALUES (?, ?)";
+          $stmt_verificacion->close();
+        }
+
+        $stmt = $conexion->prepare($sql);
+        $stmt->bind_param("si", $ruta_completa, $id_nivel);
+
+        if ($stmt->execute()) {
+          $mensaje = "Éxito al subir y registrar el archivo de calificaciones.";
+        } else {
+          $mensaje = "Error al registrar el archivo de calificaciones en la base de datos.";
+          $tipo_mensaje = "error";
+        }
+      } else {
+        $mensaje = "Error al mover el archivo de calificaciones subido.";
+        $tipo_mensaje = "error";
+      }
+    } 
+    else {
     }
   }
   if (isset($_FILES['archivoPlaneacion'])) {
@@ -626,7 +796,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
           </li>
           <li>
             <a href="#" id="openModalCalificaciones">Subir actas</a>
-
             <div id="modalCalificaciones" class="modal">
               <div class="modal-content">
                 <div class="modal-header">
@@ -646,6 +815,20 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                     <input type="file" name="cali3" id="cali3">
                     <label for="cali3">Parcial 3</label>
                     <button class="custom-button" type="submit" name="c3"><i class="fas fa-upload"></i></button>
+
+                    <label for="">LISTAS DE ASISTENCIAS</label> <br>
+
+                    <input type="file" name="asis1" id="asis1">
+                    <br><label for="asis1">Parcial 1</label>
+                    <button class="custom-button" type="submit" name="a1"><i class="fas fa-upload"></i></button>
+
+                    <input type="file" name="asis2" id="asis2">
+                    <label for="asis2">Parcial 2</label>
+                    <button class="custom-button" type="submit" name="a2"><i class="fas fa-upload"></i></button>
+
+                    <input type="file" name="asis3" id="asis3">
+                    <label for="asis3">Parcial 3</label>
+                    <button class="custom-button" type="submit" name="a3"><i class="fas fa-upload"></i></button>
                   </form>
                 </div>
               </div>
@@ -654,7 +837,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
           <li>
             <a href="#" id="openModalDescargar">Descargar avance programatico</a>
           </li>
-
           <div id="modalDescargar" class="modal">
             <div class="modal-content">
               <div class="modal-header">

@@ -47,12 +47,6 @@ if ($result_profesor->num_rows > 0) {
 $sql_municipios = "SELECT * FROM municipios";
 $result_municipios = $conexion->query($sql_municipios);
 
-$sql_colonias = "SELECT * FROM colonias";
-$result_colonias = $conexion->query($sql_colonias);
-
-$sql_codigos_postales = "SELECT * FROM codigos";
-$result_codigos_postales = $conexion->query($sql_codigos_postales);
-
 $sql_estados_civiles = "SELECT * FROM estado_civil";
 $result_estados_civiles = $conexion->query($sql_estados_civiles);
 
