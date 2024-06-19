@@ -355,16 +355,17 @@ input[type="file"]{
 label{
     display: inline-block;
     text-transform: uppercase;
-    color: #FFFFFF;
-    background: #cc5800;
+    color: #000000;
+    background:  #ffbb00; 
     text-align: center;
-    padding: 15px 40px;
+    padding: 20px 40px;
     font-size: 18px;
     letter-spacing: 1.5px;
     user-select: none;
     cursor: pointer;
     box-shadow: 5px 15px 25px rgb(0, 0, 0.35);
     border-radius: 3px;
+font-weight: bold;
 }
 
 .custom-button {
