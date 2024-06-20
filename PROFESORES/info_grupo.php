@@ -11,7 +11,6 @@
       header('location: ../');
     }
   }
-
   // Inicializar la variable de mensaje
   $mensaje = "";
   $id_carrera = '';
@@ -33,7 +32,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
   // Actualizar los datos en la base de datos
 
   // Cerrar la conexión existente
-
 
   // Reabrir la conexión
   include "../BD.php"; // Asegúrate de que la ruta sea correcta
@@ -98,7 +96,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $stmt_buscar->close();
   } elseif (isset($_POST["buscar_na"])) {
     // Realizar la consulta SQL para buscar alumnos con calificaciones "N/A"
-    $sql_buscar_na = "SELECT alumnos.matricula, alumnos.nombre, alumnos.ap_paterno, alumnos.ap_materno, carreras.id_carrera,carreras.nombre_carrera, alumnos.telefono FROM alumnos JOIN carreras ON carreras.id_carrera = alumnos.id_carrera JOIN notas ON alumnos.id_nota = notas.id_nota WHERE (notas.nota_parcial1 = 'N/A' OR notas.nota_parcial2 = 'N/A' OR notas.nota_parcial3 = 'N/A') AND notas.id_nivel = ?";
+    $sql_buscar_na = "SELECT alumnos.matricula, alumnos.nombre, alumnos.ap_paterno, alumnos.ap_materno, carreras.id_carrera,carreras.nombre_carrera, alumnos.telefono FROM alumnos JOIN carreras ON carreras.id_carrera = alumnos.id_carrera JOIN notas ON alumnos.id_nota = notas.id_nota WHERE (notas.nota_parcial1 = 'N/A' OR notas.nota_parcial2 = 'N/A' OR notas.nota_parcial3 = 'N/A') AND alumnos.id_nivel = ?";
 
     // Preparar la consulta SQL
     if ($stmt_buscar_na = $conexion->prepare($sql_buscar_na)) {
@@ -121,7 +119,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     }
   } elseif (isset($_POST["buscar_np"])) {
     // Realizar la consulta SQL para buscar alumnos con calificaciones "N/A"
-    $sql_buscar_na = "SELECT alumnos.matricula, alumnos.nombre, alumnos.ap_paterno, alumnos.ap_materno, carreras.id_carrera,carreras.nombre_carrera, alumnos.telefono FROM alumnos JOIN carreras ON carreras.id_carrera = alumnos.id_carrera JOIN notas ON alumnos.id_nota = notas.id_nota WHERE (notas.nota_parcial1 = 'N/P' OR notas.nota_parcial2 = 'N/P' OR notas.nota_parcial3 = 'N/P') AND notas.id_nivel = ?";
+    $sql_buscar_na = "SELECT alumnos.matricula, alumnos.nombre, alumnos.ap_paterno, alumnos.ap_materno, carreras.id_carrera,carreras.nombre_carrera, alumnos.telefono FROM alumnos JOIN carreras ON carreras.id_carrera = alumnos.id_carrera JOIN notas ON alumnos.id_nota = notas.id_nota WHERE (notas.nota_parcial1 = 'N/P' OR notas.nota_parcial2 = 'N/P' OR notas.nota_parcial3 = 'N/P') AND alumnos.id_nivel = ?";
 
     // Preparar la consulta SQL
     if ($stmt_buscar_na = $conexion->prepare($sql_buscar_na)) {
@@ -1249,11 +1247,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
       $id_nivel = $_SESSION['id_nivel'];
 
       // Consulta SQL para contar el total de notas "N/A"
-      $sql_verificar_notas = "SELECT COUNT(*) AS total_notas_na 
-                      FROM notas 
-                      WHERE id_nivel = ?
-                      AND (nota_parcial1 = 'N/A' OR nota_parcial2 = 'N/A' OR nota_parcial3 = 'N/A')";
-
+      $sql_verificar_notas = "SELECT COUNT(*) AS total_notas_na FROM notas join alumnos on alumnos.id_nota=notas.id_nota WHERE alumnos.id_nivel = ? AND (nota_parcial1 = 'N/A' OR nota_parcial2 = 'N/A' OR nota_parcial3 = 'N/A');";
       // Verificar si la consulta se prepara correctamente
       if ($stmt = $conexion->prepare($sql_verificar_notas)) {
         // Vincular los parámetros
@@ -1293,10 +1287,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
       $id_nivel = $_SESSION['id_nivel'];
 
       // Consulta SQL para contar el total de notas "N/A"
-      $sql_verificar_notas = "SELECT COUNT(*) AS total_notas_np 
-                      FROM notas 
-                      WHERE id_nivel = ?
-                      AND (nota_parcial1 = 'N/P' OR nota_parcial2 = 'N/P' OR nota_parcial3 = 'N/P')";
+      $sql_verificar_notas = "SELECT COUNT(*) AS total_notas_np FROM notas join alumnos on alumnos.id_nota=notas.id_nota WHERE alumnos.id_nivel = ? AND (notas.nota_parcial1 = 'N/P' OR notas.nota_parcial2 = 'N/P' OR notas.nota_parcial3 = 'N/P')";
 
       // Verificar si la consulta se prepara correctamente
       if ($stmt = $conexion->prepare($sql_verificar_notas)) {
