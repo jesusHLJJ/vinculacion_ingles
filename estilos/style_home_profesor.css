@@ -3,7 +3,7 @@ body{
             /*background-image: linear-gradient(rgba(0,0,0,0.1), rgba(0,0,0,0.1)), url('https://images.unsplash.com/photo-1552860512-13148a37d7a2?q=80&w=1000&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MTJ8fGxpZ2h0JTIwYmx1ZXxlbnwwfHwwfHx8MA%3D%3D');
             */
             background-image: 
-            linear-gradient(rgba(255, 255, 255, 0.8), rgba(0, 0, 0, 0.5)),
+            linear-gradient(rgba(255, 255, 255, 0.8), rgba(255, 255, 255)),
             url('../imagenes/fondo_g.png'); /* Cambia esta ruta por la ruta de tu imagen */
             background-size: cover; /* Ajusta la imagen para que cubra toda la pantalla */
             background-position: center; /* Centra la imagen */
@@ -20,7 +20,7 @@ body{
     bottom: 0;
     height: 100%;
     left: 0;
-    background-color: rgb(81, 81, 81);
+    background-color:#ffbb00;
     width: 65px;
     overflow: hidden;   
     transition: width 0.2s linear;
@@ -30,7 +30,7 @@ body{
 .navbar:hover{
     width: 180px;
     transition: all 0.5s ease;
-    background-color: #969695;
+    background-color: orange;
 }
 .navbar ul {
     list-style-type: none; /* Quitar viñetas */
