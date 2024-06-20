@@ -63,14 +63,6 @@ include "BD.php";
 
 <?php
 
-
-    $conexion = mysqli_connect('localhost', 'root', '', 'vinculacion_ingles');
-        if (!$conexion){
-            echo('Conexion fallida');
-        }else{
-            
-        }
-
 if (isset($_POST['enviar'])) {
   $correo = $_POST['correo'];
   $contrasena = $_POST['contrasena'];
