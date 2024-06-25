@@ -14,8 +14,8 @@ const dataTableOptions = {
       },
     },
   ],
-  lengthMenu: [10, 50, 100],
-  pageLength: 10,
+  lengthMenu: false,
+  pageLength: 8,
   destroy: true,
 };
 

@@ -33,49 +33,63 @@ $expediente = $_GET['expediente'];
         <select name="grup_disponible" id="grup_disponible" required>
             <option value=''>Explorar grupos...</option>
             <?php
-
-            $sql = "SELECT * FROM niveles where nivel=$nivel_seleccionado";
-            $sql = "SELECT niveles.id_nivel,niveles.nivel,niveles.grupo,niveles.modalidad,niveles.horario,profesores.nombre FROM niveles join profesores on niveles.id_profesor=profesores.id_profesor where niveles.nivel=$nivel_seleccionado";
+            // Primera consulta para obtener todos los niveles junto con los profesores
+            $sql = "SELECT niveles.id_nivel, niveles.nivel, niveles.grupo, niveles.modalidad, niveles.horario, profesores.nombre 
+        FROM niveles 
+        JOIN profesores ON niveles.id_profesor = profesores.id_profesor 
+        WHERE niveles.nivel = ?";
             $stmt = $conexion->prepare($sql);
+            $stmt->bind_param('i', $nivel_seleccionado);
             $stmt->execute();
             $result = $stmt->get_result();
+
             if ($result->num_rows > 0) {
                 while ($row = $result->fetch_assoc()) {
                     $id_nivel = $row['id_nivel'];
                     $nivel = $row['nivel'];
-                    $grupo = $row["grupo"];
-                    $modalidad = $row["modalidad"];
-                    $horario = $row["horario"];
-                    $profesor = $row["nombre"];
+                    $grupo = $row['grupo'];
+                    $modalidad = $row['modalidad'];
+                    $horario = $row['horario'];
+                    $profesor = $row['nombre'];
 
-                    $sql = "select count(*) as total_alumnos,niveles.cupo_max from niveles left join alumnos on alumnos.id_nivel=niveles.id_nivel where niveles.id_nivel=$id_nivel";
-                    $stmt = $conexion->prepare($sql);
-                    $stmt->execute();
-                    $result = $stmt->get_result();
-                    if ($result->num_rows > 0) {
-                        while ($row = $result->fetch_assoc()) {
-                            $total_alumnos = $row['total_alumnos'];
-                            $cupo_max = $row["cupo_max"];
+                    // Segunda consulta para contar alumnos y obtener el cupo máximo para cada nivel
+                    $sql_alumnos = "SELECT COUNT(*) AS total_alumnos, niveles.cupo_max 
+                        FROM niveles 
+                        LEFT JOIN alumnos ON alumnos.id_nivel = niveles.id_nivel 
+                        WHERE niveles.id_nivel = ?";
+                    $stmt_alumnos = $conexion->prepare($sql_alumnos);
+                    $stmt_alumnos->bind_param('i', $id_nivel);
+                    $stmt_alumnos->execute();
+                    $result_alumnos = $stmt_alumnos->get_result();
 
-                            if ($total_alumnos == $cupo_max) {
-                                echo '<option value="' . $id_nivel . '"disabled>NIVEL: ' . $nivel . ' /-/ GRUPO: ' . $grupo . ' /-/ MODALIDAD: ' . $modalidad . ' /-/ HORARIO: ' . $horario . ' /-/ PROFESOR(@): ' . $profesor . ' <-----> GRUPO LLENO</option>';
-                            } else {
-                                echo '<option value="' . $id_nivel . '">NIVEL: ' . $nivel . ' /-/ GRUPO: ' . $grupo . ' /-/ MODALIDAD: ' . $modalidad . ' /-/ HORARIO: ' . $horario . ' /-/ PROFESOR(@): ' . $profesor . '</option>';
-                            }
+                    if ($result_alumnos->num_rows > 0) {
+                        $row_alumnos = $result_alumnos->fetch_assoc();
+                        $total_alumnos = $row_alumnos['total_alumnos'];
+                        $cupo_max = $row_alumnos['cupo_max'];
+
+                        if ($total_alumnos == $cupo_max) {
+                            echo '<option value="' . $id_nivel . '" disabled>NIVEL: ' . $nivel . ' /-/ GRUPO: ' . $grupo . ' /-/ MODALIDAD: ' . $modalidad . ' /-/ HORARIO: ' . $horario . ' /-/ PROFESOR(@): ' . $profesor . ' <-----> GRUPO LLENO</option>';
+                        } else {
+                            echo '<option value="' . $id_nivel . '">NIVEL: ' . $nivel . ' /-/ GRUPO: ' . $grupo . ' /-/ MODALIDAD: ' . $modalidad . ' /-/ HORARIO: ' . $horario . ' /-/ PROFESOR(@): ' . $profesor . '</option>';
                         }
                     }
+
+                    
                 }
             } else {
                 echo "<script>var fileExists = false;</script>";
             }
 
 
+
+
+            $stmt_alumnos->close();
             $stmt->close();
             ?>
             <script>
                 if (typeof fileExists !== 'undefined' && !fileExists) {
                     Swal.fire({
-                        title: 'LO SENTIMOS, NO HAY GRUPOS DISPONIBLES PARA \n NIVEL: <?php echo $nivel_seleccionado?>',
+                        title: 'LO SENTIMOS, NO HAY GRUPOS DISPONIBLES PARA \n NIVEL: <?php echo $nivel_seleccionado ?>',
                         icon: 'error',
                         confirmButtonText: 'Aceptar',
                         confirmButtonColor: '#ffbb00'

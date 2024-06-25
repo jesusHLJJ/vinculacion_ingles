@@ -44,7 +44,7 @@ if (!isset($_SESSION['tipo'])) {
     </header>
 
     <main>
-        <div class="container my-5 table-responsive">
+        <div class="container mt-3 table table-responsive">
             <div class="row">
                 <table id="alumnos" class="table table-striped" style="width:100%">
                     <thead>
@@ -53,29 +53,28 @@ if (!isset($_SESSION['tipo'])) {
                             <th class="text-center">NOMBRE</th>
                             <th class="text-center">AP. PATERNO</th>
                             <th class="text-center">AP. MATERNO</th>
+                            <th class="text-center">CORREO ELECTRONICO</th>
                             <th class="text-center">CARRERA</th>
                             <th class="text-center">TELEFONO</th>
-                            <th class="text-center">SEXO</th>
-                            <th class="text-center">NIVEL</th>
-                            <th class="text-center">GRUPO</th>
-                            <th class="text-center">ESTATUS</th>
+                            <th class="text-center">LINEA DE CAPTURA</th>
+                            <th class="text-center">FECHA DE PAGO</th>
+                            <th class="text-center">FECHA DE ENTREGA</th>
                             <th></th>
                         </tr>
                     </thead>
 
                     <tbody id="table_alumno">
                     </tbody>
-
-                    <tfoot>
-                    </tfoot>
                 </table>
             </div>
         </div>
+    </main>
 
+    <footer>
         <div class="close">
             <button id="log_out" class="btn btn-danger"><i class="fa-solid fa-right-from-bracket"></i> CERRAR SESION</button>
         </div>
-    </main>
+    </footer>
 
     <!--JQuery-->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>

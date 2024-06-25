@@ -54,7 +54,7 @@ $pdfFiles = glob($directory . "/*.pdf");
         <?php
         if ($pdfFiles) {
             echo '<table>';
-            echo '<tr><th>Archivo PDF</th></tr>';
+            echo '<tr><th>ARCHIVO PDF</th></tr>';
             foreach ($pdfFiles as $file) {
                 echo "<tr><td><a href='$file' target='_blank'>" . basename($file) . "</a></td></tr>";
             }

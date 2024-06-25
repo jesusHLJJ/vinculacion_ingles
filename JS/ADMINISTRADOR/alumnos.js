@@ -11,8 +11,8 @@ const dataTableOptions = {
       className: "btn btn-success",
     },
   ],
-  lengthMenu: [10, 50, 100],
-  pageLength: 10,
+  lengthMenu: false,
+  pageLength: 3,
   destroy: true,
 };
 
@@ -40,12 +40,12 @@ const listprofesor = async () => {
                     <td class="text-center">${grupos.nombre}</td>
                     <td class="text-center">${grupos.ap_paterno}</td>
                     <td class="text-center">${grupos.ap_materno}</td>
+                    <td class="text-center">${grupos.correo}</td>
                     <td class="text-center">${grupos.nombre_carrera}</td>
                     <td class="text-center">${grupos.telefono}</td>
-                    <td class="text-center">${grupos.sexo}</td>
-                    <td class="text-center">${grupos.nivel}</td>
-                    <td class="text-center">${grupos.grupo}</td>
-                    <td class="text-center">${grupos.estatus_alumno}</td>
+                    <td class="text-center">${grupos.lin_captura_t}</td>
+                    <td class="text-center">${grupos.fecha_pago}</td>
+                    <td class="text-center">${grupos.fecha_entrega}</td>
                     <td class="text-center">
                         <button class="modificar btn btn-sm btn-primary" data-matricula="${grupos.matricula}" data-nombre="${grupos.nombre}" data-paterno="${grupos.ap_paterno}" data-materno="${grupos.ap_materno}" data-telefono="${grupos.telefono}">
                             <i class="fa-solid fa-pen-to-square"></i>

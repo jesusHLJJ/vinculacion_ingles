@@ -25,6 +25,7 @@ $expediente = $_SESSION['id_expediente'];
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>REINSCRIBIRSE</title>
     <link rel="stylesheet" href="estilos/reinscribirse.css">
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 </head>
 
 <body>
@@ -53,8 +54,12 @@ $expediente = $_SESSION['id_expediente'];
             <label for="lin_captura">LINEA DE CAPTURA</label>
             <input type="text" name="lin_captura" id="lin_captura" placeholder="XXXXXX(6) XXXXXX XXXXXX XXXXXX XXX" maxlength="31" oninput="formatInput(event)" required><br>
 
-            <label for="fe_pago">FECHA DEPAGO</label>
+            <label for="fe_pago">FECHA DE PAGO</label>
             <input type="date" name="fe_pago" id="fe_pago" required><br>
+
+            <label for="fe_entrega">FECHA ENTREGA</label>
+            <input type="date" name="fe_entrega" id="fe_entrega" required><br>
+
 
             <label for="nivel">NIVEL A CURSAR</label>
             <select name="nivel" id="nivel" required>
@@ -117,9 +122,22 @@ if (isset($_POST['reinscribirse'])) {
     //DATOS
     $linea_captura = $_POST['lin_captura'];
     $fecha_pago = $_POST['fe_pago'];
+    $fecha_entrega = $_POST['fe_entrega'];
     $nivel_cursar = $_POST['nivel'];
     $modalidad = $_POST['modalidad'];
     $horario = $_POST['horario'];
+    $linea_repetida = '';
+
+    //COMPROBAR SI LA LINEA DE CAPTURA NO ESTA REPETIDA
+    $sql = "Select documento_expediente.lin_captura_t from documento_expediente where documento_expediente.lin_captura_t='$linea_captura'";
+    $stmt = $conexion->prepare($sql);
+    $stmt->execute();
+    $result = $stmt->get_result();
+    if ($result->num_rows > 0) {
+        $fila = $result->fetch_assoc();
+        $linea_repetida = $fila['lin_captura_t'];
+    }
+
 
     //DOCUMENTOS
 
@@ -127,42 +145,58 @@ if (isset($_POST['reinscribirse'])) {
     $comp_pago =  '';
     $lin_captura_d =  '';
 
-    //COPIAR DOCUMENTOS A LA CARPETA DE USUARIO CORRESPONDIENTE
+    if ($linea_repetida == '') {
 
-    $const_anterior = $_FILES['const_anterior']['name'];
-    if ($const_anterior != '') {
-        $const_anterior_extension = pathinfo($const_anterior, PATHINFO_EXTENSION);
-        $const_anterior_tmp = $_FILES['const_anterior']['tmp_name'];
-        $const_anterior_route = "archivos/usuario_expediente_" . $expediente . "_reinscripcion/" . $nivel_cursar . "nivel_const_anterior." . $const_anterior_extension;
-        move_uploaded_file($const_anterior_tmp, $const_anterior_route);
+        //COPIAR DOCUMENTOS A LA CARPETA DE USUARIO CORRESPONDIENTE
+
+        $const_anterior = $_FILES['const_anterior']['name'];
+        if ($const_anterior != '') {
+            $const_anterior_extension = pathinfo($const_anterior, PATHINFO_EXTENSION);
+            $const_anterior_tmp = $_FILES['const_anterior']['tmp_name'];
+            $const_anterior_route = "archivos/usuario_expediente_" . $expediente . "_reinscripcion/" . $nivel_cursar . "nivel_const_anterior." . $const_anterior_extension;
+            move_uploaded_file($const_anterior_tmp, $const_anterior_route);
+        }
+
+        $comp_pago = $_FILES['comp_pago']['name'];
+        if ($comp_pago != '') {
+            $comp_pago_extension = pathinfo($comp_pago, PATHINFO_EXTENSION);
+            $comp_pago_tmp = $_FILES['comp_pago']['tmp_name'];
+            $comp_pago_route = "archivos/usuario_expediente_" . $expediente . "_reinscripcion/" . $nivel_cursar . "nivel_comp_pago." . $comp_pago_extension;
+            move_uploaded_file($comp_pago_tmp, $comp_pago_route);
+        }
+
+        $lin_captura_d = $_FILES['lin_captura_d']['name'];
+        if ($lin_captura_d != '') {
+            $lin_captura_d_extension = pathinfo($lin_captura_d, PATHINFO_EXTENSION);
+            $lin_captura_d_tmp = $_FILES['lin_captura_d']['tmp_name'];
+            $lin_captura_d_route = "archivos/usuario_expediente_" . $expediente . "_reinscripcion/" . $nivel_cursar . "nivel_lin_captura_d." . $lin_captura_d_extension;
+            move_uploaded_file($lin_captura_d_tmp,  $lin_captura_d_route);
+        }
+
+        //CONSULTA PARA ALMACENAR LAS RUTAS
+        $sql = "update alumnos set id_estatus=2 where id_expediente=$expediente";
+        $result = $conexion->query($sql);
+
+        $sql = "INSERT INTO documento_expediente (`id_expediente`, `nivel`, `const_na`, `comp_pago`, `lin_captura`, `lin_captura_t`, `fecha_entrega`,`fecha_pago`) VALUES ($expediente, $nivel_cursar, '$const_anterior_route','$comp_pago_route', '$lin_captura_d_route','$linea_captura','$fecha_entrega','$fecha_pago')";
+        $result = $conexion->query($sql);
+        mysqli_close($conexion);
+        if ($result) {
+            header("Location:elegir_grupo.php?nivel=$nivel_cursar&expediente=$expediente");
+        }
+    } else {
+        echo "<script>
+        document.addEventListener('DOMContentLoaded', function() {
+            Swal.fire({
+                title: 'LINEA DE CAPTURA REPETIDA',
+                icon: 'error',
+                confirmButtonText: 'Aceptar',
+                confirmButtonColor: '#ffbb00'
+            }).then(() => {
+                window.location.href = 'alumnos.php';
+            });
+        });
+    </script>";
     }
-
-    $comp_pago = $_FILES['comp_pago']['name'];
-    if ($comp_pago != '') {
-        $comp_pago_extension = pathinfo($comp_pago, PATHINFO_EXTENSION);
-        $comp_pago_tmp = $_FILES['comp_pago']['tmp_name'];
-        $comp_pago_route = "archivos/usuario_expediente_" . $expediente . "_reinscripcion/" . $nivel_cursar . "nivel_comp_pago." . $comp_pago_extension;
-        move_uploaded_file($comp_pago_tmp, $comp_pago_route);
-    }
-
-    $lin_captura_d = $_FILES['lin_captura_d']['name'];
-    if ($lin_captura_d != '') {
-        $lin_captura_d_extension = pathinfo($lin_captura_d, PATHINFO_EXTENSION);
-        $lin_captura_d_tmp = $_FILES['lin_captura_d']['tmp_name'];
-        $lin_captura_d_route = "archivos/usuario_expediente_" . $expediente . "_reinscripcion/" . $nivel_cursar . "nivel_lin_captura_d." . $lin_captura_d_extension;
-        move_uploaded_file($lin_captura_d_tmp,  $lin_captura_d_route);
-    }
-
-    //CONSULTA PARA ALMACENAR LAS RUTAS
-    $sql = "update alumnos set id_estatus=2 where id_expediente=$expediente";
-    $result = $conexion->query($sql);
-
-    $sql = "INSERT INTO documento_expediente (`id_expediente`, `nivel`, `const_na`, `comp_pago`, `lin_captura`, `lin_captura_t`, `fecha_entrega`) VALUES ($expediente, $nivel_cursar, '$const_anterior_route','$comp_pago_route', '$lin_captura_d_route','$linea_captura','$fecha_pago')";
-    $result = $conexion->query($sql);
-    mysqli_close($conexion);
-    if ($result) {
-        header("Location:elegir_grupo.php?nivel=$nivel_cursar&expediente=$expediente");
-    } 
 }
 
 ?>

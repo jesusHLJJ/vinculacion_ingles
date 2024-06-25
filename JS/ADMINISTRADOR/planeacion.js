@@ -14,8 +14,8 @@ const dataTableOptions = {
       },
     },
   ],
-  lengthMenu: [10, 50, 100],
-  pageLength: 10,
+  lengthMenu: false,
+  pageLength: 5,
   destroy: true,
 };
 
@@ -139,7 +139,7 @@ function agregarNuevoUsuario() {
       formData.append("avance1", formValues.avance1);
 
       $.ajax({
-        url: "../../PLANEACION_Y_AVANCE/guardar_datos.php",
+        url: "../../ADMINISTRADOR/PLANEACION_Y_AVANCE/guardar_datos.php",
         type: "post",
         processData: false,
         contentType: false,

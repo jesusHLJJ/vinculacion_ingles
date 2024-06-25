@@ -7,7 +7,7 @@ body {
     display: flex;
     justify-content: center;
     background-image: 
-    linear-gradient(rgba(116, 116, 116, 0.8), rgb(0, 0, 0)),
+    linear-gradient(rgba(255, 255, 255, 0.8), rgb(222, 222, 222)),
     url('../../imagenes/fondo_g.png');
     background-size: cover; /* Ajusta la imagen para que cubra toda la pantalla */
     background-position: center; /* Centra la imagen */

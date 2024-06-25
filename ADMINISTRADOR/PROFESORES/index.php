@@ -70,11 +70,13 @@ if (!isset($_SESSION['tipo'])) {
                 </table>
             </div>
         </div>
+    </main>
     
+    <footer>
         <div class="close">
             <button id="log_out" class="btn btn-danger"><i class="fa-solid fa-right-from-bracket"></i> CERRAR SESION</button>
         </div>
-    </main>
+    </footer>
 
     <!--JQuery-->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>

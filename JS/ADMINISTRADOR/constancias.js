@@ -2,8 +2,8 @@ let dataTable;
 let dataTableIsInitializated = false;
 
 const dataTableOptions = {
-  lengthMenu: [10, 50, 100],
-  pageLength: 10,
+  lengthMenu: false,
+  pageLength: 8,
   destroy: true,
 };
 
@@ -110,6 +110,7 @@ $(document).on("click", ".modificar", async function () {
         <input type="file" id="constancias" class="swal2-file" accept=".pdf" multiple>
       `,
       focusConfirm: false,
+      showCancelButton: true,
       preConfirm: () => {
         const constancias = document.getElementById("constancias").files;
         return {
