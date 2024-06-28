@@ -1,6 +1,6 @@
   <?php
   
-  include "../BD.php";
+  include "../../BD.php";
 
   session_start();
 
@@ -34,7 +34,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
   // Cerrar la conexión existente
 
   // Reabrir la conexión
-  include "../BD.php"; // Asegúrate de que la ruta sea correcta
+  include "../../BD.php"; // Asegúrate de que la ruta sea correcta
 
   // Actualizar los datos en la base de datos
   $sql_actualizar = "UPDATE alumnos SET nombre=?, ap_paterno=?, ap_materno=?, id_carrera=?, telefono=? WHERE matricula=?";
@@ -82,7 +82,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
   if (isset($_GET["search"]) && !empty($_GET["search"])) {
     // Sanitizar y obtener el término de búsqueda
 
-    include "../BD.php"; // Asegúrate de que la ruta sea correcta
+    include "../../BD.php"; // Asegúrate de que la ruta sea correcta
     $search = mysqli_real_escape_string($conexion, $_GET["search"]);
 
     // Realizar la consulta SQL para buscar coincidencias en el nombre
@@ -155,13 +155,13 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
       $ap_materno = isset($_SESSION['ap_2']) ? $_SESSION['ap_2'] : '';
       $id_nivel = $_SESSION['id_nivel'];
 
-      include "../BD.php"; // Asegúrate de que la ruta sea correcta
+      include "../../BD.php"; // Asegúrate de que la ruta sea correcta
 
       // Combinar el nombre y los apellidos para formar el nombre completo
       $nombre_completo = $nombre_profesor . "_" . $ap_paterno . "_" . $ap_materno;
 
       // Crear la ruta de la carpeta
-      $carpeta = "../DOCUMENTOS_PROFESOR/" . $nombre_completo;
+      $carpeta = "../../DOCUMENTOS_PROFESOR/" . $nombre_completo;
 
       // Verificar si la carpeta ya existe, si no, crearla
       if (!file_exists($carpeta)) {
@@ -217,12 +217,12 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
       $ap_materno = isset($_SESSION['ap_2']) ? $_SESSION['ap_2'] : '';
       $id_nivel = $_SESSION['id_nivel'];
 
-      include "../BD.php"; // Asegúrate de que la ruta sea correcta
+      include "../../BD.php"; // Asegúrate de que la ruta sea correcta
       // Combinar el nombre y los apellidos para formar el nombre completo
       $nombre_completo = $nombre_profesor . "_" . $ap_paterno . "_" . $ap_materno;
 
       // Crear la ruta de la carpeta
-      $carpeta = "../DOCUMENTOS_PROFESOR/" . $nombre_completo;
+      $carpeta = "../../DOCUMENTOS_PROFESOR/" . $nombre_completo;
 
       // Verificar si la carpeta ya existe, si no, crearla
       if (!file_exists($carpeta)) {
@@ -275,12 +275,12 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
       $ap_paterno = isset($_SESSION['ap_1']) ? $_SESSION['ap_1'] : '';
       $ap_materno = isset($_SESSION['ap_2']) ? $_SESSION['ap_2'] : '';
       $id_nivel = $_SESSION['id_nivel'];
-      include "../BD.php"; // Asegúrate de que la ruta sea correcta
+      include "../../BD.php"; // Asegúrate de que la ruta sea correcta
       // Combinar el nombre y los apellidos para formar el nombre completo
       $nombre_completo = $nombre_profesor . "_" . $ap_paterno . "_" . $ap_materno;
 
       // Crear la ruta de la carpeta
-      $carpeta = "../DOCUMENTOS_PROFESOR/" . $nombre_completo;
+      $carpeta = "../../DOCUMENTOS_PROFESOR/" . $nombre_completo;
 
       // Verificar si la carpeta ya existe, si no, crearla
       if (!file_exists($carpeta)) {
@@ -338,12 +338,12 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
       $ap_paterno = isset($_SESSION['ap_1']) ? $_SESSION['ap_1'] : '';
       $ap_materno = isset($_SESSION['ap_2']) ? $_SESSION['ap_2'] : '';
       $id_nivel = $_SESSION['id_nivel'];
-      include "../BD.php"; // Asegúrate de que la ruta sea correcta
+      include "../../BD.php"; // Asegúrate de que la ruta sea correcta
       // Combinar el nombre y los apellidos para formar el nombre completo
       $nombre_completo = $nombre_profesor . "_" . $ap_paterno . "_" . $ap_materno;
 
       // Crear la ruta de la carpeta
-      $carpeta = "../DOCUMENTOS_PROFESOR/" . $nombre_completo;
+      $carpeta = "../../DOCUMENTOS_PROFESOR/" . $nombre_completo;
 
       // Verificar si la carpeta ya existe, si no, crearla
       if (!file_exists($carpeta)) {
@@ -393,12 +393,12 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
       $ap_paterno = isset($_SESSION['ap_1']) ? $_SESSION['ap_1'] : '';
       $ap_materno = isset($_SESSION['ap_2']) ? $_SESSION['ap_2'] : '';
       $id_nivel = $_SESSION['id_nivel'];
-      include "../BD.php"; // Asegúrate de que la ruta sea correcta
+      include "../../BD.php"; // Asegúrate de que la ruta sea correcta
       // Combinar el nombre y los apellidos para formar el nombre completo
       $nombre_completo = $nombre_profesor . "_" . $ap_paterno . "_" . $ap_materno;
 
       // Crear la ruta de la carpeta
-      $carpeta = "../DOCUMENTOS_PROFESOR/" . $nombre_completo;
+      $carpeta = "../../DOCUMENTOS_PROFESOR/" . $nombre_completo;
 
       // Verificar si la carpeta ya existe, si no, crearla
       if (!file_exists($carpeta)) {
@@ -447,12 +447,12 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
       $ap_paterno = isset($_SESSION['ap_1']) ? $_SESSION['ap_1'] : '';
       $ap_materno = isset($_SESSION['ap_2']) ? $_SESSION['ap_2'] : '';
       $id_nivel = $_SESSION['id_nivel'];
-      include "../BD.php"; // Asegúrate de que la ruta sea correcta
+      include "../../BD.php"; // Asegúrate de que la ruta sea correcta
       // Combinar el nombre y los apellidos para formar el nombre completo
       $nombre_completo = $nombre_profesor . "_" . $ap_paterno . "_" . $ap_materno;
 
       // Crear la ruta de la carpeta
-      $carpeta = "../DOCUMENTOS_PROFESOR/" . $nombre_completo;
+      $carpeta = "../../DOCUMENTOS_PROFESOR/" . $nombre_completo;
 
       // Verificar si la carpeta ya existe, si no, crearla
       if (!file_exists($carpeta)) {
@@ -503,12 +503,12 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
       $ap_paterno = isset($_SESSION['ap_1']) ? $_SESSION['ap_1'] : '';
       $ap_materno = isset($_SESSION['ap_2']) ? $_SESSION['ap_2'] : '';
       $id_nivel = $_SESSION['id_nivel'];
-      include "../BD.php"; // Asegúrate de que la ruta sea correcta
+      include "../../BD.php"; // Asegúrate de que la ruta sea correcta
       // Combinar el nombre y los apellidos para formar el nombre completo
       $nombre_completo = $nombre_profesor . "_" . $ap_paterno . "_" . $ap_materno;
 
       // Crear la ruta de la carpeta
-      $carpeta = "../DOCUMENTOS_PROFESOR/" . $nombre_completo;
+      $carpeta = "../../DOCUMENTOS_PROFESOR/" . $nombre_completo;
 
       // Verificar si la carpeta ya existe, si no, crearla
       if (!file_exists($carpeta)) {
@@ -560,12 +560,12 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
       $ap_paterno = isset($_SESSION['ap_1']) ? $_SESSION['ap_1'] : '';
       $ap_materno = isset($_SESSION['ap_2']) ? $_SESSION['ap_2'] : '';
       $id_nivel = $_SESSION['id_nivel'];
-      include "../BD.php"; // Asegúrate de que la ruta sea correcta
+      include "../../BD.php"; // Asegúrate de que la ruta sea correcta
       // Combinar el nombre y los apellidos para formar el nombre completo
       $nombre_completo = $nombre_profesor . "_" . $ap_paterno . "_" . $ap_materno;
 
       // Crear la ruta de la carpeta
-      $carpeta = "../DOCUMENTOS_PROFESOR/" . $nombre_completo;
+      $carpeta = "../../DOCUMENTOS_PROFESOR/" . $nombre_completo;
 
       // Verificar si la carpeta ya existe, si no, crearla
       if (!file_exists($carpeta)) {
@@ -616,12 +616,12 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
       $ap_paterno = isset($_SESSION['ap_1']) ? $_SESSION['ap_1'] : '';
       $ap_materno = isset($_SESSION['ap_2']) ? $_SESSION['ap_2'] : '';
       $id_nivel = $_SESSION['id_nivel'];
-      include "../BD.php"; // Asegúrate de que la ruta sea correcta
+      include "../../BD.php"; // Asegúrate de que la ruta sea correcta
       // Combinar el nombre y los apellidos para formar el nombre completo
       $nombre_completo = $nombre_profesor . "_" . $ap_paterno . "_" . $ap_materno;
 
       // Crear la ruta de la carpeta
-      $carpeta = "../DOCUMENTOS_PROFESOR/" . $nombre_completo;
+      $carpeta = "../../DOCUMENTOS_PROFESOR/" . $nombre_completo;
 
       // Verificar si la carpeta ya existe, si no, crearla
       if (!file_exists($carpeta)) {
@@ -676,12 +676,12 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $ap_materno = isset($_SESSION['ap_2']) ? $_SESSION['ap_2'] : '';
     $id_nivel = $_SESSION['id_nivel'];
 
-    include "../BD.php"; // Asegúrate de que la ruta sea correcta
+    include "../../BD.php"; // Asegúrate de que la ruta sea correcta
     // Combinar el nombre y los apellidos para formar el nombre completo
     $nombre_completo = $nombre_profesor . "_" . $ap_paterno . "_" . $ap_materno;
 
     // Crear la ruta de la carpeta
-    $carpeta = "../DOCUMENTOS_PROFESOR/" . $nombre_completo;
+    $carpeta = "../../DOCUMENTOS_PROFESOR/" . $nombre_completo;
 
     // Verificar si la carpeta ya existe, si no, crearla
     if (!file_exists($carpeta)) {
@@ -731,7 +731,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     <title>Tabla de Alumnos</title>
     <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.0/xlsx.full.min.js"></script>
-    <link rel="stylesheet" href="../estilos/style_info_profesor.css">
+    <link rel="stylesheet" href="../../estilos/style_info_profesor.css">
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.6.3/css/all.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.0/css/all.min.css">
   </head>
@@ -897,7 +897,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             </div>
           </li>
           <li>
-            <a href="descargar_tabla.php">Generar</a>
+            <a href="../descargar_tabla.php">Generar</a>
           </li>
           <li>
             <a id="cerrar" href="#" class="active">Cerrar sesion</a>
@@ -1009,7 +1009,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         }).then((confirm) => {
           if (confirm) {
             // Si el usuario confirma, redirecciona a la otra página
-            window.location.href = "../CONTROLADORES/cerrar_sesion.php";
+            window.location.href = "../../CONTROLADORES/cerrar_sesion.php";
           }
         });
       });

@@ -253,7 +253,7 @@ if (mysqli_num_rows($resultado) > 0) {
         }
       }).then((confirm) => {
         if (confirm) {
-          window.location.href = "info_grupo.php";
+          window.location.href = "descarga_documento/info_grupo.php";
         }
       });
     });

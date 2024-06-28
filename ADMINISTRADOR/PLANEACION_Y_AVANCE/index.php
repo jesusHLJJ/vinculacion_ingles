@@ -38,6 +38,8 @@ if (!isset($_SESSION['tipo'])) {
                     <li class="opcion disabled"><a href="../PLANEACION_Y_AVANCE/"><i class="fa-solid fa-file"></i> PLANEACION Y AVANCE</a></li>
                     <li class="opcion"><a href="../ALUMNOS/"><i class="fa-solid fa-user"></i> ALUMNOS</a></li>
                     <li class="opcion"><a href="../ACTAS_Y_CONSTANCIAS/"><i class="fa-solid fa-file"></i> ACTAS Y CONSTANCIAS</a></li>
+                    <li class="opcion"><a href="../CONTROL_CREDENCIALES/"><i class="fa-solid fa-ticket-simple"></i> CONTROL DE CREDENCIALES</a></li>
+                    <li class="opcion"><a href="../AGREGAR_ADMINISTRADOR/"><i class="fa-solid fa-user-tie"></i> AGREGAR ADMINISTRADORES</a></li>../
                 </ul>
             </nav>
         </div>

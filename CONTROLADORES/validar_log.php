@@ -18,8 +18,14 @@ if (password_verify($pass, $hash)) {
     $_SESSION['tipo'] = $idtipo;
     switch ($idtipo) {
         case 1:
-            $mensaje = "Inicio de sesión exitoso como administrador";
-            $pagina = "../ADMINISTRADOR/";
+            if($correo=='admin@admin.com'){
+                $mensaje = "ESTA CUENTA SERÁ ELIMINADA UNA VEZ SE CREE A UN ADMINISTRADOR, FAVOR DE CREAR UN ADMINISTRADOR";
+                $pagina = "../ADMINISTRADOR/AGREGAR_ADMINISTRADOR/";
+            }else{
+                $mensaje = "Inicio de sesión exitoso como administrador";
+                $pagina = "../ADMINISTRADOR/";
+            }
+          
             break;
         case 2:
             $mensaje = "Inicio de sesión exitoso como profesor";
@@ -77,5 +83,6 @@ if (password_verify($pass, $hash)) {
 </body>
 </html>
 <?php
+
 }
 ?>

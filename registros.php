@@ -2,19 +2,19 @@
 session_start();
 
 if (isset($_SESSION['tipo'])) {
-    switch ($_SESSION['tipo']) {
-        case 1: // Tutor
-            header('location: ADMINISTRADOR/');
-            break;
-            case 2: // Administrador
-                header('location: PROFESORES/');
-            break;
-        case 3: // Alumno
+  switch ($_SESSION['tipo']) {
+    case 1: // Tutor
+      header('location: ADMINISTRADOR/');
+      break;
+    case 2: // Administrador
+      header('location: PROFESORES/');
+      break;
+    case 3: // Alumno
 
-            header('location: ALUMNOS/alumnos.php');
-            break;
-        default:
-    }
+      header('location: ALUMNOS/alumnos.php');
+      break;
+    default:
+  }
 }
 ?>
 
@@ -62,80 +62,127 @@ include "BD.php";
 
 
 <?php
-
 if (isset($_POST['enviar'])) {
   $correo = $_POST['correo'];
+
   $contrasena = $_POST['contrasena'];
   $matricula = $_POST['matricula'];
+  $sql = "select correo from usuarios where correo='$correo'";
+  $stmt = $conexion->prepare($sql);
+  $stmt->execute();
+  $result = $stmt->get_result();
+  if ($result->num_rows > 0) {
+    echo "<h2>EL CORREO YA ESTA REGISTRADO</h2>";
+  } else {
 
-  $HASH = password_hash($contrasena, PASSWORD_DEFAULT);
-  $sql = "INSERT INTO `usuarios` (`correo`, `contrasena`, `id_tipo`) VALUES ('$correo', '$HASH', 3)";
-  $result = $conexion->query($sql);
-
-
-
-  if ($result === TRUE) {
-
-    //ULTIMO ID DE LA TABLA USUARIOS
-    $sql = "select MAX(id_usuario) as 'ultimo_id' from usuarios";
-    $stmt = $conexion->prepare($sql);
-    $stmt->execute();
-    $result = $stmt->get_result();
-    //Verificar si se encontraron resultados
-    if ($result->num_rows > 0) {
-      // Obtener el nombre de la fila
-      $fila = $result->fetch_assoc();
-      $ultimo_id_usuario = $fila['ultimo_id'];
-    }
-
-    $sql = "SELECT MAX(id_expediente) as 'ultimo_id' FROM expediente";
-    $stmt = $conexion->prepare($sql);
-    $stmt->execute();
-    $result = $stmt->get_result();
-    if ($result->num_rows > 0) {
-      $fila = $result->fetch_assoc();
-      $ultimo_id = $fila['ultimo_id'];
-    }
-    $ultimo_id = $ultimo_id + 1;
-
-    $sql = "SELECT MAX(id_nota) as 'ultimo_id' FROM notas";
-    $stmt = $conexion->prepare($sql);
-    $stmt->execute();
-    $result = $stmt->get_result();
-    if ($result->num_rows > 0) {
-      $fila = $result->fetch_assoc();
-      $ultimo_id_notas = $fila['ultimo_id'];
-    }
-    $ultimo_id_notas = $ultimo_id_notas + 1;
-
-    $sql="INSERT INTO `notas` (`id_nota`, `nota_parcial1`, `nota_parcial2`, `nota_parcial3`, `id_nivel`) VALUES (NULL, NULL, NULL, NULL, NULL)";
+    $HASH = password_hash($contrasena, PASSWORD_DEFAULT);
+    $sql = "INSERT INTO `usuarios` (`correo`, `contrasena`, `id_tipo`) VALUES ('$correo', '$HASH', 3)";
     $result = $conexion->query($sql);
-    $sql = "INSERT INTO `expediente` (`id_expediente`, `nivel`, `lin_captura`, `soli_aspirante`, `act_nac`, `comp_estu`, `ine`, `comp_pago`, `lin_captura_t`, `fecha_pago`, `modalidad`, `horario`) VALUES ($ultimo_id, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL)";
-    $result = $conexion->query($sql);
-    $sql = "INSERT INTO `alumnos` (`matricula`, `nombre`, `ap_paterno`, `ap_materno`, `edad`, `id_carrera`, `telefono`, `sexo`, `id_nivel`, `id_estatus`, `id_usuarios`, `id_expediente`, `id_nota`) VALUES ($matricula, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, $ultimo_id_usuario, $ultimo_id, $ultimo_id_notas)";
-    $result = $conexion->query($sql);
-
 
 
 
     if ($result === TRUE) {
-      //CREACION DE LAS CARPETAS DE USUARIO 
-      $nombre_carpeta = "usuario_expediente_" . $ultimo_id;
-      $directorio = "ALUMNOS/archivos/";
-      $ruta_carpeta = $directorio . $nombre_carpeta;
-      mkdir($ruta_carpeta, 0755);
 
-      $nombre_carpeta = "usuario_expediente_" . $ultimo_id . "_reinscripcion";
-      $directorio = "ALUMNOS/archivos/";
-      $ruta_carpeta = $directorio . $nombre_carpeta;
-      mkdir($ruta_carpeta, 0755);
+      //ULTIMO ID DE LA TABLA USUARIOS
+      $sql = "select MAX(id_usuario) as 'ultimo_id' from usuarios";
+      $stmt = $conexion->prepare($sql);
+      $stmt->execute();
+      $result = $stmt->get_result();
+      //Verificar si se encontraron resultados
+      if ($result->num_rows > 0) {
+        // Obtener el nombre de la fila
+        $fila = $result->fetch_assoc();
+        $ultimo_id_usuario = $fila['ultimo_id'];
+      }
 
-      header('Location: index.php');
+      $sql = "SELECT MAX(id_expediente) as 'ultimo_id' FROM expediente";
+      $stmt = $conexion->prepare($sql);
+      $stmt->execute();
+      $result = $stmt->get_result();
+      if ($result->num_rows > 0) {
+        $fila = $result->fetch_assoc();
+        $ultimo_id = $fila['ultimo_id'];
+      }
+      $ultimo_id = $ultimo_id + 1;
+
+      $sql = "SELECT MAX(id_nota) as 'ultimo_id' FROM notas";
+      $stmt = $conexion->prepare($sql);
+      $stmt->execute();
+      $result = $stmt->get_result();
+      if ($result->num_rows > 0) {
+        $fila = $result->fetch_assoc();
+        $ultimo_id_notas = $fila['ultimo_id'];
+      }
+      $ultimo_id_notas = $ultimo_id_notas + 1;
+
+      $sql = "INSERT INTO `notas` (`nota_parcial1`, `nota_parcial2`, `nota_parcial3`, `id_nivel`) VALUES (NULL, NULL, NULL, NULL)";
+      $result = $conexion->query($sql);
+      echo $sql;
+      $sql = "INSERT INTO `expediente` (`id_expediente`, `nivel`, `lin_captura`, `soli_aspirante`, `act_nac`, `comp_estu`, `ine`, `comp_pago`, `lin_captura_t`, `fecha_pago`, `modalidad`, `horario`) VALUES ($ultimo_id, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL)";
+      $result = $conexion->query($sql);
+      echo $sql;
+      $sql = "INSERT INTO `alumnos` (`matricula`, `nombre`, `ap_paterno`, `ap_materno`, `edad`, `id_carrera`, `telefono`, `sexo`, `id_nivel`, `id_estatus`, `id_usuarios`, `id_expediente`, `id_nota`) VALUES ($matricula, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, $ultimo_id_usuario, $ultimo_id, $ultimo_id_notas)";
+      $result = $conexion->query($sql);
+      echo $sql;
+
+
+
+
+      if ($result === TRUE) {
+        //CREACION DE LAS CARPETAS DE USUARIO 
+        $nombre_carpeta = "usuario_expediente_" . $ultimo_id;
+        $directorio = "ALUMNOS/archivos/";
+        $ruta_carpeta = $directorio . $nombre_carpeta;
+
+        // Verificar si la carpeta existe
+        if (is_dir($ruta_carpeta)) {
+          // Eliminar la carpeta y su contenido
+          eliminarCarpeta($ruta_carpeta);
+        }
+
+
+        mkdir($ruta_carpeta, 0755);
+
+        $nombre_carpeta = "usuario_expediente_" . $ultimo_id . "_reinscripcion";
+        $directorio = "ALUMNOS/archivos/";
+        $ruta_carpeta = $directorio . $nombre_carpeta;
+
+
+        // Verificar si la carpeta existe
+        if (is_dir($ruta_carpeta)) {
+          // Eliminar la carpeta y su contenido
+          eliminarCarpeta($ruta_carpeta);
+        }
+
+
+ 
+        mkdir($ruta_carpeta, 0755);
+
+        header('Location: index.php');
+      } else {
+        echo "Error al insertar el registro: ";
+      }
     } else {
-      echo "Error al insertar el registro: ";
+      echo "No se inserto nada: ";
     }
-  } else {
-    echo "No se inserto nada: ";
   }
+}
+
+// Función para eliminar una carpeta y su contenido
+function eliminarCarpeta($carpeta)
+{
+  if (!is_dir($carpeta)) {
+    return;
+  }
+  $archivos = array_diff(scandir($carpeta), array('.', '..'));
+  foreach ($archivos as $archivo) {
+    $ruta_archivo = "$carpeta/$archivo";
+    if (is_dir($ruta_archivo)) {
+      eliminarCarpeta($ruta_archivo);
+    } else {
+      unlink($ruta_archivo);
+    }
+  }
+  rmdir($carpeta);
 }
 ?>

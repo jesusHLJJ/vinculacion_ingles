@@ -35,14 +35,18 @@ if (!isset($_SESSION['tipo'])) {
                     <li class="opcion-inicio"><a href="PLANEACION_Y_AVANCE/"><i class="fa-solid fa-file"></i> PLANEACION Y AVANCE</a></li>
                     <li class="opcion-inicio"><a href="ALUMNOS/"><i class="fa-solid fa-user"></i> ALUMNOS</a></li>
                     <li class="opcion-inicio"><a href="ACTAS_Y_CONSTANCIAS/"><i class="fa-solid fa-file"></i> ACTAS Y CONSTANCIAS</a></li>
+                    <li class="opcion-inicio"><a href="CONTROL_CREDENCIALES/"><i class="fa-solid fa-ticket-simple"></i> CONTROL DE CREDENCIALES</a></li>
+                    <li class="opcion-inicio"><a href="AGREGAR_ADMINISTRADOR/"><i class="fa-solid fa-user-tie"></i> AGREGAR ADMINISTRADORES</a></li>
                 </ul>
             </nav>
         </div>
-
+    </main>
+    
+    <footer>
         <div class="close">
             <button id="log_out" class="btn btn-danger"><i class="fa-solid fa-right-from-bracket"></i> CERRAR SESION</button>
         </div>
-    </main>
+    </footer>
 
     <!--Bootstrap-->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>

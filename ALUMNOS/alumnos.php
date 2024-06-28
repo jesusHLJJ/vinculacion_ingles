@@ -21,7 +21,10 @@ $am_profesor = '';
 $t_horario = '';
 $t_periodo = '';
 $nombre_aula = '';
-$Bloqueo='';
+$Bloqueo = '';
+$estatus_alumno = '';
+$bloqueo_inscripcion = '';
+$bloqueo_reinscripcion = '';
 
 
 $ingreso = $_SESSION['correo']; //correo electrónico que ingresa a la parte ALUMNO
@@ -45,7 +48,7 @@ if ($result->num_rows > 0) {
 
 $_SESSION['matricula'] = $matricula;
 
-$sql = "select alumnos.id_expediente from alumnos where alumnos.matricula=$matricula";
+$sql = "select alumnos.id_expediente, id_estatus from alumnos where alumnos.matricula=$matricula";
 $stmt = $conexion->prepare($sql);
 //$stmt->bind_param("s", $correo);
 $stmt->execute();
@@ -53,6 +56,7 @@ $result = $stmt->get_result();
 if ($result->num_rows > 0) {
     $fila = $result->fetch_assoc();
     $id_expediente = $fila['id_expediente'];
+    $estatus_alumno = $fila['id_estatus'];
 }
 $_SESSION['id_expediente'] = $id_expediente;
 
@@ -98,8 +102,20 @@ if ($alumno == "  ") {                          //IF PARA LA PRIMERA VEZ QUE ENT
     $horario = "AD";
     $periodo = "AD";
     $aula = "AD";
-    $Bloqueo ="Disabled";
+    $Bloqueo = "Disabled";
+} else {
+    if ($estatus_alumno == '') {
+        $Bloqueo = "";
+        $bloqueo_reinscripcion = "disabled";
+        $bloqueo_inscripcion="";
+    } 
+    if ($estatus_alumno >= 1) {
+        $Bloqueo = "";
+        $bloqueo_inscripcion = "disabled";
+        $bloqueo_reinscripcion = "";
+    }
 }
+
 //_________________________________________________________________
 
 ?>
@@ -120,13 +136,12 @@ if ($alumno == "  ") {                          //IF PARA LA PRIMERA VEZ QUE ENT
     <h1><?php echo $alumno; ?></h1>
     <div class="contenedor_botones">
         <form action='' method="POST">
-            <input type='submit' name="actas" value="CONSTANCIAS DE LIBERACION" <?php echo $Bloqueo;?>>
-            <input type='submit' name="inscribirse" value="INSCRIBIRSE" <?php echo $Bloqueo;?>>
-            <input type='submit' name="reinscribirse" value="REINSCRIBIRSE" <?php echo $Bloqueo;?>>
+            <input type='submit' name="actas" value="CONSTANCIAS DE LIBERACION" <?php echo $Bloqueo; ?>>
+            <input type='submit' name="inscribirse" value="INSCRIBIRSE" <?php echo $Bloqueo . $bloqueo_inscripcion; ?>>
+            <input type='submit' name="reinscribirse" value="REINSCRIBIRSE" <?php echo $Bloqueo . $bloqueo_reinscripcion; ?>>
             <input type='submit' name="datos_alumno" value="VER MIS DATOS">
-            <input type='submit' name="calif_alumno" value="VER MIS CALIFICACIONES" <?php echo $Bloqueo;?>>
+            <input type='submit' name="calif_alumno" value="VER MIS CALIFICACIONES" <?php echo $Bloqueo; ?>>
             <input type='button' id="cerrar" name="cerrar" value="CERRAR SESION">
-            
         </form>
     </div>
     <div class="tabla_contenido">
@@ -152,20 +167,20 @@ if ($alumno == "  ") {                          //IF PARA LA PRIMERA VEZ QUE ENT
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <script src="js/sweetAlert.js"></script>
     <script>
-    document.getElementById("cerrar").addEventListener("click", function() {
-      Swal.fire({
-        title: '¿Deseas cerrar sesión?',
-        icon: 'warning',
-        showCancelButton: true,
-        confirmButtonColor: '#3085d6',
-        cancelButtonColor: '#d33',
-        confirmButtonText: 'Sí, cerrar sesión'
-      }).then((result) => {
-        if (result.isConfirmed) {
-          window.location.href = "../CONTROLADORES/cerrar_sesion.php";
-        }
-      });
-    });
+        document.getElementById("cerrar").addEventListener("click", function() {
+            Swal.fire({
+                title: '¿Deseas cerrar sesión?',
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonColor: '#3085d6',
+                cancelButtonColor: '#d33',
+                confirmButtonText: 'Sí, cerrar sesión'
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    window.location.href = "../CONTROLADORES/cerrar_sesion.php";
+                }
+            });
+        });
     </script>
 
 </body>

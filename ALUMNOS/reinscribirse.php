@@ -71,7 +71,7 @@ $expediente = $_SESSION['id_expediente'];
                 <option value='5'>NIVEL 5</option>
                 <option value='6'>NIVEL 6</option>
             </select><br>
-
+<!--
             <label for="modalidad">MODALIDAD</label>
             <select name="modalidad" id="modalidad" required>
                 <option value=''>Selecciona una opción...</option>
@@ -85,7 +85,7 @@ $expediente = $_SESSION['id_expediente'];
                 <option value='1'>8:00 a 12:00</option>
                 <option value='2'>12:00 a 16:00</option>
 
-            </select><br><br><br>
+            </select><br><br><br>-->
         </div>
         <h3>DOCUMENTOS EN FORMATO PDF NO MAYOR A 2MB</h3>
 
@@ -124,12 +124,10 @@ if (isset($_POST['reinscribirse'])) {
     $fecha_pago = $_POST['fe_pago'];
     $fecha_entrega = $_POST['fe_entrega'];
     $nivel_cursar = $_POST['nivel'];
-    $modalidad = $_POST['modalidad'];
-    $horario = $_POST['horario'];
     $linea_repetida = '';
 
     //COMPROBAR SI LA LINEA DE CAPTURA NO ESTA REPETIDA
-    $sql = "Select documento_expediente.lin_captura_t from documento_expediente where documento_expediente.lin_captura_t='$linea_captura'";
+    $sql = "Select expediente.lin_captura_t from expediente where expediente.lin_captura_t='$linea_captura'";
     $stmt = $conexion->prepare($sql);
     $stmt->execute();
     $result = $stmt->get_result();
@@ -177,7 +175,13 @@ if (isset($_POST['reinscribirse'])) {
         $sql = "update alumnos set id_estatus=2 where id_expediente=$expediente";
         $result = $conexion->query($sql);
 
-        $sql = "INSERT INTO documento_expediente (`id_expediente`, `nivel`, `const_na`, `comp_pago`, `lin_captura`, `lin_captura_t`, `fecha_entrega`,`fecha_pago`) VALUES ($expediente, $nivel_cursar, '$const_anterior_route','$comp_pago_route', '$lin_captura_d_route','$linea_captura','$fecha_entrega','$fecha_pago')";
+        //$sql="update expediente set fecha_pago='$fecha_pago',fecha_entrega='$fecha_entrega',lin_captura_t='$linea_captura' where id_expediente=$expediente";
+        //$result = $conexion->query($sql);
+
+        $sql = "update expediente set lin_captura_t='$linea_captura',fecha_pago='$fecha_pago',fecha_entrega='$fecha_entrega'";
+        $result = $conexion->query($sql);
+
+        $sql = "INSERT INTO documento_expediente (`id_expediente`, `nivel`, `const_na`, `comp_pago`, `lin_captura`) VALUES ($expediente, $nivel_cursar, '$const_anterior_route','$comp_pago_route', '$lin_captura_d_route')";
         $result = $conexion->query($sql);
         mysqli_close($conexion);
         if ($result) {

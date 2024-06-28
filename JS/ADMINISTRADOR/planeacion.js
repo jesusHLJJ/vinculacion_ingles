@@ -67,16 +67,16 @@ const listprofesor = async () => {
             planeacion.avance_programatico_3
           )}</td>
           <td class="text-center">${createDownloadLink(
-            planeacion.planeacion_profesor
+            planeacion.plan_profesor
           )}</td>
           <td class="text-center">${createDownloadLink(
-            planeacion.avace_profesor_1
+            planeacion.avance_profesor_1
           )}</td>
           <td class="text-center">${createDownloadLink(
-            planeacion.avace_profesor_2
+            planeacion.avance_profesor_2
           )}</td>
           <td class="text-center">${createDownloadLink(
-            planeacion.avace_profesor_3
+            planeacion.avance_profesor_3
           )}</td>
           <td class="text-center">
             <button class="modificar btn btn-sm btn-primary" data-id="${planeacion.id_documento}">

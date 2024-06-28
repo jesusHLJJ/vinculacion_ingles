@@ -73,17 +73,17 @@ $expediente = $_GET['expediente'];
                             echo '<option value="' . $id_nivel . '">NIVEL: ' . $nivel . ' /-/ GRUPO: ' . $grupo . ' /-/ MODALIDAD: ' . $modalidad . ' /-/ HORARIO: ' . $horario . ' /-/ PROFESOR(@): ' . $profesor . '</option>';
                         }
                     }
-
-                    
+                    $stmt_alumnos->close();
                 }
             } else {
+                echo "</select>";
                 echo "<script>var fileExists = false;</script>";
             }
 
 
 
 
-            $stmt_alumnos->close();
+         
             $stmt->close();
             ?>
             <script>

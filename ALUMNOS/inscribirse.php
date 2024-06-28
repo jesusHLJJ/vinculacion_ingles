@@ -206,7 +206,7 @@ if (isset($_POST['inscribirse'])) {
 
 
 
-            <label for="modalidad">MODALIDAD</label>
+           <!-- <label for="modalidad">MODALIDAD</label>
             <select name="modalidad" id="modalidad" required>
                 <option value=''>Selecciona una opción...</option>
                 <option value='presencial'>PRESENCIAL</option>
@@ -220,7 +220,7 @@ if (isset($_POST['inscribirse'])) {
                 <option value='2'>12:00 a 16:00</option>
                 <option value='3'></option>
 
-            </select><br><br><br>
+            </select><br><br><br>-->
         </div>
         <h3>DOCUMENTOS EN FORMATO PDF NO MAYOR A 2MB</h3>
 
