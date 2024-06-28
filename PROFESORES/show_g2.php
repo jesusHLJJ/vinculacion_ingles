@@ -77,7 +77,7 @@ include "../BD.php";
                     <p>Horario: <?php echo $horario; ?></p>
                     <p>Aula:<?php echo $aula; ?></p> </p>
                     <!-- Puedes agregar más detalles aquí -->
-                    <a href="info_grupo.php">Ir al grupo</a>
+                    <a href="descarga_documento/info_grupo.php">Ir al grupo</a>
                 </details>
         <?php
             }

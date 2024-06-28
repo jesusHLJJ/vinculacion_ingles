@@ -182,7 +182,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
           <?php
           while ($row = $result_municipios->fetch_assoc()) {
             $selected = ($municipio == $row['id_municipio']) ? 'selected' : ''; // Comprueba si el municipio actual es igual al municipio en la base de datos
-            echo "<option value='" . $row['id_municipio'] . "' $selected>" . $row['nombre_munipio'] . "</option>";
+            echo "<option value='" . $row['id_municipio'] . "' $selected>" . $row['nombre_municipio'] . "</option>";
           }
           ?>
         </select><br><br>

@@ -5,10 +5,10 @@
   session_start();
 
   if (!isset($_SESSION['tipo'])) {
-    header('location: ../');
+    header('location: ../../');
   } else {
     if ($_SESSION['tipo'] != 2) {
-      header('location: ../');
+      header('location: ../../');
     }
   }
   // Inicializar la variable de mensaje
@@ -1038,7 +1038,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         }).then((confirm) => {
           if (confirm) {
             // Si el usuario confirma, redirecciona a la otra página
-            window.location.href = "index.php";
+            window.location.href = "../";
           }
         });
       });
