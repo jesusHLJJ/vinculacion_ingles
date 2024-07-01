@@ -11,7 +11,7 @@ if (!isset($_SESSION['tipo'])) {
 include "../../BD.php";
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
     if (isset($_POST['volver'])) {
-        header("Location:alumnos.php");
+        header("Location:../alumnos.php");
     }
 }
 $expediente = $_SESSION['id_expediente'];
