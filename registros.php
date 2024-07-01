@@ -65,14 +65,34 @@ include "BD.php";
 if (isset($_POST['enviar'])) {
   $correo = $_POST['correo'];
 
+
+
+
   $contrasena = $_POST['contrasena'];
   $matricula = $_POST['matricula'];
-  $sql = "select correo from usuarios where correo='$correo'";
+  $matricula_repetida = FALSE;
+
+
+  $sql = "select alumnos.matricula from alumnos where alumnos.matricula=$matricula";
   $stmt = $conexion->prepare($sql);
   $stmt->execute();
   $result = $stmt->get_result();
   if ($result->num_rows > 0) {
-    echo "<h2>EL CORREO YA ESTA REGISTRADO</h2>";
+    $fila = $result->fetch_assoc();
+    $matricula_repetida = TRUE;
+  }else{
+    $matricula_repetida = FALSE;
+  }
+  
+  $sql = "select correo from usuarios where correo='$correo'";
+  $stmt = $conexion->prepare($sql);
+  $stmt->execute();
+  $result = $stmt->get_result();
+
+
+
+  if ($result->num_rows > 0 || $matricula_repetida == TRUE) {
+    echo "<h2>EL CORREO O MATRICULA YA ESTA REGISTRADA</h2>";
   } else {
 
     $HASH = password_hash($contrasena, PASSWORD_DEFAULT);
@@ -129,35 +149,6 @@ if (isset($_POST['enviar'])) {
 
 
       if ($result === TRUE) {
-        //CREACION DE LAS CARPETAS DE USUARIO 
-        $nombre_carpeta = "usuario_expediente_" . $ultimo_id;
-        $directorio = "ALUMNOS/archivos/";
-        $ruta_carpeta = $directorio . $nombre_carpeta;
-
-        // Verificar si la carpeta existe
-        if (is_dir($ruta_carpeta)) {
-          // Eliminar la carpeta y su contenido
-          eliminarCarpeta($ruta_carpeta);
-        }
-
-
-        mkdir($ruta_carpeta, 0755);
-
-        $nombre_carpeta = "usuario_expediente_" . $ultimo_id . "_reinscripcion";
-        $directorio = "ALUMNOS/archivos/";
-        $ruta_carpeta = $directorio . $nombre_carpeta;
-
-
-        // Verificar si la carpeta existe
-        if (is_dir($ruta_carpeta)) {
-          // Eliminar la carpeta y su contenido
-          eliminarCarpeta($ruta_carpeta);
-        }
-
-
- 
-        mkdir($ruta_carpeta, 0755);
-
         header('Location: index.php');
       } else {
         echo "Error al insertar el registro: ";

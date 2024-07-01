@@ -1,5 +1,37 @@
 <?php
 session_start();
+include "../../BD.php";
+$ingreso = $_SESSION['correo'];
+$expediente = $_SESSION['id_expediente'];
+$matricula = $_SESSION['matricula'];
+
+$sql = "select * from alumnos where id_expediente=$expediente";
+$stmt = $conexion->prepare($sql);
+$stmt->execute();
+$result = $stmt->get_result();
+if ($result->num_rows > 0) {
+    // Obtener el nombre de la fila
+    $fila = $result->fetch_assoc();
+    $matricula = $fila['matricula'];
+    $nombre_alumno = $fila['nombre'];
+    $ap_alumno = $fila['ap_paterno'];
+    $am_alumno = $fila['ap_materno'];
+}
+
+
+//CREACION DE LA CARPETA DE USUARIO 
+$nombre_carpeta = "usuario_expediente_" . $expediente;
+$directorio = "../../EXPEDIENTE_ALUMNO/archivos/";
+$ruta_carpeta = $directorio . $nombre_carpeta;
+
+if (is_dir($ruta_carpeta)) {
+} else {
+    mkdir($ruta_carpeta, 0755);
+}
+
+
+
+
 
 if (!isset($_SESSION['tipo'])) {
     header('location: ../');
@@ -8,16 +40,13 @@ if (!isset($_SESSION['tipo'])) {
         header('location: ../');
     }
 }
-include "../BD.php";
+
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
     if (isset($_POST['volver'])) {
         header("Location:alumnos.php");
     }
 }
 
-$ingreso = $_SESSION['correo'];
-$expediente = $_SESSION['id_expediente'];
-$matricula = $_SESSION['matricula'];
 
 //SACAR EL CUPO DEL GRUPO DEL ALUMNO
 $sql = "select niveles.cupo_max from niveles";
@@ -70,7 +99,7 @@ if (isset($_POST['inscribirse'])) {
         if ($soli_aspirante != '') {
             $soli_aspirante_extension = pathinfo($soli_aspirante, PATHINFO_EXTENSION);
             $soli_aspirante_tmp = $_FILES['soli_aspirante']['tmp_name'];
-            $soli_aspirante_route = "archivos/usuario_expediente_" . $expediente . "/soli_aspirante." . $soli_aspirante_extension;
+            $soli_aspirante_route = "../../EXPEDIENTE_ALUMNO/archivos/usuario_expediente_" . $expediente . "/soli_aspirante." . $soli_aspirante_extension;
             move_uploaded_file($soli_aspirante_tmp, $soli_aspirante_route);
         }
 
@@ -78,7 +107,7 @@ if (isset($_POST['inscribirse'])) {
         if ($act_nacimiento != '') {
             $act_nacimiento_extension = pathinfo($act_nacimiento, PATHINFO_EXTENSION);
             $act_nacimiento_tmp = $_FILES['act_nacimiento']['tmp_name'];
-            $act_nacimiento_route = "archivos/usuario_expediente_" . $expediente . "/act_nacimiento." . $act_nacimiento_extension;
+            $act_nacimiento_route = "../../EXPEDIENTE_ALUMNO/archivos/usuario_expediente_" . $expediente . "/act_nacimiento." . $act_nacimiento_extension;
             move_uploaded_file($act_nacimiento_tmp, $act_nacimiento_route);
         }
 
@@ -86,7 +115,7 @@ if (isset($_POST['inscribirse'])) {
         if ($comp_estudios != '') {
             $comp_estudios_extension = pathinfo($comp_estudios, PATHINFO_EXTENSION);
             $comp_estudios_tmp = $_FILES['comp_estudios']['tmp_name'];
-            $comp_estudios_route = "archivos/usuario_expediente_" . $expediente . "/comp_estudios." . $comp_estudios_extension;
+            $comp_estudios_route = "../../EXPEDIENTE_ALUMNO/archivos/usuario_expediente_" . $expediente . "/comp_estudios." . $comp_estudios_extension;
             move_uploaded_file($comp_estudios_tmp,  $comp_estudios_route);
         }
 
@@ -94,7 +123,7 @@ if (isset($_POST['inscribirse'])) {
         if ($ine != '') {
             $ine_extension = pathinfo($ine, PATHINFO_EXTENSION);
             $ine_tmp = $_FILES['ine']['tmp_name'];
-            $ine_route = "archivos/usuario_expediente_" . $expediente . "/ine." . $ine_extension;
+            $ine_route = "../../EXPEDIENTE_ALUMNO/archivos/usuario_expediente_" . $expediente . "/ine." . $ine_extension;
             move_uploaded_file($ine_tmp,  $ine_route);
         }
 
@@ -102,7 +131,7 @@ if (isset($_POST['inscribirse'])) {
         if ($comp_pago != '') {
             $comp_pago_extension = pathinfo($comp_pago, PATHINFO_EXTENSION);
             $comp_pago_tmp = $_FILES['comp_pago']['tmp_name'];
-            $comp_pago_route = "archivos/usuario_expediente_" . $expediente . "/comp_pago." . $comp_pago_extension;
+            $comp_pago_route = "../../EXPEDIENTE_ALUMNO/archivos/usuario_expediente_" . $expediente . "/comp_pago." . $comp_pago_extension;
             move_uploaded_file($comp_pago_tmp,  $comp_pago_route);
         }
 
@@ -110,7 +139,7 @@ if (isset($_POST['inscribirse'])) {
         if ($lin_captura_d != '') {
             $lin_captura_d_extension = pathinfo($lin_captura_d, PATHINFO_EXTENSION);
             $lin_captura_d_tmp = $_FILES['lin_captura_d']['tmp_name'];
-            $lin_captura_d_route = "archivos/usuario_expediente_" . $expediente . "/lin_captura_d." . $lin_captura_d_extension;
+            $lin_captura_d_route = "../../EXPEDIENTE_ALUMNO/archivos/usuario_expediente_" . $expediente . "/lin_captura_d." . $lin_captura_d_extension;
             move_uploaded_file($lin_captura_d_tmp,  $lin_captura_d_route);
         }
 
@@ -122,7 +151,7 @@ if (isset($_POST['inscribirse'])) {
         $result = $conexion->query($sql);
         mysqli_close($conexion);
         if ($result) {
-            header("Location:elegir_grupo.php?nivel=$nivel_cursar&expediente=$expediente");
+            header("Location:../elegir_grupo.php?nivel=$nivel_cursar&expediente=$expediente&modo=1");
         }
     } else {
         echo "<script>
@@ -133,7 +162,7 @@ if (isset($_POST['inscribirse'])) {
                     confirmButtonText: 'Aceptar',
                     confirmButtonColor: '#ffbb00'
                 }).then(() => {
-                    window.location.href = 'alumnos.php';
+                    window.location.href = '../alumnos.php';
                 });
             });
         </script>";
@@ -149,7 +178,7 @@ if (isset($_POST['inscribirse'])) {
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>INSCRIBIRSE</title>
-    <link rel="stylesheet" href="estilos/inscribirse.css">
+    <link rel="stylesheet" href="../estilos/inscribirse.css">
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 </head>
 
@@ -206,7 +235,7 @@ if (isset($_POST['inscribirse'])) {
 
 
 
-           <!-- <label for="modalidad">MODALIDAD</label>
+            <!-- <label for="modalidad">MODALIDAD</label>
             <select name="modalidad" id="modalidad" required>
                 <option value=''>Selecciona una opción...</option>
                 <option value='presencial'>PRESENCIAL</option>
@@ -265,13 +294,7 @@ if (isset($_POST['inscribirse'])) {
     <form action="" method="post">
         <input type="submit" id="volver" name="volver" value=VOLVER>
     </form>
-    <script src="java/inscribirse.js"></script>
+    <script src="../java/inscribirse.js"></script>
 </body>
-
-
-
-
-
-
 
 </html>

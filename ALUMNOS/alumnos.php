@@ -93,8 +93,8 @@ $horario = $t_horario;
 $periodo = $t_periodo;
 $aula = $nombre_aula;
 
-
-if ($alumno == "  ") {                          //IF PARA LA PRIMERA VEZ QUE ENTRE EL ALUMNO
+//PARA LA PRIMERA VEZ QUE ENTRE EL ALUMNO
+if ($alumno == "  ") {
     $alumno = "ACTUALIZA TUS DATOS";
     $grupo = "AD";
     $nivel = "AD";
@@ -107,8 +107,8 @@ if ($alumno == "  ") {                          //IF PARA LA PRIMERA VEZ QUE ENT
     if ($estatus_alumno == '') {
         $Bloqueo = "";
         $bloqueo_reinscripcion = "disabled";
-        $bloqueo_inscripcion="";
-    } 
+        $bloqueo_inscripcion = "";
+    }
     if ($estatus_alumno >= 1) {
         $Bloqueo = "";
         $bloqueo_inscripcion = "disabled";
@@ -195,11 +195,11 @@ if (isset($_POST['actas'])) {
 }
 
 if (isset($_POST['inscribirse'])) {
-    header("Location: ../ALUMNOS/inscribirse.php");
+    header("Location: ../ALUMNOS/archivos/inscribirse.php");
 }
 
 if (isset($_POST['reinscribirse'])) {
-    header("Location: ../ALUMNOS/reinscribirse.php");
+    header("Location: ../ALUMNOS/archivos/reinscribirse.php");
 }
 /*
 if (isset($_POST['cerrar'])) {

@@ -12,6 +12,7 @@ include "../BD.php";
 
 $nivel_seleccionado = $_GET['nivel'];
 $expediente = $_GET['expediente'];
+$modo = $_GET['modo'];
 ?>
 
 <!DOCTYPE html>
@@ -70,20 +71,29 @@ $expediente = $_GET['expediente'];
                         if ($total_alumnos == $cupo_max) {
                             echo '<option value="' . $id_nivel . '" disabled>NIVEL: ' . $nivel . ' /-/ GRUPO: ' . $grupo . ' /-/ MODALIDAD: ' . $modalidad . ' /-/ HORARIO: ' . $horario . ' /-/ PROFESOR(@): ' . $profesor . ' <-----> GRUPO LLENO</option>';
                         } else {
-                            echo '<option value="' . $id_nivel . '">NIVEL: ' . $nivel . ' /-/ GRUPO: ' . $grupo . ' /-/ MODALIDAD: ' . $modalidad . ' /-/ HORARIO: ' . $horario . ' /-/ PROFESOR(@): ' . $profesor . '</option>';
+                            echo '<option value="' . $id_nivel . '">NIVEL: ' . $nivel . ' /-/ GRUPO: ' . $grupo . ' /-/ MODALIDAD: ' . $modalidad . ' /-/ HORARIO: ' . $horario . ' /-/ PROFESOR(@): ' . $profesor . ' /-/ ALUMNOS: ' . $total_alumnos . '/' . $cupo_max . '</option>';
                         }
                     }
                     $stmt_alumnos->close();
                 }
             } else {
                 echo "</select>";
+                if ($modo == 1) {
+                    $sql = "update alumnos join expediente on alumnos.id_expediente=expediente.id_expediente set alumnos.id_estatus=null,expediente.lin_captura_t='' where alumnos.id_expediente=$expediente";
+                    $result = $conexion->query($sql);
+                    $sql = "update expediente set expediente.lin_captura_t='' where id_expediente=$expediente";
+                } elseif ($modo == 2) {
+                    $sql = "update alumnos join expediente on alumnos.id_expediente=expediente.id_expediente set alumnos.id_estatus=1,expediente.lin_captura_t='' where alumnos.id_expediente=$expediente";
+                    $result = $conexion->query($sql);
+                }
+
                 echo "<script>var fileExists = false;</script>";
             }
 
 
 
 
-         
+
             $stmt->close();
             ?>
             <script>

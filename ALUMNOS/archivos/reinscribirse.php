@@ -8,7 +8,7 @@ if (!isset($_SESSION['tipo'])) {
         header('location: ../');
     }
 }
-include "../BD.php";
+include "../../BD.php";
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
     if (isset($_POST['volver'])) {
         header("Location:alumnos.php");
@@ -24,7 +24,7 @@ $expediente = $_SESSION['id_expediente'];
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>REINSCRIBIRSE</title>
-    <link rel="stylesheet" href="estilos/reinscribirse.css">
+    <link rel="stylesheet" href="../estilos/reinscribirse.css">
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 </head>
 
@@ -112,7 +112,7 @@ $expediente = $_SESSION['id_expediente'];
     <form action="" method="post">
         <input type="submit" id="volver" name="volver" value=VOLVER>
     </form>
-    <script src="java/reinscribirse.js"></script>
+    <script src="../java/reinscribirse.js"></script>
 </body>
 
 </html>
@@ -151,7 +151,7 @@ if (isset($_POST['reinscribirse'])) {
         if ($const_anterior != '') {
             $const_anterior_extension = pathinfo($const_anterior, PATHINFO_EXTENSION);
             $const_anterior_tmp = $_FILES['const_anterior']['tmp_name'];
-            $const_anterior_route = "archivos/usuario_expediente_" . $expediente . "_reinscripcion/" . $nivel_cursar . "nivel_const_anterior." . $const_anterior_extension;
+            $const_anterior_route = "../../EXPEDIENTE_ALUMNO/archivos/usuario_expediente_" . $expediente . "/nivel_" . $nivel_cursar . "_nivel_const_anterior." . $const_anterior_extension;
             move_uploaded_file($const_anterior_tmp, $const_anterior_route);
         }
 
@@ -159,7 +159,7 @@ if (isset($_POST['reinscribirse'])) {
         if ($comp_pago != '') {
             $comp_pago_extension = pathinfo($comp_pago, PATHINFO_EXTENSION);
             $comp_pago_tmp = $_FILES['comp_pago']['tmp_name'];
-            $comp_pago_route = "archivos/usuario_expediente_" . $expediente . "_reinscripcion/" . $nivel_cursar . "nivel_comp_pago." . $comp_pago_extension;
+            $comp_pago_route = "../../EXPEDIENTE_ALUMNO/archivos/usuario_expediente_" . $expediente . "/nivel_" . $nivel_cursar . "_nivel_comp_pago." . $comp_pago_extension;
             move_uploaded_file($comp_pago_tmp, $comp_pago_route);
         }
 
@@ -167,7 +167,7 @@ if (isset($_POST['reinscribirse'])) {
         if ($lin_captura_d != '') {
             $lin_captura_d_extension = pathinfo($lin_captura_d, PATHINFO_EXTENSION);
             $lin_captura_d_tmp = $_FILES['lin_captura_d']['tmp_name'];
-            $lin_captura_d_route = "archivos/usuario_expediente_" . $expediente . "_reinscripcion/" . $nivel_cursar . "nivel_lin_captura_d." . $lin_captura_d_extension;
+            $lin_captura_d_route = "../../EXPEDIENTE_ALUMNO/archivos/usuario_expediente_" . $expediente . "/nivel_" . $nivel_cursar . "_nivel_lin_captura_d." . $lin_captura_d_extension;
             move_uploaded_file($lin_captura_d_tmp,  $lin_captura_d_route);
         }
 
@@ -185,7 +185,7 @@ if (isset($_POST['reinscribirse'])) {
         $result = $conexion->query($sql);
         mysqli_close($conexion);
         if ($result) {
-            header("Location:elegir_grupo.php?nivel=$nivel_cursar&expediente=$expediente");
+            header("Location:../elegir_grupo.php?nivel=$nivel_cursar&expediente=$expediente&modo=2");
         }
     } else {
         echo "<script>
@@ -196,7 +196,7 @@ if (isset($_POST['reinscribirse'])) {
                 confirmButtonText: 'Aceptar',
                 confirmButtonColor: '#ffbb00'
             }).then(() => {
-                window.location.href = 'alumnos.php';
+                window.location.href = '../alumnos.php';
             });
         });
     </script>";
