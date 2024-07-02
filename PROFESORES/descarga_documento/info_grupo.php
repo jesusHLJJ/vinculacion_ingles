@@ -1,5 +1,5 @@
   <?php
-  
+
   include "../../BD.php";
 
   session_start();
@@ -14,65 +14,59 @@
   // Inicializar la variable de mensaje
   $mensaje = "";
   $id_carrera = '';
+
   // Si se ha enviado el formulario (se ha presionado el botón "Guardar")
-if ($_SERVER["REQUEST_METHOD"] == "POST") {
-  // Recibir los datos del formulario
-  $matricula = isset($_POST["matricula"]) ? $_POST["matricula"] : '';
-  $nombre = isset($_POST["nombre"]) ? $_POST["nombre"] : '';
-  $ap_paterno = isset($_POST["ap_paterno"]) ? $_POST["ap_paterno"] : '';
-  $ap_materno = isset($_POST["ap_materno"]) ? $_POST["ap_materno"] : '';
-  $id_carrera = isset($_POST["id_carrera"]) ? $_POST["id_carrera"] : '';
-  $telefono = isset($_POST["telefono"]) ? $_POST["telefono"] : '';
+  if ($_SERVER["REQUEST_METHOD"] == "POST") {
+    if (isset($_POST["save"])) {
+      // Recibir los datos del formulario
+      $matricula = isset($_POST["matricula"]) ? $_POST["matricula"] : '';
+      $nombre = isset($_POST["nombre"]) ? $_POST["nombre"] : '';
+      $ap_paterno = isset($_POST["ap_paterno"]) ? $_POST["ap_paterno"] : '';
+      $ap_materno = isset($_POST["ap_materno"]) ? $_POST["ap_materno"] : '';
+      $id_carrera = isset($_POST["id_carrera"]) ? $_POST["id_carrera"] : '';
+      $telefono = isset($_POST["telefono"]) ? $_POST["telefono"] : '';
 
-  $nota_parcial1 = isset($_POST["parcial1"]) ? $_POST["parcial1"] : '';
-  $nota_parcial2 = isset($_POST["parcial2"]) ? $_POST["parcial2"] : '';
-  $nota_parcial3 = isset($_POST["parcial3"]) ? $_POST["parcial3"] : '';
-  $id_nivel = $_SESSION['id_nivel'];
+      $nota_parcial1 = isset($_POST["parcial1"]) ? $_POST["parcial1"] : '';
+      $nota_parcial2 = isset($_POST["parcial2"]) ? $_POST["parcial2"] : '';
+      $nota_parcial3 = isset($_POST["parcial3"]) ? $_POST["parcial3"] : '';
+      $id_nivel = $_SESSION['id_nivel'];
 
-  // Actualizar los datos en la base de datos
+      // Reabrir la conexión
+      include "../../BD.php"; // Asegúrate de que la ruta sea correcta
 
-  // Cerrar la conexión existente
+      // Actualizar los datos en la base de datos
+      $sql_actualizar = "UPDATE alumnos SET nombre=?, ap_paterno=?, ap_materno=?, id_carrera=?, telefono=? WHERE matricula=?";
+      $stmt_actualizar = $conexion->prepare($sql_actualizar);
+      $stmt_actualizar->bind_param("ssssss", $nombre, $ap_paterno, $ap_materno, $id_carrera, $telefono, $matricula);
 
-  // Reabrir la conexión
-  include "../../BD.php"; // Asegúrate de que la ruta sea correcta
+      if ($stmt_actualizar->execute()) {
+        $mensaje = "Los datos se actualizaron correctamente.";
+        $stmt_actualizar->close();
+      } else {
+        $mensaje = "Hubo un error al actualizar los datos.";
+      }
 
-  // Actualizar los datos en la base de datos
-  $sql_actualizar = "UPDATE alumnos SET nombre=?, ap_paterno=?, ap_materno=?, id_carrera=?, telefono=? WHERE matricula=?";
-  $stmt_actualizar = $conexion->prepare($sql_actualizar);
-  $stmt_actualizar->bind_param("ssssis", $nombre, $ap_paterno, $ap_materno, $id_carrera, $telefono, $matricula);
+      $sql_verificar_notas = "SELECT * FROM notas JOIN alumnos ON notas.id_nota=alumnos.id_nota WHERE alumnos.matricula=?";
+      $stmt_verificar_notas = $conexion->prepare($sql_verificar_notas);
+      $stmt_verificar_notas->bind_param("i", $matricula);
+      $stmt_verificar_notas->execute();
+      $result_verificar_notas = $stmt_verificar_notas->get_result();
 
-  if ($stmt_actualizar->execute()) {
-    $mensaje = "Los datos se actualizaron correctamente.";
-    $stmt_actualizar->close();
-  } else {
-    $mensaje = "Hubo un error al actualizar los datos.";
+      if ($result_verificar_notas->num_rows > 0) {
+        // Actualizar las notas existentes
+        $sql_actualizar_notas = "UPDATE notas JOIN alumnos ON notas.id_nota=alumnos.id_nota SET notas.nota_parcial1=?, notas.nota_parcial2=?, notas.nota_parcial3=? WHERE alumnos.matricula=?";
+        $stmt_actualizar_notas = $conexion->prepare($sql_actualizar_notas);
+        $stmt_actualizar_notas->bind_param("sssi", $nota_parcial1, $nota_parcial2, $nota_parcial3, $matricula);
+        $stmt_actualizar_notas->execute();
+      }
+
+      if (($result_verificar_notas->num_rows > 0 && $stmt_actualizar_notas->execute()) || $stmt_insertar_notas->execute()) {
+        $mensaje = "Los datos y las notas se actualizaron correctamente.";
+      } else {
+        $mensaje = "Hubo un error al actualizar las notas.";
+      }
+    }
   }
-
-  // Verificar si ya existen notas para el alumno
-  $sql_verificar_notas = "SELECT * FROM notas join alumnos on notas.id_nota=notas.id_nota WHERE alumnos.matricula =?";
-  $stmt_verificar_notas = $conexion->prepare($sql_verificar_notas);
-  $stmt_verificar_notas->bind_param("s", $matricula);
-  $stmt_verificar_notas->execute();
-  $result_verificar_notas = $stmt_verificar_notas->get_result();
-
-  if ($result_verificar_notas->num_rows > 0) {
-    // Actualizar las notas existentes
-    $sql_actualizar_notas = "update notas join alumnos on notas.id_nota=alumnos.id_nota set notas.nota_parcial1=?,notas.nota_parcial2=?,notas.nota_parcial3=? where alumnos.matricula=?";
-    $stmt_actualizar_notas = $conexion->prepare($sql_actualizar_notas);
-    $stmt_actualizar_notas->bind_param("sssi", $nota_parcial1, $nota_parcial2, $nota_parcial3, $matricula);
-  } else {
-    // Insertar nuevas notas
-    $sql_insertar_notas = "INSERT INTO notas (nota_parcial1, nota_parcial2, nota_parcial3, id_nivel) VALUES (?, ?, ?, ?)";
-    $stmt_insertar_notas = $conexion->prepare($sql_insertar_notas);
-    $stmt_insertar_notas->bind_param("iiii", $nota_parcial1, $nota_parcial2, $nota_parcial3, $id_nivel);
-  }
-
-  if (($result_verificar_notas->num_rows > 0 && $stmt_actualizar_notas->execute()) || $stmt_insertar_notas->execute()) {
-    $mensaje = "Los datos y las notas se actualizaron correctamente.";
-  } else {
-    $mensaje = "Hubo un error al actualizar las notas.";
-  }
-}
   $id_nivel = $_SESSION['id_nivel'];
   $grupo = $_SESSION['grupo'];
   $modalidad = $_SESSION['modalidad'];
@@ -370,7 +364,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         } else {
           // Si no existe un documento para este nivel, inserta uno nuevo
           $sql = "INSERT INTO documentos_nivel (acta_calificacion, id_nivel) VALUES (?, ?)";
-          $stmt_verificacion->close(); 
+          $stmt_verificacion->close();
         }
 
         $stmt = $conexion->prepare($sql);
@@ -495,9 +489,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         $mensaje = "Error al mover el archivo de calificaciones subido.";
         $tipo_mensaje = "error";
       }
-    } 
-    
-    elseif (isset($_POST['a1'])) {
+    } elseif (isset($_POST['a1'])) {
       // Obtener el nombre del profesor y sus apellidos de las variables de sesión
       $nombre_profesor = isset($_SESSION['nombre_profesor']) ? $_SESSION['nombre_profesor'] : '';
       $ap_paterno = isset($_SESSION['ap_1']) ? $_SESSION['ap_1'] : '';
@@ -551,10 +543,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         $mensaje = "Error al mover el archivo de calificaciones subido.";
         $tipo_mensaje = "error";
       }
-    } 
-    
-
-    elseif (isset($_POST['a2'])) {
+    } elseif (isset($_POST['a2'])) {
       // Obtener el nombre del profesor y sus apellidos de las variables de sesión
       $nombre_profesor = isset($_SESSION['nombre_profesor']) ? $_SESSION['nombre_profesor'] : '';
       $ap_paterno = isset($_SESSION['ap_1']) ? $_SESSION['ap_1'] : '';
@@ -608,9 +597,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         $mensaje = "Error al mover el archivo de calificaciones subido.";
         $tipo_mensaje = "error";
       }
-    } 
-
-    elseif (isset($_POST['a3'])) {
+    } elseif (isset($_POST['a3'])) {
       // Obtener el nombre del profesor y sus apellidos de las variables de sesión
       $nombre_profesor = isset($_SESSION['nombre_profesor']) ? $_SESSION['nombre_profesor'] : '';
       $ap_paterno = isset($_SESSION['ap_1']) ? $_SESSION['ap_1'] : '';
@@ -664,8 +651,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         $mensaje = "Error al mover el archivo de calificaciones subido.";
         $tipo_mensaje = "error";
       }
-    } 
-    else {
+    } else {
     }
   }
   if (isset($_FILES['archivoPlaneacion'])) {
@@ -737,25 +723,25 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
   </head>
 
   <body>
-  <div id="loader">
-        <div class="loader-container">
-            <div class="loader-spinner"></div>
-            <div class="loader-image">
-                <img src="../imagenes/si.jpg" alt="Loading">
-            </div>
+    <div id="loader">
+      <div class="loader-container">
+        <div class="loader-spinner"></div>
+        <div class="loader-image">
+          <img src="../imagenes/si.jpg" alt="Loading">
         </div>
+      </div>
     </div>
 
     <script>
-        document.addEventListener("DOMContentLoaded", function() {
-            // Simular una carga con un timeout (por ejemplo, una consulta a una API)
-            setTimeout(function() {
-                // Ocultar el cargador
-                document.getElementById("loader").style.display = "none";
-                // Mostrar el contenido
-                document.getElementById("content").style.display = "block";
-            }, 400); // Ajusta el tiempo según sea necesario
-        });
+      document.addEventListener("DOMContentLoaded", function() {
+        // Simular una carga con un timeout (por ejemplo, una consulta a una API)
+        setTimeout(function() {
+          // Ocultar el cargador
+          document.getElementById("loader").style.display = "none";
+          // Mostrar el contenido
+          document.getElementById("content").style.display = "block";
+        }, 400); // Ajusta el tiempo según sea necesario
+      });
     </script>
     <?php if (!empty($mensaje)) : ?>
       <script>
@@ -951,7 +937,25 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                     </select>
                   </td>
 
-                  <td><input type="text" name="telefono" value="<?php echo $row['telefono']; ?>"></td>
+                  <td><input type="text" name="telefono" value="<?php echo $row['telefono']; ?>" oninput="formatPhoneNumber(this)" maxlength="12" required></td>
+
+                  <script>
+                    function formatPhoneNumber(input) {
+                      // Elimina todos los caracteres que no sean números
+                      let phone = input.value.replace(/\D/g, '');
+
+                      // Formatea el número
+                      if (phone.length > 2 && phone.length <= 6) {
+                        phone = phone.replace(/(\d{2})(\d+)/, '$1 $2');
+                      } else if (phone.length > 6) {
+                        phone = phone.replace(/(\d{2})(\d{4})(\d+)/, '$1 $2 $3');
+                      }
+
+                      // Actualiza el valor del input
+                      input.value = phone;
+                    }
+                  </script>
+
                   <?php
                   // Aquí debes definir $parcial1, $parcial2 y $parcial3 con valores vacíos por defecto
 
@@ -976,7 +980,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                   <td><input type="text" name="parcial2" value="<?php echo htmlspecialchars($parcial2); ?>"></td>
                   <td><input type="text" name="parcial3" value="<?php echo htmlspecialchars($parcial3); ?>"></td>
 
-                  <td><input type="hidden" name="matricula" value="<?php echo $row['matricula']; ?>"><input type="submit" class="btn" value="Guardar"></td>
+                  <td><input type="hidden" name="matricula" value="<?php echo $row['matricula']; ?>"><input type="submit" class="btn" name="save" value="Guardar"></td>
                 </form>
               </tr>
             <?php endwhile; ?>

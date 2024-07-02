@@ -135,10 +135,10 @@ if (isset($_POST['enviar'])) {
       }
       $ultimo_id_notas = $ultimo_id_notas + 1;
 
-      $sql = "INSERT INTO `notas` (`nota_parcial1`, `nota_parcial2`, `nota_parcial3`, `id_nivel`) VALUES (NULL, NULL, NULL, NULL)";
+      $sql = "INSERT INTO `notas` (`nota_parcial1`, `nota_parcial2`, `nota_parcial3`) VALUES (NULL, NULL, NULL)";
       $result = $conexion->query($sql);
       echo $sql;
-      $sql = "INSERT INTO `expediente` (`id_expediente`, `nivel`, `lin_captura`, `soli_aspirante`, `act_nac`, `comp_estu`, `ine`, `comp_pago`, `lin_captura_t`, `fecha_pago`, `modalidad`, `horario`) VALUES ($ultimo_id, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL)";
+      $sql = "INSERT INTO `expediente` (`id_expediente`, `nivel`, `lin_captura`, `soli_aspirante`, `act_nac`, `comp_estu`, `ine`, `comp_pago`, `lin_captura_t`, `fecha_pago`,`fecha_entrega` ) VALUES ($ultimo_id, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL)";
       $result = $conexion->query($sql);
       echo $sql;
       $sql = "INSERT INTO `alumnos` (`matricula`, `nombre`, `ap_paterno`, `ap_materno`, `edad`, `id_carrera`, `telefono`, `sexo`, `id_nivel`, `id_estatus`, `id_usuarios`, `id_expediente`, `id_nota`) VALUES ($matricula, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, $ultimo_id_usuario, $ultimo_id, $ultimo_id_notas)";

@@ -61,3 +61,67 @@ td {
     background-color: rgb(255, 32, 32);
     color:white;
 }
+
+
+/* Media Queries para hacer la página responsive */
+@media (max-width: 768px) {
+    body {
+        font-size: 24px;
+        height: auto;
+    }
+
+    .table {
+        margin-top: 150px;
+        padding: 10px;
+    }
+
+    .encabezado {
+        padding: 10px;
+        font-size: 20px;
+    }
+
+    .titulo {
+        padding: 5px;
+        font-size: 18px;
+    }
+
+    td {
+        padding: 5px;
+        font-size: 18px;
+    }
+
+    #volver {
+        font-size: 30px;
+    }
+}
+
+@media (max-width: 480px) {
+    body {
+        font-size: 20px;
+        height: auto;
+    }
+
+    .table {
+        margin-top: 100px;
+        padding: 5px;
+    }
+
+    .encabezado {
+        padding: 5px;
+        font-size: 18px;
+    }
+
+    .titulo {
+        padding: 3px;
+        font-size: 16px;
+    }
+
+    td {
+        padding: 3px;
+        font-size: 16px;
+    }
+
+    #volver {
+        font-size: 25px;
+    }
+}

@@ -53,8 +53,11 @@ if (!isset($_SESSION['tipo'])) {
                         <tr>
                             <th class="text-center">ID</th>
                             <th class="text-center">GRUPO</th>
+                            <th class="text-center">LISTA 1</th>
                             <th class="text-center">ACTA 1</th>
+                            <th class="text-center">LISTA 2</th>
                             <th class="text-center">ACTA 2</th>
+                            <th class="text-center">LISTA 3</th>
                             <th class="text-center">ACTA 3</th>
                             <th class="text-center">CONSTANCIAS</th>
                             <th class="text-center"></th>

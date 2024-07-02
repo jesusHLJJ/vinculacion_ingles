@@ -1,245 +1,195 @@
-body{
-            /* Configuración del fondo */
-            /*background-image: linear-gradient(rgba(0,0,0,0.1), rgba(0,0,0,0.1)), url('https://images.unsplash.com/photo-1552860512-13148a37d7a2?q=80&w=1000&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MTJ8fGxpZ2h0JTIwYmx1ZXxlbnwwfHwwfHx8MA%3D%3D');
-            */
-            background-image: 
-            linear-gradient(rgba(255, 255, 255, 0.8), rgba(255, 255, 255)),
-            url('../imagenes/fondo_g.png'); /* Cambia esta ruta por la ruta de tu imagen */
-            background-size: cover; /* Ajusta la imagen para que cubra toda la pantalla */
-            background-position: center; /* Centra la imagen */
-            background-repeat: no-repeat; /* Evita que la imagen se repita */
-            margin: 0; /* Elimina el margen del body para que la imagen cubra toda la ventana */
-            height: 100vh; /* Asegura que el body tenga la altura de la ventana */
-            font-size: 20px;
-            font-family: Arial, sans-serif;
-            font-weight: bold;
+body {
+    background-image: linear-gradient(rgba(255, 255, 255, 0.8), rgba(255, 255, 255)), url('../imagenes/fondo_g.png'); /* Cambia esta ruta por la ruta de tu imagen */
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    margin: 0;
+    height: 100vh;
+    font-size: 20px;
+    font-family: Arial, sans-serif;
+    font-weight: bold;
 }
+    
+/* Navbar */
 .navbar {
     position: absolute; 
     top: 0;
     bottom: 0;
     height: 100%;
     left: 0;
-    background-color:#ffbb00;
+    background-color: #ffbb00;
     width: 65px;
     overflow: hidden;   
     transition: width 0.2s linear;
     box-shadow: 0 20px 35px rgba(0,0,0,0.1);
-
 }
-.navbar:hover{
+
+.navbar:hover {
     width: 180px;
     transition: all 0.5s ease;
     background-color: orange;
 }
+
 .navbar ul {
-    list-style-type: none; /* Quitar viñetas */
+    list-style-type: none;
     margin: 0;
     padding: 0;
 }
 
 .navbar ul li {
-    margin-bottom: 35px; /* Espacio entre elementos */
+    margin-bottom: 35px;
 }
 
 .navbar ul li a {
     text-decoration: none;
-    color: #333; /* Color de texto */
-    display: flex; /* Mostrar elementos en línea */
-    align-items: center; /* Alinear verticalmente */
+    color: #333;
+    display: flex;
+    align-items: center;
 }
 
 .small-image {
-    width: 60px; /* Ancho de la imagen pequeña */
+    width: 60px;
     height: 60px;
-    margin-right: 5px; /* Espacio entre la imagen y el texto */
+    margin-right: 5px;
     border-radius: 100%;
 }
 
 .nav-item {
-    display: none; /* Ocultar los textos por defecto */
+    display: none;
 }
 
 .navbar ul li:hover .nav-item {
-    display: inline-block; /* Mostrar los textos al hacer hover */
+    display: inline-block;
 }
-.logout{
-    position:absolute;
+
+/* Logout */
+.logout {
+    position: absolute;
     bottom: 0;
 }
-.logout:hover{
+
+.logout:hover {
     color: red;
     transition: all 2s ease;
 }
 
+/* Título */
 .titulo-bienvenida {
-    color: #ffbb00; /* Color del texto */
-    font-family: Arial, sans-serif; /* Tipo de fuente */
-    text-align: center; /* Alineación del texto */
-    margin-top: 20px; /* Espacio superior */
+    color: #ffbb00;
+    font-family: Arial, sans-serif;
+    text-align: center;
+    margin-top: 20px;
     background-color: rgb(81, 81, 81);
-    
-    
 }
+
+/* Container */
 .container {
     text-align: center;
     width: 47%;
     top: auto;
     margin: 10px auto;
     padding: 20px;
-    background-color: #fff;
-    border-radius: 5px;
-    background-color: rgba(169, 160, 160, 0.4); 
+    background-color: rgba(169, 160, 160, 0.4);
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-    position: relative; /* Añadido */
-    overflow: hidden; /* Añadido */
-    border: 3px solid black; /* Agregar contorno */
+    position: relative;
+    overflow: hidden;
+    border: 3px solid black;
+}
+
+/* Iconos */
+.icono-izquierdo, .icono-derecho {
+    position: absolute;
+    top: 10px;
+    z-index: 1;
 }
 
 .icono-izquierdo {
-    position: absolute;
-    top: 10px; /* Ajusta la posición vertical según sea necesario */
-    left: 10px; /* Ajusta la posición horizontal según sea necesario */
-    z-index: 1; /* Añadido */
+    left: 10px;
 }
-
-.icono-izquierdo img {
-    width: 40px; /* Ajusta el tamaño del icono según sea necesario */
-    height: auto;
-    border-radius: 50%;
-    overflow: hidden;
-    box-shadow: 0 0 0 3px #ccc; /* Grosor y color del borde */
-    transition: box-shadow 0.3s ease; /* Transición suave */
-}
-
 
 .icono-derecho {
-    position: absolute;
-    top: 10px; /* Ajusta la posición vertical según sea necesario */
-    right: 10px; /* Ajusta la posición horizontal según sea necesario */
-    z-index: 1; /* Añadido */
+    right: 10px;
 }
 
-.icono-derecho img {
-    width: 40px; /* Ajusta el tamaño del icono según sea necesario */
+.icono-izquierdo img, .icono-derecho img {
+    width: 40px;
     height: auto;
     border-radius: 50%;
     overflow: hidden;
-    box-shadow: 0 0 0 3px #ccc; /* Grosor y color del borde */
-    transition: box-shadow 0.3s ease; /* Transición suave */
+    box-shadow: 0 0 0 3px #ccc;
+    transition: box-shadow 0.3s ease;
 }
 
-.button-description1 {
-    color: #000000; /* Color del texto */
-    font-family: Arial, sans-serif; /* Tipo de fuente */
-    text-align:left; /* Alineación del texto */
-    margin-top: 5px; /* Espacio superior */
-    position: fixed;
-    top: 150px; /* Ajusta la distancia desde la parte superior */
-    left: 40px; /* Ajusta la distancia desde la parte izquierda */
-    font-size: 20px;
-}
-
-.button-description2 {
-    color: #000000; /* Color del texto */
-    font-family: Arial, sans-serif; /* Tipo de fuente */
-    text-align:right; /* Alineación del texto */
-    margin-top: 5px; /* Espacio superior */
-    position: fixed;
-    top: 425px; /* Ajusta la distancia desde la parte superior */
-    left: 90px; /* Ajusta la distancia desde la parte izquierda */
-    font-size: 20px;
-}
-.button-description3 {
-    color: #000000; /* Color del texto */
-    font-family: Arial, sans-serif; /* Tipo de fuente */
-    text-align: right; /* Alineación del texto */
-    position: fixed;
-    bottom: 5px; /* Distancia desde la parte inferior */
-    right: 16px; /* Distancia desde la parte derecha */
-    margin: 0;
-    top: 655px;
-    font-size: 17px;
-}
-
-.boton-redondo,
-.boton-redondo2,
-.boton-redondo3 {
+/* Botones redondos */
+.boton-redondo, .boton-redondo2, .boton-redondo3 {
     position: fixed;
     z-index: 1;
+    width: 70px;
+    height: 70px;
+    border-radius: 50%;
+    overflow: hidden;
+    box-shadow: 0 0 0 3px #ccc;
+    transition: box-shadow 0.3s ease;
+    cursor: pointer;
 }
 
 .boton-redondo {
     top: 80px;
-    left: 20px;
-    width: 70px; /* Ajusta el tamaño del botón según tus necesidades */
-    height: 70px; /* Ajusta el tamaño del botón según tus necesidades */
     left: 105px;
-    border-radius: 50%;
-    overflow: hidden;
-    box-shadow: 0 0 0 3px #ccc; /* Grosor y color del borde */
-    transition: box-shadow 0.3s ease; /* Transición suave */
-    cursor: pointer;
-}
-
-.boton-redondo:hover {
-    box-shadow: 0 0 0 5px #4CAF50; /* Cambiar el color del borde al pasar el ratón */
-}
-
-.boton-redondo .imagen {
-    position: absolute;
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
 }
 
 .boton-redondo2 {
     top: calc(50% - 35px);
-    left: 20px;
-    width: 70px; /* Ajusta el tamaño del botón según tus necesidades */
-    height: 70px; /* Ajusta el tamaño del botón según tus necesidades */
     left: 108px;
-    border-radius: 50%;
-    overflow: hidden;
-    box-shadow: 0 0 0 3px #ccc; /* Grosor y color del borde */
-    transition: box-shadow 0.3s ease; /* Transición suave */
-    cursor: pointer;
-}
-
-.boton-redondo2:hover {
-    box-shadow: 0 0 0 5px #4CAF50; /* Cambiar el color del borde al pasar el ratón */
-}
-
-.boton-redondo2 .imagen {
-    position: absolute;
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
 }
 
 .boton-redondo3 {
     bottom: 20px;
     right: 30px;
-    width: 70px; /* Ajusta el tamaño del botón según tus necesidades */
-    height: 70px; /* Ajusta el tamaño del botón según tus necesidades */
-    border-radius: 50%;
-    overflow: hidden;
-    box-shadow: 0 0 0 3px #ccc; /* Grosor y color del borde */
-    transition: box-shadow 0.3s ease; /* Transición suave */
-    cursor: pointer;
-    
 }
 
-.boton-redondo3:hover {
-    box-shadow: 0 0 0 5px #4CAF50; /* Cambiar el color del borde al pasar el ratón */
+.boton-redondo:hover, .boton-redondo2:hover, .boton-redondo3:hover {
+    box-shadow: 0 0 0 5px #4CAF50;
 }
 
-.boton-redondo3 .imagen {
+.boton-redondo .imagen, .boton-redondo2 .imagen, .boton-redondo3 .imagen {
     position: absolute;
     width: 100%;
     height: 100%;
     object-fit: cover;
 }
+
+/* Descripciones de botones */
+.button-description1, .button-description2, .button-description3 {
+    color: #000000;
+    font-family: Arial, sans-serif;
+    font-size: 20px;
+}
+
+.button-description1 {
+    text-align: left;
+    position: fixed;
+    top: 150px;
+    left: 40px;
+}
+
+.button-description2 {
+    text-align: right;
+    position: fixed;
+    top: 425px;
+    left: 90px;
+}
+
+.button-description3 {
+    text-align: right;
+    position: fixed;
+    bottom: 5px;
+    right: 16px;
+    top: 655px;
+    font-size: 17px;
+}
+
+/* Galería de imágenes */
 #image-gallery {
     display: grid;
     grid-template-columns: repeat(3, 1fr);
@@ -255,12 +205,12 @@ body{
 }
 
 #image-gallery img {
-    max-width:70%; /* Ajusta este valor según el tamaño deseado */
+    max-width: 70%;
     height: auto;
-    border: 5px solid black; /* Agregar contorno */
+    border: 5px solid black;
 }
 
-
+/* Botón */
 .button {
     display: inline-block;
     padding: 10px 20px;
@@ -279,70 +229,54 @@ body{
     font-size: 12px;
 }
 
-/* Estilos responsivos */
-@media screen and (max-width: 600px) {
-    .boton-redondo,
-    .boton-redondo2,
-    .boton-redondo3 {
-        width: 50px; /* Ajusta el tamaño del botón según tus necesidades */
-        height: 50px; /* Ajusta el tamaño del botón según tus necesidades */
-    }
-
-    .button-description {
-        font-size: 10px;
-    }
-}
-
+/* Botón regresar */
 .boton-regresar {
     position: fixed;
     top: 20px;
     left: 20px;
-    width: 100px; /* Ajusta el tamaño del botón según tus necesidades */
-    height: 40px; /* Ajusta el tamaño del botón según tus necesidades */
-    border-radius: 20px; /* Ajusta el radio para obtener una forma redonda */
+    width: 100px;
+    height: 40px;
+    border-radius: 20px;
     overflow: hidden;
-    box-shadow: 0 0 0 3px #000000; /* Grosor y color del borde */
-    transition: box-shadow 0.3s ease; /* Transición suave */
+    box-shadow: 0 0 0 3px #000000;
+    transition: box-shadow 0.3s ease;
     cursor: pointer;
     display: flex;
     justify-content: center;
     align-items: center;
-    background-color: #ffffff; /* Color de fondo del botón */
-    color: #f60101; /* Color del texto */
-    font-size: 16px; /* Tamaño de fuente */
-    font-weight: bold; /* Grosor de la fuente */
-    text-decoration: none; /* Sin subrayado para el texto del botón */
+    background-color: #ffffff;
+    color: #f60101;
+    font-size: 16px;
+    font-weight: bold;
+    text-decoration: none;
 }
 
 .boton-regresar:hover {
-    box-shadow: 0 0 0 5px #000000; /* Cambiar el color del borde al pasar el ratón */
+    box-shadow: 0 0 0 5px #000000;
 }
 
- /* Estilos para el contenedor del cargador */
- #loader {
+/* Loader */
+#loader {
     position: fixed;
     width: 100%;
     height: 100%;
-    background: rgba(255, 255, 255, 0.7); /* Ajustado para ser casi transparente */
+    background: rgba(255, 255, 255, 0.7);
     display: flex;
     justify-content: center;
     align-items: center;
     z-index: 9999;
 }
 
-
-/* Estilos para el contenedor de la imagen y el spinner */
 .loader-container {
     position: relative;
     width: 120px;
     height: 120px;
 }
 
-/* Estilos para la imagen del cargador */
 .loader-image img {
-    width: 100%; /* La imagen ocupará todo el contenedor */
-    height: 100%; 
-    border-radius: 50%; /* Hace la imagen redonda */
+    width: 100%;
+    height: 100%;
+    border-radius: 50%;
     position: absolute;
     top: 20px;
     left: 15px;
@@ -357,13 +291,88 @@ body{
     animation: spin 2s linear infinite;
 }
 
-/* Animación del spinner */
 @keyframes spin {
     0% { transform: rotate(0deg); }
     100% { transform: rotate(360deg); }
 }
 
-/* Ocultar el contenido mientras se muestra el cargador */
 #content {
     display: none;
+}
+
+/* Estilos responsivos */
+@media screen and (max-width: 1024px) {
+    .navbar {
+        width: 50px;
+    }
+
+    .navbar:hover {
+        width: 150px;
+    }
+
+    .navbar ul li a {
+        font-size: 16px;
+    }
+
+    .small-image {
+        width: 50px;
+        height: 50px;
+    }
+
+    .button-description1, .button-description2, .button-description3 {
+        font-size: 18px;
+    }
+
+    .boton-redondo, .boton-redondo2, .boton-redondo3 {
+        width: 60px;
+        height: 60px;
+    }
+
+    #image-gallery img {
+        max-width: 80%;
+    }
+}
+
+@media screen and (max-width: 600px) {
+    body {
+        font-size: 16px;
+    }
+
+    .navbar {
+        width: 40px;
+    }
+
+    .navbar:hover {
+        width: 120px;
+    }
+
+    .navbar ul li a {
+        font-size: 14px;
+    }
+
+    .small-image {
+        width: 40px;
+        height: 40px;
+    }
+
+    .button-description1, .button-description2, .button-description3 {
+        font-size: 14px;
+    }
+
+    .boton-redondo, .boton-redondo2, .boton-redondo3 {
+        width: 50px;
+        height: 50px;
+    }
+
+    .button-description {
+        font-size: 10px;
+    }
+
+    #image-gallery {
+        grid-template-columns: 1fr;
+    }
+
+    #image-gallery img {
+        max-width: 90%;
+    }
 }

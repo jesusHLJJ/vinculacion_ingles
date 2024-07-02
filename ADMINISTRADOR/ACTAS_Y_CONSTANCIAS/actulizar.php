@@ -81,7 +81,7 @@ function obtenerIdNivel($conexion, $grupo)
 // Función para insertar las rutas de los archivos en la base de datos
 function insertarRutasEnBaseDeDatos($conexion, $idnivel, $directorio)
 {
-    $sql = "UPDATE documentos_nivel SET acta_liberacion = ? WHERE id_nivel = ?";
+    $sql = "UPDATE documentos_nivel SET acta_libreacion = ? WHERE id_nivel = ?";
     $stmt = $conexion->prepare($sql);
     $stmt->bind_param("si", $directorio, $idnivel);
     $resultado = $stmt->execute();

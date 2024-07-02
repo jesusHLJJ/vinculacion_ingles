@@ -19,6 +19,8 @@ if ($result->num_rows > 0) {
 }
 
 
+
+
 //CREACION DE LA CARPETA DE USUARIO 
 $nombre_carpeta = "usuario_expediente_" . $expediente;
 $directorio = "../../EXPEDIENTE_ALUMNO/archivos/";
@@ -65,8 +67,8 @@ if (isset($_POST['inscribirse'])) {
     $fecha_pago = $_POST['fe_pago'];
     $fecha_entrega = $_POST['fe_entrega'];
     $nivel_cursar = $_POST['nivel'];
-    $modalidad = $_POST['modalidad'];
-    $horario = $_POST['horario'];
+    //$modalidad = $_POST['modalidad'];
+    //$horario = $_POST['horario'];
     $linea_repetida = '';
 
     //COMPROBAR SI LA LINEA DE CAPTURA NO ESTA REPETIDA
@@ -147,7 +149,7 @@ if (isset($_POST['inscribirse'])) {
         //CONSULTA PARA ALMACENAR LAS RUTAS
         $sql = "update alumnos set id_estatus=1 where id_expediente=$expediente";
         $result = $conexion->query($sql);
-        $sql = "update expediente set nivel=$nivel_cursar, lin_captura='$lin_captura_d_route',soli_aspirante='$soli_aspirante_route',act_nac='$act_nacimiento_route',comp_estu='$comp_estudios_route',ine='$ine_route',comp_pago='$comp_pago_route',lin_captura_t='$linea_captura',fecha_pago='$fecha_pago',fecha_entrega='$fecha_entrega',modalidad='$modalidad',horario='$horario' where id_expediente=$expediente";
+        $sql = "update expediente set nivel=$nivel_cursar, lin_captura='$lin_captura_d_route',soli_aspirante='$soli_aspirante_route',act_nac='$act_nacimiento_route',comp_estu='$comp_estudios_route',ine='$ine_route',comp_pago='$comp_pago_route',lin_captura_t='$linea_captura',fecha_pago='$fecha_pago',fecha_entrega='$fecha_entrega' where id_expediente=$expediente";
         $result = $conexion->query($sql);
         mysqli_close($conexion);
         if ($result) {

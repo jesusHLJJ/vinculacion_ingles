@@ -34,33 +34,100 @@ const listprofesor = async () => {
     let content = ``;
 
     profesor.forEach((grupos) => {
+      const botonDescarga = grupos.nivel == 1
+        ? `<button class="descargar-nivel1 btn btn-sm btn-info mt-2" data-matricula="${grupos.matricula}">
+            <i class="fa-solid fa-file-zipper"></i> Descargar
+          </button>`
+        : `<button class="descargar-nivel2 btn btn-sm btn-warning mt-2" data-matricula="${grupos.matricula}">
+            <i class="fa-solid fa-file-zipper"></i> Descargar
+          </button>`;
+
       content += `
-                <tr>
-                    <td class="text-center">${grupos.matricula}</td>
-                    <td class="text-center">${grupos.nombre}</td>
-                    <td class="text-center">${grupos.ap_paterno}</td>
-                    <td class="text-center">${grupos.ap_materno}</td>
-                    <td class="text-center">${grupos.correo}</td>
-                    <td class="text-center">${grupos.nombre_carrera}</td>
-                    <td class="text-center">${grupos.telefono}</td>
-                    <td class="text-center">${grupos.lin_captura_t}</td>
-                    <td class="text-center">${grupos.fecha_pago}</td>
-                    <td class="text-center">${grupos.fecha_entrega}</td>
-                    <td class="text-center">
-                        <button class="modificar btn btn-sm btn-primary" data-matricula="${grupos.matricula}" data-nombre="${grupos.nombre}" data-paterno="${grupos.ap_paterno}" data-materno="${grupos.ap_materno}" data-telefono="${grupos.telefono}">
-                            <i class="fa-solid fa-pen-to-square"></i>
-                        </button>
-                    </td>
-                </tr>`;
+        <tr>
+            <td class="text-center">${grupos.matricula}</td>
+            <td class="text-center">${grupos.nombre}</td>
+            <td class="text-center">${grupos.ap_paterno}</td>
+            <td class="text-center">${grupos.ap_materno}</td>
+            <td class="text-center">${grupos.correo}</td>
+            <td class="text-center">${grupos.nombre_carrera}</td>
+            <td class="text-center">${grupos.telefono}</td>
+            <td class="text-center">${grupos.lin_captura_t}</td>
+            <td class="text-center">${grupos.fecha_pago}</td>
+            <td class="text-center">${grupos.fecha_entrega}</td>
+            <td class="text-center">
+                <button class="modificar btn btn-sm btn-primary" data-matricula="${grupos.matricula}" data-nombre="${grupos.nombre}" data-paterno="${grupos.ap_paterno}" data-materno="${grupos.ap_materno}" data-telefono="${grupos.telefono}" data-estatus="${grupos.estatus_alumno}">
+                    <i class="fa-solid fa-pen-to-square"></i>
+                </button>
+                ${botonDescarga}
+            </td>
+        </tr>`;
     });
 
     $("#table_alumno").html(content);
-  } catch (error) {}
+  } catch (error) {
+    console.error("Error:", error);
+  }
 };
 
 window.addEventListener("load", async () => {
   await initDataTable();
 });
+
+$(document).on("click", ".descargar-nivel1", async function() {
+  const matricula = $(this).data("matricula");
+
+  try {
+    const result = await Swal.fire({
+      title: '¿Descargar todos los archivos?',
+      text: `Se descargarán todos los archivos asociados a la matrícula ${matricula}`,
+      focusConfirm: false,
+      showCancelButton: true,
+      confirmButtonText: 'Descargar',
+      cancelButtonText: 'Cancelar'
+    });
+
+    if (result.isConfirmed) {
+      window.location.href = `../../ADMINISTRADOR/ALUMNOS/descargar_archivos.php?matricula=${matricula}`;
+    }
+  } catch (error) {
+    console.error("Error:", error);
+    await Swal.fire(
+      "Error",
+      "Hubo un problema al intentar descargar los archivos",
+      "error"
+    );
+  }
+});
+
+
+$(document).on("click", ".descargar-nivel2", async function() {
+  const matricula = $(this).data("matricula");
+
+  try {
+    const result = await Swal.fire({
+      title: '¿Descargar todos los archivos para Nivel 2 o Superior?',
+      text: `Se descargarán todos los archivos asociados a la matrícula ${matricula}`,
+      focusConfirm: false,
+      showCancelButton: true,
+      confirmButtonText: 'Descargar',
+      cancelButtonText: 'Cancelar'
+    });
+
+    if (result.isConfirmed) {
+      // Redirigir al archivo PHP con la matrícula como parámetro
+      window.location.href = `../../ADMINISTRADOR/ALUMNOS/descargar_documento_expediente.php?matricula=${matricula}`;
+    }
+  } catch (error) {
+    console.error("Error:", error);
+    await Swal.fire(
+      "Error",
+      "Hubo un problema al intentar descargar los archivos",
+      "error"
+    );
+  }
+});
+
+
 
 $(document).on("click", ".modificar", async function () {
   var old_matricula = $(this).data("matricula");

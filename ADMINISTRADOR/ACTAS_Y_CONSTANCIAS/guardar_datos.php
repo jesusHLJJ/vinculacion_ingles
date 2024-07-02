@@ -79,7 +79,7 @@ function obtenerNombreGrupo($conexion, $nivel)
 // Función para insertar la ruta de la carpeta en la base de datos
 function insertarRutaCarpetaEnBaseDeDatos($conexion, $nivel_id, $directorio)
 {
-    $sql = "INSERT INTO documentos_nivel (id_nivel, acta_liberacion) VALUES (?, ?)";
+    $sql = "INSERT INTO documentos_nivel (id_nivel, acta_libreacion) VALUES (?, ?)";
     $stmt = $conexion->prepare($sql);
     $stmt->bind_param("is", $nivel_id, $directorio);
     $resultado = $stmt->execute();

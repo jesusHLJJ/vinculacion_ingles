@@ -318,7 +318,7 @@ font-weight: bold;
         left: 0;
         right: 0;
         width: 100vw;
-        background-color: #000000;
+        background-color: #eee7e7;
         transition: 0.5s;
         overflow: hidden;
     }
@@ -344,9 +344,242 @@ font-weight: bold;
         opacity: 1;
     }
     .nav-bar ul li a {
-        margin-bottom: 20px;
+        margin-bottom: -5px;
     }
 }
+
+
+@media (max-width: 900px) {
+    /* Estilos para button[name="na"] en responsive */
+    button[name="na"] {
+        position: absolute;
+        margin-top: 40px; /* Espacio superior *//* Espacio superior común */
+        left: 1px; /* Alineación a la izquierda con margen */
+        right: 10px;
+        display: block;
+        width: 30%;
+        max-width: 200px;
+        padding: 10px 20px;
+        background-color: #ffbb00;
+        color: #080808;
+        border: 2px solid #000;
+        border-radius: 10px;
+        cursor: pointer;
+        transition: background-color 0.3s, color 0.3s;
+        font-weight: bold;
+        font-size: 12px;
+        text-align: center;
+    }
+
+    /* Estilos para button[name="buscar_na"] en responsive */
+    button[name="buscar_na"] {
+        position: absolute;
+        margin-top: 40px; /* Espacio superior */
+        margin-left: auto;
+        margin-right: auto;
+        display: block;
+        width: 30%;
+        max-width: 200px;
+        padding: 10px 20px;
+        background-color: #ffbb00;
+        color: #080808;
+        border: 2px solid #000;
+        border-radius: 10px;
+        cursor: pointer;
+        transition: background-color 0.3s, color 0.3s;
+        font-weight: bold;
+        font-size: 12px;
+        text-align: center;
+    }
+
+    /* Estilos para button[name="np"] en responsive */
+    button[name="np"] {
+        position: absolute;
+        margin-top: 130px; /* Espacio superior */
+        margin-left: auto;
+        margin-right: auto;
+        left: 1px; 
+        display: block;
+        width: 30%;
+        max-width: 200px;
+        padding: 10px 20px;
+        background-color: #ffbb00;
+        color: #080808;
+        border: 2px solid #000;
+        border-radius: 10px;
+        cursor: pointer;
+        transition: background-color 0.3s, color 0.3s;
+        font-weight: bold;
+        font-size: 12px;
+        text-align: center;
+    }
+
+    button[name="buscar_np"] {
+        position: absolute;
+        margin-top: 90px;
+        top: 185px; /* Espacio superior */
+        margin-left: auto;
+        margin-right: auto;
+        left: 20px;
+        display: block;
+        width: 30%;
+        max-width: 200px;
+        padding: 10px 20px;
+        background-color: #ffbb00;
+        color: #080808;
+        border: 2px solid #000;
+        border-radius: 10px;
+        cursor: pointer;
+        transition: background-color 0.3s, color 0.3s;
+        font-weight: bold;
+        font-size: 12px;
+        text-align: center;
+    }
+    .info-container {
+        position: absolute;
+        margin-left: auto;
+        margin-right: auto;
+        left: 250px; /* Colocar el contenedor a 150px del borde izquierdo */
+        top: 300px; /* Colocar el contenedor a 150px del borde superior */
+        background-color: #ffbb00; 
+        padding: 10px; /* Espacio interior */
+        border-radius: 5px; /* Bordes redondeados */
+        color: rgb(10, 10, 10); /* Color del texto */
+        max-width: 200px; /* Ancho máximo del contenedor */
+    }
+    .info-container h2 {
+        font-size: 0.8em; /* Tamaño de fuente más pequeño */
+        font-weight: bold;
+        margin-bottom: 1px; /* Margen inferior más pequeño */
+    }
+
+    .btn1{
+        margin-left: auto;
+        margin-right: auto;
+        position: absolute;
+        left: 90px;
+        width: 80px;
+        height: 80px;
+        background: #ffbb00; 
+        line-height: 80px;
+        border-radius: 50%;
+        text-align: center;
+        cursor: pointer;
+        transition: .5s;
+    }
+    
+    .btn1 i{
+        font-size: 25px;
+        color: rgb(6, 6, 6);
+        line-height: 80px;
+        transition: all .7s ease;
+        font-weight: bold;
+    }
+
+    .container{
+        margin-left: auto;
+        margin-right: auto;
+        left: 85px;
+        top: 170px;
+        transform: translate(-50%, -50%);
+        padding: 10px;
+    }
+
+    .container:hover input {
+        width: 160px;
+    }
+
+    .btn1:hover  {
+        background:#cc0000;
+    }
+    
+}
+
+
+ /* Estilos para el botón */
+ button[name="na"] {
+    position: absolute;
+    right: 120px;
+    top: 190px;
+    padding: 10px 20px; /* Padding interno */
+    background-color: #ffbb00; /* Color de fondo */
+    color: rgb(8, 8, 8); /* Color del texto */
+    border: 2px solid #000; /* Contorno de color negro */
+    border-radius: 10px; /* Bordes redondeados */
+    cursor: pointer; /* Cursor al pasar por encima */
+    transition: background-color 0.3s; /* Transición suave */
+    font-weight: bold;
+}
+
+
+/* Estilo al pasar el cursor por encima */
+button[name="na"]:hover {
+    background-color:#cc5800; /* Color de fondo oscuro */
+    transform: scale(1.1);
+}
+
+button[name="np"] {
+    position: absolute;
+    right: 370px;
+    top:190px;
+    padding: 10px 20px; /* Padding interno */
+    background-color: #ffbb00; /* Color de fondo */
+    color: rgb(8, 8, 8); /* Color del texto */
+    border: 2px solid #000; /* Contorno de color negro */
+    border-radius: 10px; /* Bordes redondeados */
+    cursor: pointer; /* Cursor al pasar por encima */
+    transition: background-color 0.3s; /* Transición suave */
+    font-weight: bold;
+}
+
+
+/* Estilo al pasar el cursor por encima */
+button[name="np"]:hover {
+    background-color:#cc5800; /* Color de fondo oscuro */
+    transform: scale(1.1); /* Aumenta el tamaño del botón al 110% */
+}
+
+button[name="buscar_na"] {
+    position: absolute;
+    left: 1px;
+    top: 160px;
+    padding: 10px 20px; /* Padding interno */
+    background-color: #ffbb00; /* Color de fondo */
+    color: rgb(8, 8, 8); /* Color del texto */
+    border: 2px solid #000; /* Contorno de color negro */
+    border-radius: 10px; /* Bordes redondeados */
+    cursor: pointer; /* Cursor al pasar por encima */
+    transition: background-color 0.3s; /* Transición suave */
+    font-weight: bold;
+}
+
+/* Estilo al pasar el cursor por encima */
+button[name="buscar_na"]:hover {
+    background-color:#cc5800; /* Color de fondo oscuro */
+    transform: scale(1.1); /* Aumenta el tamaño del botón al 110% */
+}
+button[name="buscar_np"] {
+    position: absolute;
+    left: 1px;
+    top: 200px;
+    padding: 10px 20px; /* Padding interno */
+    background-color: #ffbb00; /* Color de fondo */
+    color: rgb(8, 8, 8); /* Color del texto */
+    border: 2px solid #000; /* Contorno de color negro */
+    border-radius: 10px; /* Bordes redondeados */
+    cursor: pointer; /* Cursor al pasar por encima */
+    transition: background-color 0.3s; /* Transición suave */
+    font-weight: bold;
+}
+
+/* Estilo al pasar el cursor por encima */
+button[name="buscar_np"]:hover {
+    background-color:#cc5800; /* Color de fondo oscuro */
+    transform: scale(1.1); /* Aumenta el tamaño del botón al 110% */
+}
+
+
+
 input[type="file"]{
     display: none;
 }
@@ -474,88 +707,6 @@ label:active{
     background-color: #c50707;
   }
   
- /* Estilos para el botón */
- button[name="na"] {
-    position: absolute;
-    right: 120px;
-    top: 190px;
-    padding: 10px 20px; /* Padding interno */
-    background-color: #ffbb00; /* Color de fondo */
-    color: rgb(8, 8, 8); /* Color del texto */
-    border: 2px solid #000; /* Contorno de color negro */
-    border-radius: 10px; /* Bordes redondeados */
-    cursor: pointer; /* Cursor al pasar por encima */
-    transition: background-color 0.3s; /* Transición suave */
-    font-weight: bold;
-}
-
-
-/* Estilo al pasar el cursor por encima */
-button[name="na"]:hover {
-    background-color:#cc5800; /* Color de fondo oscuro */
-    transform: scale(1.1);
-}
-
-button[name="np"] {
-    position: absolute;
-    right: 370px;
-    top:190px;
-    padding: 10px 20px; /* Padding interno */
-    background-color: #ffbb00; /* Color de fondo */
-    color: rgb(8, 8, 8); /* Color del texto */
-    border: 2px solid #000; /* Contorno de color negro */
-    border-radius: 10px; /* Bordes redondeados */
-    cursor: pointer; /* Cursor al pasar por encima */
-    transition: background-color 0.3s; /* Transición suave */
-    font-weight: bold;
-}
-
-
-/* Estilo al pasar el cursor por encima */
-button[name="np"]:hover {
-    background-color:#cc5800; /* Color de fondo oscuro */
-    transform: scale(1.1); /* Aumenta el tamaño del botón al 110% */
-}
-
-button[name="buscar_na"] {
-    position: absolute;
-    left: 20px;
-    top: 190px;
-    padding: 10px 20px; /* Padding interno */
-    background-color: #ffbb00; /* Color de fondo */
-    color: rgb(8, 8, 8); /* Color del texto */
-    border: 2px solid #000; /* Contorno de color negro */
-    border-radius: 10px; /* Bordes redondeados */
-    cursor: pointer; /* Cursor al pasar por encima */
-    transition: background-color 0.3s; /* Transición suave */
-    font-weight: bold;
-}
-
-/* Estilo al pasar el cursor por encima */
-button[name="buscar_na"]:hover {
-    background-color:#cc5800; /* Color de fondo oscuro */
-    transform: scale(1.1); /* Aumenta el tamaño del botón al 110% */
-}
-button[name="buscar_np"] {
-    position: absolute;
-    left: 90px;
-    top: 190px;
-    padding: 10px 20px; /* Padding interno */
-    background-color: #ffbb00; /* Color de fondo */
-    color: rgb(8, 8, 8); /* Color del texto */
-    border: 2px solid #000; /* Contorno de color negro */
-    border-radius: 10px; /* Bordes redondeados */
-    cursor: pointer; /* Cursor al pasar por encima */
-    transition: background-color 0.3s; /* Transición suave */
-    font-weight: bold;
-}
-
-/* Estilo al pasar el cursor por encima */
-button[name="buscar_np"]:hover {
-    background-color:#cc5800; /* Color de fondo oscuro */
-    transform: scale(1.1); /* Aumenta el tamaño del botón al 110% */
-}
-
 
 
  /* Estilos para el contenedor del cargador */

@@ -24,11 +24,19 @@ const extractFolderName = (filePath) => {
 };
 
 const createFolderDownloadLink = (filePath) => {
+  if (!filePath) return "N/A";
+
   const folderName = extractFolderName(filePath);
   if (folderName === "N/A") return "N/A";
 
-  const folderPath = filePath.split("/").slice(0, -1).join("/") + "/";
-  const downloadUrl = folderPath + folderName + ".zip"; // Asumiendo que el servidor provee un archivo ZIP
+  const folderPath = filePath.split("/").slice(0, -1).join("/");
+  const downloadUrl = `${folderPath}/${folderName}.zip`; // Asumiendo que el servidor provee un archivo ZIP
+
+  // Debugging logs
+  console.log(`filePath: ${filePath}`);
+  console.log(`folderName: ${folderName}`);
+  console.log(`folderPath: ${folderPath}`);
+  console.log(`downloadUrl: ${downloadUrl}`);
 
   return `<a href="${downloadUrl}" download>${folderName}</a>`;
 };
@@ -60,16 +68,25 @@ const listprofesor = async () => {
           <td class="text-center">${planeacion.id_documento}</td>
           <td class="text-center">${planeacion.grupo}</td>
           <td class="text-center">${createDownloadLink(
+            planeacion.lista_1
+          )}</td>
+          <td class="text-center">${createDownloadLink(
             planeacion.acta_calificacion
+          )}</td>
+          <td class="text-center">${createDownloadLink(
+            planeacion.lista_2
           )}</td>
           <td class="text-center">${createDownloadLink(
             planeacion.acta_calificacion_2
           )}</td>
           <td class="text-center">${createDownloadLink(
+            planeacion.lista_3
+          )}</td>
+          <td class="text-center">${createDownloadLink(
             planeacion.acta_calificacion_3
           )}</td>
           <td class="text-center">${createFolderDownloadLink(
-            planeacion.acta_liberacion
+            planeacion.acta_libreacion
           )}</td>
           <td class="text-center">
             <button class="modificar btn btn-sm btn-primary" data-id="${
@@ -88,6 +105,8 @@ const listprofesor = async () => {
     console.error("Error:", error);
   }
 };
+
+
 
 window.addEventListener("load", async () => {
   await initDataTable();

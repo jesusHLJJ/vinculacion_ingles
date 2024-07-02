@@ -1,5 +1,6 @@
 /* estilos/elegir_grupo.css */
 
+/* Estilo general del body */
 body {
     display: flex;
     justify-content: center;
@@ -11,15 +12,26 @@ body {
     color: #fff; /* Texto blanco */
 }
 
+/* Estilo del contenedor que centra el formulario */
+.container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 100%;
+    max-width: 1100px; /* Ancho máximo del contenedor */
+}
+
+/* Estilo del formulario */
 form {
     background-color: #444; /* Fondo del formulario un poco más claro */
     padding: 20px;
     border-radius: 8px;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
     text-align: center;
-    width: 80%;
+    width: 100%;
 }
 
+/* Estilo de las etiquetas */
 label {
     display: block;
     margin-bottom: 10px;
@@ -27,6 +39,7 @@ label {
     color: #ffa500; /* Naranja */
 }
 
+/* Estilo de los elementos select y botones */
 select, input[type="submit"] {
     width: 100%;
     padding: 10px;
@@ -36,6 +49,7 @@ select, input[type="submit"] {
     font-size: 16px;
 }
 
+/* Estilo del botón de envío */
 input[type="submit"] {
     background-color: #ffa500; /* Naranja */
     color: #fff;
@@ -43,14 +57,35 @@ input[type="submit"] {
     border: none;
 }
 
+/* Estilo del botón de envío en hover */
 input[type="submit"]:hover {
     background-color: #ff8c00; /* Naranja oscuro */
 }
 
+/* Estilo de las opciones del select */
 option {
     color: #000; /* Texto negro dentro del select */
 }
 
+/* Estilo del texto dentro del span */
 span {
     color: white;
+}
+
+/* Media Query para pantallas de hasta 768px (tabletas) */
+@media (max-width: 768px) {
+    select, input[type="submit"] {
+        font-size: 14px; /* Ajusta el tamaño de fuente para tabletas */
+    }
+}
+
+/* Media Query para pantallas de hasta 480px (móviles) */
+@media (max-width: 480px) {
+    select, input[type="submit"] {
+        font-size: 14px; /* Ajusta el tamaño de fuente para móviles */
+    }
+
+    form {
+        padding: 15px; /* Reduce el padding para pantallas más pequeñas */
+    }
 }

@@ -112,7 +112,33 @@ $id_carrera = $t_id_carrera;
 
 
             <label for="numero">NÚMERO TELEFÓNICO</label>
-            <input type="text" id="numero" name="numero" value="<?php echo $telefono; ?>" maxlength="10" required><br>
+            <input type="text" id="numero" name="numero" value="<?php echo $telefono; ?>" maxlength="12" required><br>
+
+            <script>
+                document.getElementById('numero').addEventListener('input', function(e) {
+                    let value = e.target.value.replace(/\D/g, ''); // Elimina todos los caracteres que no son dígitos
+                    let formattedValue = '';
+
+                    if (value.length > 2) {
+                        formattedValue = value.substring(0, 2) + ' ';
+                    } else {
+                        formattedValue = value;
+                    }
+
+                    if (value.length > 6) {
+                        formattedValue += value.substring(2, 6) + ' ' + value.substring(6, 10);
+                    } else if (value.length > 2) {
+                        formattedValue += value.substring(2, 6);
+                    }
+
+                    e.target.value = formattedValue;
+                });
+            </script>
+
+
+
+
+
 
             <label for="carrera">CARRERA</label>
             <select name="carrera" id="carrera" required>
@@ -170,7 +196,7 @@ $id_carrera = $t_id_carrera;
 
 
 
-           // header("Location: ../ALUMNOS/datos_alumno.php");
+            // header("Location: ../ALUMNOS/datos_alumno.php");
         } else {
             echo "<script>
             Swal.fire({

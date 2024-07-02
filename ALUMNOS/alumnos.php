@@ -32,7 +32,7 @@ $ingreso = $_SESSION['correo']; //correo electrónico que ingresa a la parte ALU
 //REALIZAR CONSULTAS SQL PARA RECOLECTAR DATOS //
 
 //DATOS GENERALES
-$sql = "select alumnos.matricula, alumnos.nombre,alumnos.ap_paterno,alumnos.ap_materno,usuarios.correo from alumnos join usuarios on alumnos.id_usuarios=usuarios.id_usuario where usuarios.correo='$ingreso'";
+$sql = "select alumnos.id_nota, alumnos.matricula, alumnos.nombre,alumnos.ap_paterno,alumnos.ap_materno,usuarios.correo from alumnos join usuarios on alumnos.id_usuarios=usuarios.id_usuario where usuarios.correo='$ingreso'";
 $stmt = $conexion->prepare($sql);
 $stmt->execute();
 $result = $stmt->get_result();
@@ -40,6 +40,7 @@ $result = $stmt->get_result();
 if ($result->num_rows > 0) {
     // Obtener el nombre de la fila
     $fila = $result->fetch_assoc();
+    $_SESSION['id_nota']=$fila['id_nota'];
     $matricula = $fila['matricula'];
     $nombre_alumno = $fila['nombre'];
     $ap_alumno = $fila['ap_paterno'];
@@ -48,7 +49,7 @@ if ($result->num_rows > 0) {
 
 $_SESSION['matricula'] = $matricula;
 
-$sql = "select alumnos.id_expediente, id_estatus from alumnos where alumnos.matricula=$matricula";
+$sql = "select alumnos.id_expediente, alumnos.id_estatus,expediente.lin_captura_t from alumnos join expediente on alumnos.id_expediente=expediente.id_expediente where alumnos.matricula='$matricula'";
 $stmt = $conexion->prepare($sql);
 //$stmt->bind_param("s", $correo);
 $stmt->execute();
@@ -57,6 +58,7 @@ if ($result->num_rows > 0) {
     $fila = $result->fetch_assoc();
     $id_expediente = $fila['id_expediente'];
     $estatus_alumno = $fila['id_estatus'];
+    $_SESSION['linea_captura_alumno']=$fila['lin_captura_t'];
 }
 $_SESSION['id_expediente'] = $id_expediente;
 
