@@ -208,7 +208,7 @@ if (isset($_POST['inscribirse'])) {
             </script>
 
             <label for="lin_captura">LINEA DE CAPTURA</label>
-            <input type="text" name="lin_captura" id="lin_captura" placeholder="XXXXXX(6) XXXXXX XXXXXX XXXXXX XXX" maxlength="31" oninput="formatInput(event)" required><br>
+            <input type="text" name="lin_captura" id="lin_captura" placeholder="XXXXXX(6) XXXXXX XXXXXX XXXXXX XXX" maxlength="31" oninput="formatInput(event)" pattern="[0-9\s]+" title="SOLO SE ADMITEN NÚMEROS" required><br>
 
 
 

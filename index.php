@@ -51,7 +51,6 @@ if (isset($_SESSION['tipo'])) {
             });
         </script>';
         }
-
     } else {
         $sql = "select correo from usuarios where correo='admin@admin.com' and id_tipo=1";
         $stmt = $conexion->prepare($sql);
@@ -70,10 +69,10 @@ if (isset($_SESSION['tipo'])) {
         }
     }
     ?>
-
-    <header>
-
+    <header class="encabezado">
+        <h2>Sistema de Administración del Departamento de Inglés (SADI)</h2>
     </header>
+
 
     <div class="wrapper">
         <form action="CONTROLADORES/validar_log.php" method="post">

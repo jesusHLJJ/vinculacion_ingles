@@ -59,7 +59,6 @@ if (!isset($_SESSION['tipo'])) {
                             <th>SEXO</th>
                             <th>DOMICILIO</th>
                             <th>RFC</th>
-                            <th>TURNO</th>
                             <th></th>
                         </tr>
                     </thead>
