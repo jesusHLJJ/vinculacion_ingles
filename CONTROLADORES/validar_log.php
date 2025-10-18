@@ -1,7 +1,7 @@
 <?php
 session_start();
 include "../BD.php";
-
+include "../config.php"; 
 $correo = $_POST['correo'];
 $pass = $_POST['pass'];
 
@@ -28,8 +28,17 @@ if (password_verify($pass, $hash)) {
           
             break;
         case 2:
-            $mensaje = "Inicio de sesión exitoso como profesor";
-            $pagina = "../PROFESORES/";
+                if($control_sistema != 0){
+                    $mensaje = "Inicio de sesión exitoso como profesor";
+                    $pagina = "../PROFESORES/";
+            }else{
+                $mensaje = "Lo sentimos, el sistema fue cerrado temporalmente por un administrador";
+                $pagina = "../";
+                /*
+                session_unset();
+                session_destroy();*/
+                
+            }
             break;
         case 3:
             $mensaje = "Inicio de sesión exitoso como alumno";
@@ -50,14 +59,36 @@ if (password_verify($pass, $hash)) {
   <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
 </head>
 <body>
-    <script type="text/javascript">
-        swal({
-            text: "<?php echo $mensaje; ?>",
-            icon: "success"
-        }).then(function() {
-            window.location.href = "<?php echo $pagina; ?>";
-        });
-    </script>
+   <script type="text/javascript">
+    const control = <?php echo (int)$control_sistema; ?>;
+    const tipoUsuario = <?php echo (int)$_SESSION['tipo']; ?>;
+    const mensaje = "<?php echo $mensaje; ?>";
+    const pagina = "<?php echo $pagina; ?>";
+
+    // Si es admin (tipo 1), siempre success
+    // Si no es admin y control == 0 → error
+    const icono = (tipoUsuario === 1 || control === 1) ? "success" : "error";
+    const titulo = (icono === "success") ? "¡Acceso concedido!" : "Acceso denegado";
+
+    swal({
+        title: titulo,
+        text: mensaje,
+        icon: icono,
+        button: "Aceptar"
+    }).then(function() {
+        if (icono === "error") {
+            // Llamar al PHP que destruye la sesión
+            fetch('cerrar_sesion.php')
+                .then(() => {
+                    window.location.href = pagina;
+                });
+        } else {
+            window.location.href = pagina;
+        }
+    });
+</script>
+
+
 </body>
 </html>
 <?php

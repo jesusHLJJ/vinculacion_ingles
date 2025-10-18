@@ -1,14 +1,14 @@
 <?php
 session_start();
 include "BD.php";
-
+include "config.php"; 
 if (isset($_SESSION['tipo'])) {
     switch ($_SESSION['tipo']) {
-        case 1: // Tutor
+        case 1: // ADMIN
             header('location: ADMINISTRADOR/');
             break;
-        case 2: // Administrador
-            header('location: PROFESORES/');
+        case 2: // PROFESOR
+                header('location: PROFESORES/');
             break;
         case 3: // Alumno
 

@@ -1,4 +1,5 @@
 <?php
+include "../config.php";
 session_start();
 
 if (!isset($_SESSION['tipo'])) {
@@ -54,6 +55,14 @@ if (!isset($_SESSION['tipo'])) {
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <!-- JS -->
     <script src="../JS/cerrar_sesion.js"></script>
+
+
+    <form action="../config.php" method="POST">
+        <button type="submit" name="control_sistema" value="1">Activar</button>
+        <button type="submit" name="control_sistema" value="0">Desactivar</button>
+    </form>
+
+
 </body>
 
 </html>
