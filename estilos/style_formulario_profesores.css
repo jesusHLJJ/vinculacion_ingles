@@ -32,29 +32,6 @@ body {
     font-family: Arial, Helvetica, sans-serif;
   }
 
-  .boton-regresar {
-    position: fixed;
-    top: 20px;
-    left: 20px;
-    width: 100px; /* Ajusta el tamaño del botón según tus necesidades */
-    height: 40px; /* Ajusta el tamaño del botón según tus necesidades */
-    border-radius: 20px; /* Ajusta el radio para obtener una forma redonda */
-    overflow: hidden;
-    box-shadow: 0 0 0 3px #ffbb00;  /* Grosor y color del borde */
-    transition: box-shadow 0.3s ease; /* Transición suave */
-    cursor: pointer;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    background-color: #ffffff; /* Color de fondo del botón */
-    color: #000000; /* Color del texto en negro */
-    font-size: 16px; /* Tamaño de fuente */
-    font-weight: bold; /* Grosor de la fuente */
-}
-
-.boton-regresar:hover {
-    box-shadow: 0 0 0 5px #ffbb00;  /* Cambiar el color del borde al pasar el ratón */
-}
 
   form label {
     display: block;
@@ -111,94 +88,54 @@ form input[type="submit"]:hover {
     background-color: rgb(81, 81, 81);
   }
 
-  .boton-redondo3 {
-    position: fixed;
-    z-index: 1;
-}
 
-.boton-redondo3 {
-    bottom: 20px;
-    right: 30px;
-    width: 70px; /* Ajusta el tamaño del botón según tus necesidades */
-    height: 70px; /* Ajusta el tamaño del botón según tus necesidades */
-    border-radius: 50%;
-    overflow: hidden;
-    box-shadow: 0 0 0 3px #ccc; /* Grosor y color del borde */
-    transition: box-shadow 0.3s ease; /* Transición suave */
-    cursor: pointer;
-    
-}
 
-.boton-redondo3:hover {
-    box-shadow: 0 0 0 5px #e70303; /* Cambiar el color del borde al pasar el ratón */
-}
-
-.boton-redondo3 .imagen {
-    position: absolute;
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-}
-
-.button-description3 {
-    color: #000000; /* Color del texto */
-    font-family: Arial, sans-serif; /* Tipo de fuente */
-    text-align: right; /* Alineación del texto */
-    position: fixed;
-    bottom: 5px; /* Distancia desde la parte inferior */
-    right: 16px; /* Distancia desde la parte derecha */
-    margin: 0;
-    top: 655px;
-    font-size: 17px;
-}
 
  /* Estilos para el contenedor del cargador */
- #loader {
+#loader {
   position: fixed;
   width: 100%;
   height: 100%;
-  background: rgba(255, 255, 255, 0.7); /* Ajustado para ser casi transparente */
+  background: rgba(255, 255, 255, 0.7);
   display: flex;
   justify-content: center;
   align-items: center;
   z-index: 9999;
 }
 
-
-/* Estilos para el contenedor de la imagen y el spinner */
 .loader-container {
   position: relative;
   width: 120px;
   height: 120px;
+  display: flex;           /* Centrado flex */
+  justify-content: center; /* Centrado horizontal */
+  align-items: center;     /* Centrado vertical */
 }
 
-/* Estilos para la imagen del cargador */
 .loader-image img {
-  width: 100%; /* La imagen ocupará todo el contenedor */
-  height: 100%; 
-  border-radius: 50%; /* Hace la imagen redonda */
-  position: absolute;
-  top: 20px;
-  left: 15px;
+  width: 60px;      /* Ajusta el tamaño de la imagen */
+  height: 60px;
+  border-radius: 50%;
+  z-index: 2;       /* Encima del spinner */
 }
 
-/* Estilos para el spinner */
 .loader-spinner {
   border: 16px solid #f57c02;
   border-top: 16px solid #6b6b6b;
   border-radius: 50%;
   width: 100%;
   height: 100%;
+  position: absolute;  /* Para que quede debajo de la imagen */
+  top: 0;
+  left: 0;
   animation: spin 2s linear infinite;
 }
 
-/* Animación del spinner */
 @keyframes spin {
   0% { transform: rotate(0deg); }
   100% { transform: rotate(360deg); }
 }
 
-/* Ocultar el contenido mientras se muestra el cargador */
 #content {
   display: none;
 }

@@ -20,8 +20,6 @@ body{
         height: 100vh; /* Asegura que el body tenga la altura de la ventana */
 
 }
-
-
 /* Estilos para el contenedor */
 .info-container {
     position: absolute;

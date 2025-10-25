@@ -107,104 +107,150 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
   <title>Actualizar datos</title>
   <link rel="stylesheet" href="../estilos/style_formulario_profesores.css">
   <script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+
 </head>
 
 <body>
-<div id="loader">
-        <div class="loader-container">
-            <div class="loader-spinner"></div>
-            <div class="loader-image">
-                <img src="../imagenes/si.jpg" alt="Loading">
-            </div>
-        </div>
+  <div id="loader">
+    <div class="loader-container">
+      <div class="loader-spinner"></div>
+      <div class="loader-image">
+        <img src="../imagenes/si.jpg" alt="Loading">
+      </div>
     </div>
-
-    <script>
-        document.addEventListener("DOMContentLoaded", function() {
-            // Simular una carga con un timeout (por ejemplo, una consulta a una API)
-            setTimeout(function() {
-                // Ocultar el cargador
-                document.getElementById("loader").style.display = "none";
-                // Mostrar el contenido
-                document.getElementById("content").style.display = "block";
-            }, 400); // Ajusta el tiempo según sea necesario
-        });
-    </script>
-  <h1 class="titulo-bienvenida"><?php echo $nombres . ' ' . $apellido_paterno . ' ' . $apellido_materno; ?></h1>
-  <div class="boton-regresar">
-    <a id="regresar" href="#">Regresar</a>
   </div>
 
-  <div class="container">
-    <div class="formulario">
+  <script>
+    document.addEventListener("DOMContentLoaded", function() {
+      // Simular una carga con un timeout (por ejemplo, una consulta a una API)
+      setTimeout(function() {
+        // Ocultar el cargador
+        document.getElementById("loader").style.display = "none";
+        // Mostrar el contenido
+        document.getElementById("content").style.display = "block";
+      }, 400); // Ajusta el tiempo según sea necesario
+    });
+  </script>
+
+
+
+
+  <nav class="navbar navbar-dark bg-dark">
+    <div class="container-fluid d-flex justify-content-between align-items-center">
+
+      <!-- Botón Regresar a la izquierda -->
+      <a id="regresar" class="btn btn-outline-warning" href="#">Regresar</a>
+
+      <!-- Título centrado -->
+      <h1 class="text-center text-warning flex-grow-1 m-0">
+        Actualizar Información
+      </h1>
+
+      <!-- Botón de Cerrar sesión a la derecha -->
+      <a class="navbar-brand d-flex align-items-center" id="cerrar" href="#">
+        <img src="../imagenes/cerrar_sesion_icono.png" alt="" class="rounded-circle me-2" style="width:60px; height:60px;">
+        Cerrar sesión
+      </a>
+
+    </div>
+  </nav>
+
+
+
+  <div class="container my-4">
+    <div class="form-floating mb-3">
       <form id="updateForm" method="post" action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?>">
-        <label for="nombres">Nombres:</label><br>
-        <input type="text" id="nombres" name="nombres" value="<?php echo $nombres; ?>"><br>
 
-        <label for="apellido_paterno">Apellido Paterno:</label><br>
-        <input type="text" id="apellido_paterno" name="apellido_paterno" value="<?php echo $apellido_paterno; ?>"><br>
+        <div class="row mb-3">
+          <div class="col-md-4">
+            <label for="nombres" class="form-label">Nombres</label>
+            <input type="text" class="form-control" id="nombres" name="nombres" value="<?php echo $nombres; ?>">
+          </div>
+          <div class="col-md-4">
+            <label for="apellido_paterno" class="form-label">Apellido Paterno</label>
+            <input type="text" class="form-control" id="apellido_paterno" name="apellido_paterno" value="<?php echo $apellido_paterno; ?>">
+          </div>
+          <div class="col-md-4">
+            <label for="apellido_materno" class="form-label">Apellido Materno</label>
+            <input type="text" class="form-control" id="apellido_materno" name="apellido_materno" value="<?php echo $apellido_materno; ?>">
+          </div>
+        </div>
 
-        <label for="apellido_materno">Apellido Materno:</label><br>
-        <input type="text" id="apellido_materno" name="apellido_materno" value="<?php echo $apellido_materno; ?>"><br>
+        <div class="row mb-3">
+          <div class="col-md-2">
+            <label for="edad" class="form-label">Edad</label>
+            <input type="number" class="form-control" id="edad" name="edad" value="<?php echo $edad; ?>">
+          </div>
+          <div class="col-md-2">
+            <label for="sexo" class="form-label">Sexo</label>
+            <select id="sexo" name="sexo" class="form-select">
+              <option value="M" <?php if ($sexo == 'M') echo 'selected'; ?>>M</option>
+              <option value="F" <?php if ($sexo == 'F') echo 'selected'; ?>>F</option>
+            </select>
+          </div>
+          <div class="col-md-4">
+            <label for="rfc" class="form-label">RFC</label>
+            <input type="text" class="form-control" id="rfc" name="rfc" value="<?php echo $rfc; ?>">
+          </div>
+          <div class="col-md-4">
+            <label for="estado_civil" class="form-label">Estado Civil</label>
+            <select id="estado_civil" name="estado_civil" class="form-select">
+              <?php
+              while ($row = $result_estados_civiles->fetch_assoc()) {
+                $selected = ($estado_civil == $row['id_estado_civil']) ? 'selected' : '';
+                echo "<option value='" . $row['id_estado_civil'] . "' $selected>" . $row['estado_civil'] . "</option>";
+              }
+              ?>
+            </select>
+          </div>
+        </div>
 
-        <label for="edad">Edad:</label><br>
-        <input type="number" id="edad" name="edad" value="<?php echo $edad; ?>"><br>
+        <div class="row mb-3">
+          <div class="col-md-6">
+            <label for="calle" class="form-label">Calle</label>
+            <input type="text" class="form-control" id="calle" name="calle" value="<?php echo $calle; ?>">
+          </div>
+          <div class="col-md-2">
+            <label for="numero" class="form-label">Número</label>
+            <input type="text" class="form-control" id="numero" name="numero" value="<?php echo $numero; ?>">
+          </div>
+          <div class="col-md-4">
+            <label for="colonia" class="form-label">Colonia</label>
+            <input type="text" class="form-control" id="colonia" name="colonia" value="<?php echo $colonia; ?>">
+          </div>
+        </div>
 
-        <label for="sexo">Sexo:</label><br>
-        <select id="sexo" name="sexo">
-          <option value="M" <?php if ($sexo == 'M') echo 'selected'; ?>>M</option>
-          <option value="F" <?php if ($sexo == 'F') echo 'selected'; ?>>F</option>
-        </select><br>
+        <div class="row mb-3">
+          <div class="col-md-4">
+            <label for="estado" class="form-label">Estado</label>
+            <input type="text" class="form-control" id="estado" name="estado" value="<?php echo $estado; ?>">
+          </div>
+          <div class="col-md-4">
+            <label for="municipio" class="form-label">Municipio</label>
+            <select id="municipio" name="municipio" class="form-select">
+              <?php
+              while ($row = $result_municipios->fetch_assoc()) {
+                $selected = ($municipio == $row['id_municipio']) ? 'selected' : '';
+                echo "<option value='" . $row['id_municipio'] . "' $selected>" . $row['nombre_municipio'] . "</option>";
+              }
+              ?>
+            </select>
+          </div>
+          <div class="col-md-4">
+            <label for="codigo_postal" class="form-label">Código Postal</label>
+            <input type="text" class="form-control" id="codigo_postal" name="codigo_postal" value="<?php echo $codigo; ?>">
+          </div>
+        </div>
 
-        <label for="calle">Calle:</label><br>
-        <input type="text" id="calle" name="calle" value="<?php echo $calle; ?>"><br>
+        <div class="text-center mt-4">
+          <button type="submit" class="btn btn-primary">Modificar</button>
+        </div>
 
-        <label for="numero">Número:</label><br>
-        <input type="text" id="numero" name="numero" value="<?php echo $numero; ?>"><br>
-
-        <label for="rfc">RFC:</label><br>
-        <input type="text" id="rfc" name="rfc" value="<?php echo $rfc; ?>"><br>
-
-        <label for="estado_civil">Estado Civil:</label><br>
-        <select id="estado_civil" name="estado_civil">
-          <?php
-          while ($row = $result_estados_civiles->fetch_assoc()) {
-            $selected = ($estado_civil == $row['id_estado_civil']) ? 'selected' : ''; // Comprueba si el estado civil actual es igual al estado civil en la base de datos
-            echo "<option value='" . $row['id_estado_civil'] . "' $selected>" . $row['estado_civil'] . "</option>";
-          }
-          ?>
-        </select><br><br>
-
-        <label for="estado">Estado:</label><br>
-        <input type="text" id="estado" name="estado" value="<?php echo $estado; ?>"><br><br>
-        <label for="municipio">Municipio:</label><br>
-        <select id="municipio" name="municipio">
-          <?php
-          while ($row = $result_municipios->fetch_assoc()) {
-            $selected = ($municipio == $row['id_municipio']) ? 'selected' : ''; // Comprueba si el municipio actual es igual al municipio en la base de datos
-            echo "<option value='" . $row['id_municipio'] . "' $selected>" . $row['nombre_municipio'] . "</option>";
-          }
-          ?>
-        </select><br><br>
-
-
-        <label for="colonia">Colonia:</label><br>
-        <input type="text" id="colonia" name="colonia" value="<?php echo $colonia; ?>"><br><br>
-
-        <label for="codigo_postal">Código Postal:</label><br>
-        <input type="text" id="codigo_postal" name="codigo_postal" value="<?php echo $codigo; ?>"><br><br>
-
-        <input type="submit" value="Modificar" id="cambios">
       </form>
     </div>
   </div>
 
-  <div class="boton-redondo3">
-    <a id="cerrar" href="#">
-      <img class="imagen" src="../imagenes/cerrar_sesion_icono.png" alt="Botón Redondo3">
-    </a>
-  </div>
-  <h2 class="button-description3">Cerrar sesión</h2>
 
   <script>
     document.getElementById("cerrar").addEventListener("click", function() {

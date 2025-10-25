@@ -1,5 +1,6 @@
+/* ==== ESTILOS BASE ==== */
 body {
-    background-image: linear-gradient(rgba(255, 255, 255, 0.8), rgba(255, 255, 255)), url('../imagenes/fondo_g.png'); /* Cambia esta ruta por la ruta de tu imagen */
+    background-image: linear-gradient(rgba(255, 255, 255, 0.8), rgba(255, 255, 255)), url('../imagenes/fondo_g.png');
     background-size: cover;
     background-position: center;
     background-repeat: no-repeat;
@@ -9,43 +10,6 @@ body {
     font-family: Arial, sans-serif;
     font-weight: bold;
 }
-    
-/* Navbar */
-.navbar {
-    position: absolute; 
-    top: 0;
-    bottom: 0;
-    height: 100%;
-    left: 0;
-    background-color: #ffbb00;
-    width: 65px;
-    overflow: hidden;   
-    transition: width 0.2s linear;
-    box-shadow: 0 20px 35px rgba(0,0,0,0.1);
-}
-
-.navbar:hover {
-    width: 180px;
-    transition: all 0.5s ease;
-    background-color: orange;
-}
-
-.navbar ul {
-    list-style-type: none;
-    margin: 0;
-    padding: 0;
-}
-
-.navbar ul li {
-    margin-bottom: 35px;
-}
-
-.navbar ul li a {
-    text-decoration: none;
-    color: #333;
-    display: flex;
-    align-items: center;
-}
 
 .small-image {
     width: 60px;
@@ -54,241 +18,57 @@ body {
     border-radius: 100%;
 }
 
-.nav-item {
-    display: none;
-}
-
-.navbar ul li:hover .nav-item {
-    display: inline-block;
-}
-
-/* Logout */
-.logout {
-    position: absolute;
-    bottom: 0;
-}
-
-.logout:hover {
-    color: red;
-    transition: all 2s ease;
-}
-
-/* Título */
-.titulo-bienvenida {
-    color: #ffbb00;
-    font-family: Arial, sans-serif;
+/* ==== CONTENEDOR ==== */
+.custom-container {
     text-align: center;
-    margin-top: 20px;
-    background-color: rgb(81, 81, 81);
-}
-
-/* Container */
-.container {
-    text-align: center;
-    width: 47%;
-    top: auto;
-    margin: 10px auto;
-    padding: 20px;
+    width: 75%;
+    margin: 1vh auto;
+    padding: 2vh;
     background-color: rgba(169, 160, 160, 0.4);
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
     position: relative;
-    overflow: hidden;
     border: 3px solid black;
+    border-radius: 10px;
 }
 
-/* Iconos */
-.icono-izquierdo, .icono-derecho {
-    position: absolute;
-    top: 10px;
-    z-index: 1;
-}
-
-.icono-izquierdo {
-    left: 10px;
-}
-
-.icono-derecho {
-    right: 10px;
-}
-
-.icono-izquierdo img, .icono-derecho img {
-    width: 40px;
-    height: auto;
-    border-radius: 50%;
-    overflow: hidden;
-    box-shadow: 0 0 0 3px #ccc;
-    transition: box-shadow 0.3s ease;
-}
-
-/* Botones redondos */
-.boton-redondo, .boton-redondo2, .boton-redondo3 {
-    position: fixed;
-    z-index: 1;
-    width: 70px;
-    height: 70px;
-    border-radius: 50%;
-    overflow: hidden;
-    box-shadow: 0 0 0 3px #ccc;
-    transition: box-shadow 0.3s ease;
-    cursor: pointer;
-}
-
-.boton-redondo {
-    top: 80px;
-    left: 105px;
-}
-
-.boton-redondo2 {
-    top: calc(50% - 35px);
-    left: 108px;
-}
-
-.boton-redondo3 {
-    bottom: 20px;
-    right: 30px;
-}
-
-.boton-redondo:hover, .boton-redondo2:hover, .boton-redondo3:hover {
-    box-shadow: 0 0 0 5px #4CAF50;
-}
-
-.boton-redondo .imagen, .boton-redondo2 .imagen, .boton-redondo3 .imagen {
-    position: absolute;
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-}
-
-/* Descripciones de botones */
-.button-description1, .button-description2, .button-description3 {
-    color: #000000;
-    font-family: Arial, sans-serif;
-    font-size: 20px;
-}
-
-.button-description1 {
-    text-align: left;
-    position: fixed;
-    top: 150px;
-    left: 40px;
-}
-
-.button-description2 {
-    text-align: right;
-    position: fixed;
-    top: 425px;
-    left: 90px;
-}
-
-.button-description3 {
-    text-align: right;
-    position: fixed;
-    bottom: 5px;
-    right: 16px;
-    top: 655px;
-    font-size: 17px;
-}
-
-/* Galería de imágenes */
-#image-gallery {
-    display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    gap: 0px;
-    justify-items: center;
-    align-items: center;
-    margin-top: auto;
-    padding: 0px;
-}
-
-#image-gallery .image-item {
-    display: inline-block;
-}
-
-#image-gallery img {
-    max-width: 70%;
-    height: auto;
-    border: 5px solid black;
-}
-
-/* Botón */
-.button {
-    display: inline-block;
-    padding: 10px 20px;
-    background-color: #fff;
-    color: #000000;
-    border: 3px solid #ffbb00;
-    cursor: pointer;
-    border-radius: 5px;
-    margin-top: 20px;
-    font-weight: bold;
-}
-
-.button-description {
-    text-align: center;
-    margin-top: 5px;
-    font-size: 12px;
-}
-
-/* Botón regresar */
-.boton-regresar {
-    position: fixed;
-    top: 20px;
-    left: 20px;
-    width: 100px;
-    height: 40px;
-    border-radius: 20px;
-    overflow: hidden;
-    box-shadow: 0 0 0 3px #000000;
-    transition: box-shadow 0.3s ease;
-    cursor: pointer;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    background-color: #ffffff;
-    color: #f60101;
-    font-size: 16px;
-    font-weight: bold;
-    text-decoration: none;
-}
-
-.boton-regresar:hover {
-    box-shadow: 0 0 0 5px #000000;
-}
-
-/* Loader */
+/* ==== LOADER ==== */
 #loader {
-    position: fixed;
-    width: 100%;
-    height: 100%;
-    background: rgba(255, 255, 255, 0.7);
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    z-index: 9999;
+  position: fixed;
+  width: 100%;
+  height: 100%;
+  background: rgba(255, 255, 255, 0.7);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 9999;
 }
 
 .loader-container {
-    position: relative;
-    width: 120px;
-    height: 120px;
+  position: relative;
+  width: 120px;
+  height: 120px;
+  display: flex;           /* Centrado flex */
+  justify-content: center; /* Centrado horizontal */
+  align-items: center;     /* Centrado vertical */
 }
 
 .loader-image img {
-    width: 100%;
-    height: 100%;
-    border-radius: 50%;
-    position: absolute;
-    top: 20px;
-    left: 15px;
+  width: 60px;      /* Ajusta el tamaño de la imagen */
+  height: 60px;
+  border-radius: 50%;
+  z-index: 2;       /* Encima del spinner */
 }
 
 .loader-spinner {
-    border: 16px solid #f57c02;
-    border-top: 16px solid #6b6b6b;
-    border-radius: 50%;
-    width: 100%;
-    height: 100%;
-    animation: spin 2s linear infinite;
+  border: 16px solid #f57c02;
+  border-top: 16px solid #6b6b6b;
+  border-radius: 50%;
+  width: 100%;
+  height: 100%;
+  position: absolute;  /* Para que quede debajo de la imagen */
+  top: 0;
+  left: 0;
+  animation: spin 2s linear infinite;
 }
 
 @keyframes spin {
@@ -296,83 +76,24 @@ body {
     100% { transform: rotate(360deg); }
 }
 
-#content {
-    display: none;
+/* ==== RESPONSIVIDAD SIMPLIFICADA ==== */
+@media (max-width: 1024px) {
+    body { font-size: 18px; }
+    .small-image { width: 50px; height: 50px; }
+    .container { width: 70%; }
 }
 
-/* Estilos responsivos */
-@media screen and (max-width: 1024px) {
-    .navbar {
-        width: 50px;
-    }
-
-    .navbar:hover {
-        width: 150px;
-    }
-
-    .navbar ul li a {
-        font-size: 16px;
-    }
-
-    .small-image {
-        width: 50px;
-        height: 50px;
-    }
-
-    .button-description1, .button-description2, .button-description3 {
-        font-size: 18px;
-    }
-
-    .boton-redondo, .boton-redondo2, .boton-redondo3 {
-        width: 60px;
-        height: 60px;
-    }
-
-    #image-gallery img {
-        max-width: 80%;
-    }
+@media (max-width: 768px) {
+    body { font-size: 16px; }
+    .small-image { width: 40px; height: 40px; }
+    .container { width: 85%; }
+    .titulo-bienvenida { font-size: 18px; }
 }
 
-@media screen and (max-width: 600px) {
-    body {
-        font-size: 16px;
-    }
-
-    .navbar {
-        width: 40px;
-    }
-
-    .navbar:hover {
-        width: 120px;
-    }
-
-    .navbar ul li a {
-        font-size: 14px;
-    }
-
-    .small-image {
-        width: 40px;
-        height: 40px;
-    }
-
-    .button-description1, .button-description2, .button-description3 {
-        font-size: 14px;
-    }
-
-    .boton-redondo, .boton-redondo2, .boton-redondo3 {
-        width: 50px;
-        height: 50px;
-    }
-
-    .button-description {
-        font-size: 10px;
-    }
-
-    #image-gallery {
-        grid-template-columns: 1fr;
-    }
-
-    #image-gallery img {
-        max-width: 90%;
-    }
+@media (max-width: 480px) {
+    body { font-size: 14px; }
+    .small-image { width: 35px; height: 35px; }
+    .container { width: 95%; padding: 15px; }
+    .titulo-bienvenida { font-size: 16px; }
 }
+
